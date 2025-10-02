@@ -3,148 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>makeAutomatic – Integración en Electrónica, Cloud y Redes</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-    }
-
-    header {
-      background-color: #1e1e1e;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-
-    header img {
-      max-width: 150px;
-      margin-bottom: 1rem;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    .intro {
-      padding: 2rem 1rem;
-      text-align: center;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .services {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem 1rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .service {
-      background-color: #1f1f1f;
-      padding: 1.5rem;
-      border-radius: 10px;
-      width: 100%;
-    }
-
-    .service h2 {
-      margin-top: 0;
-      color: #00bcd4;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      padding: 2rem 1rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .gallery img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    footer {
-      background-color: #1e1e1e;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #aaa;
-    }
-
-    .contact-info {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      color: #bbb;
-    }
-    
-    /* Estilos para el botón de WhatsApp */
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25D366;
-      color: white;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      text-align: center;
-      font-size: 30px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      text-decoration: none; /* Asegura que no tenga subrayado */
-    }
-    
-    .whatsapp-btn:hover {
-      background-color: #128C7E;
-      transform: scale(1.1);
-    }
-
-    .whatsapp-btn::before {
-      content: "WhatsApp";
-      font-family: sans-serif;
-      font-size: 0;
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    
-    .whatsapp-btn i {
-      display: block;
-    }
-
-    /* Para logos (Linux, JS, Python) */
-    .gallery img.logo {
-      width: 100%;
-      height: 200px;
-      object-fit: contain;
-      background-color: #121212; /* el mismo que tu body */
-      border-radius: 8px;
-      padding: 10px;
-    }
-
-  </style>
+  <meta name="description" content="makeAutomatic – Laboratorio de Electrónica, Cloud, IoT y Robótica. Integramos hardware, software y nube para soluciones industriales y comerciales eficientes y escalables.">
+  <title>makeAutomatic – Laboratorio de Electrónica, Cloud, IoT y Robótica</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+  <link rel="stylesheet" href="styles.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17151219695">
   </script>
@@ -163,7 +25,7 @@
   </header>
 
   <section class="intro">
-    <p>Integramos electrónica, hardware, software, nube y networking para ofrecer soluciones completas en sistemas industriales y comerciales, asegurando eficiencia, confiabilidad y escalabilidad.</p>
+    <p>Integramos electrónica, software, servicios en la nube, IoT, robótica e inteligencia artificial para ofrecer soluciones innovadoras y escalables, orientadas a la eficiencia y confiabilidad en entornos industriales y comerciales.</p>
     <div class="contact-info">
       <p>Contacto:</p>
       <p>WhatsApp: 3233344633</p>
@@ -172,27 +34,26 @@
   </section>
   
   <section class="services">
-    <div class="service">
-      <h2>Administracion de sistemas UNIX</h2>
-      <p>Administración, configuración y optimización de sistemas UNIX, incluyendo múltiples distribuciones Linux y macOS</p>
-    </div>
-    <div class="service">
-      <h2>Desarrollo de software y bases de datos</h2>
-      <p>Desarrollo de software a la medida con Python y JavaScript, integrando bases de datos SQL y NoSQL según sus necesidades</p>
-    </div>
-    <div class="service">
-      <h2>Servicios en la Nube</h2>
-      <p>Implementación, administración y optimización de soluciones en AWS, Azure, GCP y Huawei Cloud para impulsar la transformación digital de su empresa.</p>
-    </div>
-    <div class="service">
-      <h2>Networking</h2>
-      <p>Diseño, configuración y mantenimiento de redes LAN, MAN, WAN y PAN, asegurando conectividad estable, segura y de alto rendimiento.</p>
-    </div>
-    <div class="service">
-      <h2>Diagnóstico, Reparación y Mantenimiento</h2>
-      <p>Identificación precisa de fallas y soluciones efectivas para garantizar el óptimo funcionamiento de sistemas electrónicos industriales y comerciales.</p>
-    </div>
-  </section>
+  <div class="service">
+    <h2>Administración de sistemas Linux</h2>
+    <p>Gestión, configuración y optimización de servidores basados en Linux para entornos estables, seguros y de alto rendimiento.</p>
+  </div>
+
+  <div class="service">
+    <h2>Servicios en la Nube</h2>
+    <p>Implementación y administración de soluciones en AWS, Azure, GCP y otras plataformas, facilitando la integración de procesos y la transformación digital.</p>
+  </div>
+
+  <div class="service">
+    <h2>IoT y Robótica</h2>
+    <p>Diseño de prototipos y soluciones de automatización mediante sensores, actuadores y sistemas robóticos conectados, integrados con servicios en la nube.</p>
+  </div>
+
+  <div class="service">
+    <h2>Agentes de Inteligencia Artificial</h2>
+    <p>Desarrollo e integración de agentes de IA especializados para sectores productivos, aplicados al análisis de datos, automatización y soporte en la toma de decisiones.</p>
+  </div>
+</section>
 
   <section class="gallery">
     <img src="image1.jpg" alt="Proceso de reparación 1">
