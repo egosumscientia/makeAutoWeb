@@ -134,3 +134,22 @@ footer {
     border-radius: 8px;
     padding: 10px;
 }
+
+.portfolio {
+    margin-top: 2rem;
+}
+
+.portfolio-btn {
+    display: inline-block;
+    background-color: #00bcd4;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.portfolio-btn:hover {
+    background-color: #0097a7;
+}
