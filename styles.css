@@ -153,3 +153,54 @@ footer {
 .portfolio-btn:hover {
     background-color: #0097a7;
 }
+
+.ai-demo {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 24px;
+    background: #0d1117;
+    color: #e6edf3;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    font-family: 'Roboto Mono', monospace;
+    text-align: center;
+    }
+
+    .ai-demo canvas {
+    margin: 20px auto;
+    display: block;
+    }
+
+    .ai-demo .ai-input {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    }
+
+    .ai-demo input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #21262d;
+    color: #fff;
+    }
+
+    .ai-demo button {
+    background: #238636;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    }
+
+    .ai-demo #reply {
+    margin-top: 12px;
+    font-weight: bold;
+    }
+
+    .ai-demo #explanation {
+    font-size: 0.85em;
+    color: #8b949e;
+}
