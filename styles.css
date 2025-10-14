@@ -204,3 +204,22 @@ footer {
     font-size: 0.85em;
     color: #8b949e;
 }
+
+/* === Ajuste de proporción para el radar de AI-TestBuddy === */
+.ai-demo canvas {
+    max-width: 400px !important;
+    max-height: 400px !important;
+    width: 400px !important;
+    height: 400px !important;
+    margin: 0 auto !important;
+    display: block;
+}
+
+.ai-demo {
+    max-width: 480px !important; /* más estrecho para centrarlo */
+    margin: 60px auto !important;
+    padding: 24px;
+    background: #0d1117;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
