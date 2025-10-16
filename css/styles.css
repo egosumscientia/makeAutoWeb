@@ -557,3 +557,24 @@ html, body {
     min-width: unset;
   }
 }
+
+/* === FIX FINAL: mensaje visible y centrado sin alterar colores originales === */
+#audioResult {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 60px; /* evita solaparse con las flechas */
+  text-align: center;
+  color: #f1f5f9; /* color de texto principal, igual al resto de la página */
+  font-weight: 500;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive: un poco más de espacio si las flechas quedan cerca */
+@media (max-width: 600px) {
+  #audioResult {
+    margin-bottom: 80px;
+  }
+}
+
