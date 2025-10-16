@@ -87,13 +87,41 @@ header h1 {
   padding: 10px;
 }
 
-footer {
+/* footer {
   background-color: #0A0F1D;
   padding: 1rem;
   text-align: center;
   font-size: 0.9rem;
   color: var(--color-text-muted);
+} */
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #0a0f1a;
+  color: #cccccc;
+  font-family: 'Inter', sans-serif;
 }
+
+.footer-slogan {
+  color: #00d4d4;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.footer .brand {
+  color: #00d4d4;
+  font-weight: 600;
+}
+
 
 .contact-info {
   margin-top: 1rem;
@@ -220,8 +248,7 @@ footer {
 
 .intro,
 .contact-info,
-.gallery,
-footer {
+.gallery {
   background-color: transparent;
 }
 
