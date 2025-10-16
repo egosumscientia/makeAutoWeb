@@ -61,7 +61,7 @@ function setupAudioSense() {
       <input type="file" id="audioFile" accept=".wav,.mp3,.ogg,.m4a" />
       <button id="analyzeBtn">Analizar Audio</button>
     </div>
-    <p class="audio-info">Formatos compatibles: <b>WAV</b>, <b>MP3</b>, <b>OGG</b>, <b>M4A</b> (máx. 10&nbsp;MB).</p>
+    <p class="audio-info">Formatos compatibles: <b>WAV</b>, <b>MP3</b>, <b>OGG</b>, <b>M4A</b> (máx. 5&nbsp;MB).</p>
     <p id="audioResult"></p>
   `;
 
