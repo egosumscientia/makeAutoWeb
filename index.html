@@ -58,19 +58,61 @@
       </div>
     </section>
 
-    <section id="ai-testbuddy" class="ai-demo">
-      <h2>🤖 AI-TestBuddy</h2>
-      <p>
-        Demo interactiva de <b>makeAutomatic</b> que muestra cómo una IA ajusta preferencias humanas en un vector visual.
-      </p>
-      <canvas id="tasteRadar" width="400" height="400"></canvas>
-      <div class="ai-input">
-        <input id="msg" placeholder="Ejemplo: 'más picante', 'equilibrado', 'más dulce'" />
-        <button id="sendBtn">Enviar</button>
+<section id="ai-demo-carousel" class="ai-demo">
+  <h2>Demos de Inteligencia Artificial</h2>
+
+  <div class="carousel">
+    <div class="carousel-inner">
+
+      <!-- Proyecto 1 -->
+      <div class="carousel-item active">
+        <h3>AI-TestBuddy</h3>
+        <p>Demo interactiva de <b>makeAutomatic</b> donde una IA adapta preferencias humanas en un vector visual.</p>
+        <canvas id="tasteRadar" width="400" height="400"></canvas>
+        <div class="ai-input">
+          <input id="msg" placeholder="Ejemplo: 'más picante', 'equilibrado', 'menos dulce'" />
+          <button id="sendBtn">Enviar</button>
+        </div>
+        <p id="reply"></p>
+        <p id="explanation"></p>
       </div>
-      <p id="reply"></p>
-      <p id="explanation"></p>
-    </section>
+
+      <!-- Proyecto 2 -->
+      <div class="carousel-item">
+        <h3>AI–EcoPredict</h3>
+        <p>Predicción ambiental simulada por <b>makeAutomatic</b>.</p>
+
+        <!-- Canvas y botón -->
+        <canvas id="ecoCanvas" width="400" height="300"></canvas>
+        <div class="ai-input">
+          <button id="btnPredict">Predecir</button>
+        </div>
+
+        <!-- Script de interacción -->
+        <script src="ai-ecopredict.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            if (typeof drawChart === "function") {
+              console.log("AI–EcoPredict listo.");
+            }
+          });
+        </script>
+      </div>
+
+      <!-- Proyecto 3 -->
+      <div class="carousel-item">
+        <h3>AI-AudioSense</h3>
+        <p>Procesamiento de audio inteligente para monitoreo industrial.</p>
+      </div>
+
+    </div> <!-- cierre correcto de carousel-inner -->
+
+    <button class="carousel-btn prev">❮</button>
+    <button class="carousel-btn next">❯</button>
+  </div>
+</section>
+
+
 
     <section class="gallery">
       <img src="image1.jpg" alt="Proceso de reparación 1">
@@ -89,6 +131,6 @@
   </a>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="scripts.js"></script>
+  <script src="scripts.js" defer></script>
 </body>
 </html>

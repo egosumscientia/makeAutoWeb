@@ -103,5 +103,29 @@ function setupAIInteraction() {
   drawRadar();
 }
 
+// === Simple Carousel Logic ===
+document.addEventListener("DOMContentLoaded", () => {
+  const items = document.querySelectorAll(".carousel-item");
+  const nextBtn = document.querySelector(".carousel-btn.next");
+  const prevBtn = document.querySelector(".carousel-btn.prev");
+  let index = 0;
+
+  function showSlide(i) {
+    const inner = document.querySelector(".carousel-inner");
+    inner.style.transform = `translateX(-${i * 100}%)`;
+  }
+
+  nextBtn.addEventListener("click", () => {
+    index = (index + 1) % items.length;
+    showSlide(index);
+  });
+
+  prevBtn.addEventListener("click", () => {
+    index = (index - 1 + items.length) % items.length;
+    showSlide(index);
+  });
+});
+
+
 // --- Inicialización automática ---
 document.addEventListener("DOMContentLoaded", setupAIInteraction);
