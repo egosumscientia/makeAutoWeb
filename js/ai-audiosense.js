@@ -8,47 +8,6 @@ document.addEventListener("slideChanged", (e) => {
   if (e.detail.index === 2) setupAudioSense();
 });
 
-/* function setupAudioSense() {
-  const container = document.querySelector(".carousel-item:nth-child(3)");
-  if (!container || container.querySelector("#audioFile")) return;
-
-  container.innerHTML += `
-    <div class="ai-input">
-      <input type="file" id="audioFile" accept="audio/*" />
-      <button id="analyzeBtn">Analizar Audio</button>
-    </div>
-    <p id="audioResult"></p>
-  `;
-
-  const btn = document.getElementById("analyzeBtn");
-  const input = document.getElementById("audioFile");
-  const output = document.getElementById("audioResult");
-
-  btn.addEventListener("click", async () => {
-    const file = input.files[0];
-    if (!file) {
-      output.textContent = "Selecciona un archivo de audio primero.";
-      return;
-    }
-
-    output.textContent = "Procesando...";
-    const base64Audio = await toBase64(file);
-
-    try {
-      const res = await fetch(audioApiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ audio: base64Audio })
-      });
-
-      const data = await res.json();
-      output.textContent = data.message || JSON.stringify(data);
-    } catch (err) {
-      console.error("Error:", err);
-      output.textContent = "Error al conectar con el servidor IA.";
-    }
-  });
-} */
 
 function setupAudioSense() {
   const container = document.querySelector(".carousel-item:nth-child(3)");
