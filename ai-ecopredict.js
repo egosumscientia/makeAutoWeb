@@ -1,4 +1,4 @@
-// ai-ecopredict.js — versión final con tooltip y animación (responsive fix)
+// ai-ecopredict.js — versión final con animación, tooltip y fix móvil
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("ecoCanvas");
   const ctx = canvas.getContext("2d");
@@ -9,14 +9,28 @@ document.addEventListener("DOMContentLoaded", () => {
   let puntos = [];
   let animFrame;
 
-  // 🧩 FIX: ajustar tamaño dinámicamente al ancho disponible
+  // 🧩 FIX RESPONSIVE: recalcular tamaño según ancho disponible
   function resizeCanvas() {
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientWidth * 0.75; // proporción 4:3
-    if (window.lastData) drawChart(window.lastData, false);
+    const width = canvas.clientWidth || 300; // fallback si el ancho es 0
+    canvas.width = width;
+    canvas.height = width * 0.75; // mantiene proporción 4:3
+    if (ctx && window.lastData) drawChart(window.lastData, false);
   }
+
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
+
+  // 🧠 FIX: Redibuja cuando el canvas se hace visible (por ejemplo, al cambiar de slide)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        resizeCanvas(); // vuelve a dar tamaño real al canvas
+        console.log("🟢 Canvas visible, reajustado correctamente.");
+      }
+    });
+  }, { threshold: 0.3 });
+
+  observer.observe(canvas);
 
   const drawLineAnimated = (points, color, offset = 0, speed = 60) => {
     ctx.strokeStyle = color;
