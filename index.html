@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,14 +7,7 @@
   <meta name="description" content="makeAutomatic – Laboratorio de Electrónica, Cloud, IoT y Robótica. Integramos hardware, software y nube para soluciones industriales y comerciales eficientes y escalables.">
   <title>makeAutomatic – Laboratorio de Electrónica, Cloud, IoT y Robótica</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17151219695"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17151219695');
-  </script>
+  <link rel="stylesheet" href="styles.css?v=104">
 </head>
 <body>
   <header>
@@ -58,48 +52,47 @@
       </div>
     </section>
 
-<section id="ai-demo-carousel" class="ai-demo">
-  <h2>Demos de Inteligencia Artificial</h2>
+    <section id="ai-demo-carousel" class="ai-demo">
+      <h2>Demos de Inteligencia Artificial</h2>
 
-  <div class="carousel">
-    <div class="carousel-inner">
+      <div class="carousel">
+        <div class="carousel-inner">
 
-      <!-- Proyecto 1 -->
-      <div class="carousel-item active">
-        <h3>AI-TestBuddy</h3>
-        <p>Demo interactiva de <b>makeAutomatic</b> donde una IA adapta preferencias humanas en un vector visual.</p>
-        <canvas id="tasteRadar"></canvas>
-        <div class="ai-input">
-          <input id="msg" placeholder="Ejemplo: 'más picante', 'equilibrado', 'menos dulce'" />
-          <button id="sendBtn">Enviar</button>
+          <!-- Proyecto 1 -->
+          <div class="carousel-item active">
+            <h3>AI-TestBuddy</h3>
+            <p>Demo interactiva de <b>makeAutomatic</b> donde una IA adapta preferencias humanas en un vector visual.</p>
+            <canvas id="tasteRadar" width="400" height="400"></canvas>
+            <div class="ai-input">
+              <input id="msg" placeholder="Ejemplo: 'más picante', 'equilibrado', 'menos dulce'" />
+              <button id="sendBtn">Enviar</button>
+            </div>
+            <p id="reply"></p>
+            <p id="explanation"></p>
+          </div>
+
+          <!-- Proyecto 2 -->
+          <div class="carousel-item">
+            <h3>AI–EcoPredict</h3>
+            <p>Predicción ambiental simulada por <b>makeAutomatic</b>.</p>
+            <canvas id="ecoCanvas" width="400" height="400"></canvas>
+            <div class="ai-input">
+              <button id="btnPredict">Predecir</button>
+            </div>
+          </div>
+
+          <!-- Proyecto 3 -->
+          <div class="carousel-item">
+            <h3>AI-AudioSense</h3>
+            <p>Procesamiento de audio inteligente para monitoreo industrial.</p>
+          </div>
+
         </div>
-        <p id="reply"></p>
-        <p id="explanation"></p>
+
+        <button class="carousel-btn prev">❮</button>
+        <button class="carousel-btn next">❯</button>
       </div>
-
-      <!-- Proyecto 2 -->
-      <div class="carousel-item">
-        <h3>AI–EcoPredict</h3>
-        <p>Predicción ambiental simulada por <b>makeAutomatic</b>.</p>
-
-        <!-- Canvas y botón -->
-        <canvas id="ecoCanvas"></canvas>
-        <div class="ai-input">
-          <button id="btnPredict">Predecir</button>
-        </div>
-      </div>
-
-      <!-- Proyecto 3 -->
-      <div class="carousel-item">
-        <h3>AI-AudioSense</h3>
-        <p>Procesamiento de audio inteligente para monitoreo industrial.</p>
-      </div>
-
-    </div>
-    <button class="carousel-btn prev">❮</button>
-    <button class="carousel-btn next">❯</button>
-  </div>
-</section>
+    </section>
 
     <section class="gallery">
       <img src="image1.jpg" alt="Proceso de reparación 1">
@@ -117,7 +110,6 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="scripts.js" defer></script>
   <script src="ai-ecopredict.js" defer></script>

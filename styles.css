@@ -171,10 +171,10 @@ footer {
 }
 
 .ai-demo canvas {
-  max-width: 400px !important;
-  max-height: 400px !important;
-  width: 400px !important;
-  height: 400px !important;
+  max-width: 400px;
+  max-height: 400px;
+  width: 100%;
+  height: auto;
 }
 
 
@@ -182,6 +182,7 @@ footer {
   display: flex;
   gap: 8px;
   margin-top: 16px;
+  justify-content: center;
 }
 
 .ai-demo input {
@@ -200,6 +201,7 @@ footer {
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .ai-demo button:hover {
@@ -233,7 +235,7 @@ html, body {
   color: var(--color-text-main);
 }
 
-/* === Carousel Section FIXED === */
+/* === Carousel Section FIX para desplazamiento (No usar display: none) === */
 .carousel {
   position: relative;
   overflow: hidden;
@@ -243,14 +245,15 @@ html, body {
 }
 
 .carousel-inner {
-  display: flex;
+  display: flex; /* CRUCIAL: Muestra los slides uno al lado del otro */
   transition: transform 0.6s ease-in-out;
 }
 
 .carousel-item {
-  min-width: 100%;
+  min-width: 100%; /* CRUCIAL: Cada slide ocupa el 100% del ancho del carrusel */
   box-sizing: border-box;
   text-align: center;
+  flex-shrink: 0; /* Asegura que no se encoja */
 }
 
 .carousel-item img.carousel-image {
@@ -277,7 +280,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10; /* asegura que estén sobre el canvas */
+  z-index: 10;
 }
 
 /* Centrado visual y márgenes seguros dentro del ancho */
@@ -362,11 +365,87 @@ html, body {
   min-height: 200px;
 }
 
-/* Solo el slide activo debe ser visible */
-.carousel-item {
-  display: none;
+/* === FIX FINAL UNIFICADO (no duplica nada y mantiene el diseño) === */
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-.carousel-item.active {
+.carousel-inner {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s ease-in-out;
+  overflow: hidden; /* evita que se vea el siguiente slide */
+}
+
+.carousel-item {
+  flex: 0 0 100%;          /* cada slide ocupa 100% */
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 420px;       /* mantiene altura mínima */
+  text-align: center;
+}
+
+.ai-demo canvas {
+  width: 100%;
+  height: 360px;           /* altura visible estable */
+  max-height: 400px;
   display: block;
+  margin: 0 auto;
+}
+
+/* Evita overflow en móviles */
+@media (max-width: 768px) {
+  .ai-demo {
+    width: 100%;
+    padding: 16px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}
+
+/* === FIX: asegurar que el radar sea visible === */
+#tasteRadar {
+  display: block;
+  width: 100%;
+  height: 360px;      /* altura visible inicial */
+  max-height: 400px;
+  margin: 0 auto;
+}
+
+
+/* === FIX para asegurar visibilidad del segundo canvas === */
+.carousel-item canvas {
+  display: block !important;
+  width: 100% !important;
+  max-width: 480px;
+  height: auto !important;
+  margin: 0 auto;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.carousel-inner {
+  overflow: visible !important;
+}
+
+#ecoCanvas {
+  min-height: 360px;
+  background: transparent;
+}
+
+/* === FIX FINAL VISUAL para mostrar ecoCanvas y mantener altura === */
+.carousel-item.active {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  min-height: 420px;
+}
+
+.ai-demo {
+  min-height: 500px; /* garantiza que haya espacio para el canvas en móvil */
 }
