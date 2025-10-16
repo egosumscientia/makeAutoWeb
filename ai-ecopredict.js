@@ -11,26 +11,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🧩 FIX RESPONSIVE: recalcular tamaño según ancho disponible
   function resizeCanvas() {
-    const width = canvas.clientWidth || 300; // fallback si el ancho es 0
+    const width = canvas.clientWidth || 300;
     canvas.width = width;
-    canvas.height = width * 0.75; // mantiene proporción 4:3
+    canvas.height = width * 0.75;
     if (ctx && window.lastData) drawChart(window.lastData, false);
   }
 
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  // 🧠 FIX: Redibuja cuando el canvas se hace visible (por ejemplo, al cambiar de slide)
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        resizeCanvas(); // vuelve a dar tamaño real al canvas
-        console.log("🟢 Canvas visible, reajustado correctamente.");
-      }
-    });
-  }, { threshold: 0.3 });
-
-  observer.observe(canvas);
+  // 🔔 NUEVO: redibuja cuando se muestra el segundo slide
+  document.addEventListener("slideChanged", (e) => {
+    if (e.detail.index === 1) {
+      setTimeout(resizeCanvas, 200); // espera leve para obtener ancho real
+    }
+  });
 
   const drawLineAnimated = (points, color, offset = 0, speed = 60) => {
     ctx.strokeStyle = color;

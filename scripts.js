@@ -3,8 +3,6 @@
 // =============================================
 
 const apiUrl = "https://77stzif1o3.execute-api.us-east-1.amazonaws.com/default/";
-// ⬆️ Reemplaza con tu endpoint real de AWS Lambda
-
 const dims = ["dulce", "salado", "ácido", "amargo", "umami", "picante", "crujiente"];
 let values = [0.4, 0.6, 0.3, 0.2, 0.8, 0.4, 0.6];
 let radarChart;
@@ -64,21 +62,18 @@ function updateUI(data) {
   const replyEl = document.getElementById("reply");
   const explanationEl = document.getElementById("explanation");
 
-  // Mostrar respuesta solo si no es el mensaje de inicio
   if (data.reply && !data.reply.includes("Perfil reiniciado")) {
     replyEl.innerText = data.reply;
   } else {
     replyEl.innerText = "";
   }
 
-  // Mostrar explicación solo si no es el texto genérico del demo
   if (data.explanation && !data.explanation.includes("Este demo demuestra")) {
     explanationEl.innerText = data.explanation;
   } else {
     explanationEl.innerText = "";
   }
 
-  // Actualizar vector y redibujar radar
   values = dims.map((d) => data.vector?.[d] ?? 0);
   drawRadar();
 }
@@ -113,6 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function showSlide(i) {
     const inner = document.querySelector(".carousel-inner");
     inner.style.transform = `translateX(-${i * 100}%)`;
+
+    // 🔔 NUEVO: notifica a los scripts que el slide cambió
+    const event = new CustomEvent("slideChanged", { detail: { index: i } });
+    document.dispatchEvent(event);
   }
 
   nextBtn.addEventListener("click", () => {
@@ -126,10 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 // --- Inicialización automática ---
 document.addEventListener("DOMContentLoaded", setupAIInteraction);
-
 
 window.addEventListener("resize", () => {
   const canvas = document.getElementById("tasteRadar");
