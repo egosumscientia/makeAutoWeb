@@ -581,4 +581,27 @@ html, body {
   }
 }
 
+#msg {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  background-color: #1e293b;
+  color: #e2e8f0;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#msg::placeholder {
+  color: #64748b;
+  opacity: 0.9;
+}
+
+#msg:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 6px var(--color-accent);
+  background-color: #111827;
+}
 
