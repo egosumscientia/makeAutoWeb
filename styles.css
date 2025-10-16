@@ -354,26 +354,19 @@ html, body {
     overflow: hidden;
   }
 }
+
 #ecoCanvas {
   aspect-ratio: 4 / 3;
   width: 100%;
   display: block;
-}
-.carousel-inner {
-  overflow: visible !important;
+  min-height: 200px;
 }
 
+/* Solo el slide activo debe ser visible */
 .carousel-item {
-  opacity: 1 !important;
-  display: block !important;
-  position: relative !important;
+  display: none;
 }
 
-#ecoCanvas {
-  background: rgba(255,0,0,0.2) !important;
-  border: 2px solid red !important;
-  min-height: 200px !important;
+.carousel-item.active {
+  display: block;
 }
-
-
-
