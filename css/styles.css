@@ -605,3 +605,58 @@ html, body {
   background-color: #111827;
 }
 
+/* === Sección del Asistente GPT === */
+.ai-assistant {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #0d1117;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
+  color: var(--color-text-main);
+}
+
+.ai-assistant h2 {
+  color: var(--color-primary);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.ai-assistant p {
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.ai-btn {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0.8rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.ai-btn:hover {
+  background: var(--color-accent-hover);
+  transform: scale(1.05);
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .ai-assistant {
+    padding: 2rem 1rem;
+  }
+
+  .ai-assistant p {
+    font-size: 0.95rem;
+  }
+
+  .ai-btn {
+    width: 90%;
+  }
+}
+
