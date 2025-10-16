@@ -3,7 +3,6 @@
 // Integración con carrusel existente
 // =============================================
 
-const audioApiUrl = "https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/prod/analyze-audio";
 
 document.addEventListener("slideChanged", (e) => {
   if (e.detail.index === 2) setupAudioSense();
@@ -74,37 +73,44 @@ function setupAudioSense() {
     "https://y86gcq22ul.execute-api.us-east-1.amazonaws.com/prod/analyze-audio";
 
   analyzeBtn.addEventListener("click", async () => {
-    const file = fileInput.files[0];
-    if (!file) {
-      resultEl.textContent = "⚠️ Por favor selecciona un archivo de audio.";
-      return;
-    }
+  const file = fileInput.files[0];
+  if (!file) {
+    resultEl.textContent = "⚠️ Por favor selecciona un archivo de audio.";
+    return;
+  }
 
-    // Indicador de carga
-    resultEl.textContent = "⏳ Procesando audio...";
+  // ⚠️ Validación antes de procesar
+  if (file.size > 5 * 1024 * 1024) { // 5 MB
+    resultEl.textContent = "⚠️ El archivo es demasiado grande. Selecciona uno menor a 5 MB.";
+    return;
+  }
 
-    try {
-      const reader = new FileReader();
-      reader.onload = async function (e) {
-        const base64Audio = e.target.result.split(",")[1];
+  // Indicador de carga
+  resultEl.textContent = "⏳ Procesando audio...";
 
-        const response = await fetch(audioApiUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ audio: base64Audio }),
-        });
+  try {
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+      const base64Audio = e.target.result.split(",")[1];
 
-        const data = await response.json();
-        resultEl.textContent = `✅ ${data.message} (Confianza: ${(data.confidence * 100).toFixed(1)}%)`;
-      };
-      reader.readAsDataURL(file);
-    } catch (error) {
-      resultEl.textContent = "❌ Error al procesar el audio.";
-      console.error("AudioSense error:", error);
-    }
-  });
+      const response = await fetch(audioApiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ audio: base64Audio }),
+      });
+
+      const data = await response.json();
+      resultEl.textContent = `✅ ${data.message} (Confianza: ${(data.confidence * 100).toFixed(1)}%)`;
+    };
+
+    reader.readAsDataURL(file);
+  } catch (error) {
+    resultEl.textContent = "❌ Error al procesar el audio.";
+    console.error("AudioSense error:", error);
+  }
+});
+
 }
-
 
 
 function toBase64(file) {
