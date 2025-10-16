@@ -558,23 +558,24 @@ html, body {
   }
 }
 
-/* === FIX FINAL: mensaje visible y centrado sin alterar colores originales === */
+/* === Mensaje de resultado: SIEMPRE en blanco === */
 #audioResult {
   display: block;
-  margin-top: 16px;
-  margin-bottom: 60px; /* evita solaparse con las flechas */
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
   text-align: center;
-  color: #f1f5f9; /* color de texto principal, igual al resto de la página */
+  color: #ffffff;  /* blanco fijo para todo tipo de mensaje */
   font-weight: 500;
   line-height: 1.4;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  padding-bottom: 2.5rem; /* evita que se tape con las flechas */
 }
 
-/* Responsive: un poco más de espacio si las flechas quedan cerca */
 @media (max-width: 600px) {
   #audioResult {
-    margin-bottom: 80px;
+    padding-bottom: 3.5rem; /* un poco más de espacio en móviles */
+    font-size: 0.95rem;     /* tamaño de texto cómodo */
   }
 }
 
