@@ -558,24 +558,27 @@ html, body {
   }
 }
 
-/* === Mensaje de resultado: SIEMPRE en blanco === */
+/* === FIX FINAL: mensaje centrado, sin tapar flechas, texto más pequeño === */
 #audioResult {
   display: block;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
+  max-width: 75%;            /* deja espacio libre para las flechas */
+  margin: 1rem auto 1.5rem;
+  padding: 0.25rem 0;
   text-align: center;
-  color: #ffffff;  /* blanco fijo para todo tipo de mensaje */
-  font-weight: 500;
+  word-break: break-word;
   line-height: 1.4;
+  font-size: 0.85rem;        /* 🔹 más pequeño y proporcionado */
+  color: #f1f5f9;            /* texto legible sobre fondo oscuro */
   position: relative;
   z-index: 2;
-  padding-bottom: 2.5rem; /* evita que se tape con las flechas */
 }
 
+/* En pantallas pequeñas: aún más compacto */
 @media (max-width: 600px) {
   #audioResult {
-    padding-bottom: 3.5rem; /* un poco más de espacio en móviles */
-    font-size: 0.95rem;     /* tamaño de texto cómodo */
+    max-width: 70%;
+    font-size: 0.8rem;
   }
 }
+
 
