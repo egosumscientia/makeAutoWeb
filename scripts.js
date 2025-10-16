@@ -129,3 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- Inicialización automática ---
 document.addEventListener("DOMContentLoaded", setupAIInteraction);
+
+
+window.addEventListener("resize", () => {
+  const canvas = document.getElementById("tasteRadar");
+  if (canvas && typeof radarChart !== "undefined" && radarChart) {
+    radarChart.resize();
+  }
+});

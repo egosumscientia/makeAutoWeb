@@ -175,9 +175,8 @@ footer {
   max-height: 400px !important;
   width: 400px !important;
   height: 400px !important;
-  margin: 0 auto !important;
-  display: block;
 }
+
 
 .ai-demo .ai-input {
   display: flex;
@@ -324,4 +323,36 @@ html, body {
 .carousel-item img[src="demo3.png"] {
   display: none;
 }
+
+
+
+/* === FIX para móviles: aislar canvas y evitar desbordes === */
+@media (max-width: 768px) {
+  .ai-demo {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .ai-demo canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    display: block;
+    margin: 0 auto !important;
+  }
+
+  .carousel-item {
+    overflow: hidden;
+  }
+
+  .carousel-inner {
+    overflow: hidden;
+  }
+}
+
 
