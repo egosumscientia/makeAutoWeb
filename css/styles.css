@@ -205,7 +205,10 @@ footer {
   justify-content: center;
 }
 
-.ai-demo input {
+.ai-demo input[type="text"],
+.ai-demo input[type="number"],
+.ai-demo input[type="email"],
+.ai-demo input[type="password"] {
   flex: 1;
   padding: 8px;
   border: none;
@@ -213,6 +216,12 @@ footer {
   background: #21262d;
   color: white;
 }
+
+/* Oculta el input de archivos para usar el botón personalizado */
+.ai-demo input[type="file"] {
+  display: none !important;
+}
+
 
 .ai-demo button {
   background: var(--color-accent);
@@ -475,35 +484,6 @@ html, body {
   margin-top: 0.5rem;
   text-align: center;
 }
-/* === FIX para input de archivo en móviles === */
-.ai-demo .ai-input input[type="file"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 100%;
-  max-width: 250px;
-  background: #1e293b;
-  color: #fff;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 0.9rem;
-  text-align: center;
-  border: 1px solid #334155;
-  cursor: pointer;
-}
-
-.ai-demo .ai-input input[type="file"]::file-selector-button {
-  background: var(--color-accent);
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.ai-demo .ai-input input[type="file"]::file-selector-button:hover {
-  background: var(--color-accent-hover);
-}
 
 /* Móviles: apilar elementos y centrar */
 @media (max-width: 600px) {
@@ -519,5 +499,61 @@ html, body {
 
   .ai-demo .ai-input button {
     width: 90%;
+  }
+}
+
+/* === Ajuste de equilibrio visual de los botones === */
+.ai-demo .ai-input {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.custom-file-upload,
+.ai-demo .ai-input button {
+  background-color: var(--color-accent);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  min-width: 200px;
+  text-align: center;
+}
+
+.ai-demo .ai-input button {
+  font-size: 0.9rem;
+}
+
+.custom-file-upload:hover,
+.ai-demo .ai-input button:hover {
+  background-color: var(--color-accent-hover);
+  transform: scale(1.04);
+}
+
+.audio-info {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  text-align: center;
+}
+
+/* === En pantallas pequeñas === */
+@media (max-width: 600px) {
+  .ai-demo .ai-input {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .custom-file-upload,
+  .ai-demo .ai-input button {
+    width: 90%;
+    min-width: unset;
   }
 }

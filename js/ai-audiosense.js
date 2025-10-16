@@ -58,6 +58,7 @@ function setupAudioSense() {
   // Inyecta el formulario dinámicamente
   container.innerHTML += `
     <div class="ai-input">
+      <label for="audioFile" class="custom-file-upload">📂 Seleccionar archivo</label>
       <input type="file" id="audioFile" accept=".wav,.mp3,.ogg,.m4a" />
       <button id="analyzeBtn">Analizar Audio</button>
     </div>
