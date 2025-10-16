@@ -1,4 +1,4 @@
-// ai-ecopredict.js — versión final con tooltip y animación
+// ai-ecopredict.js — versión final con tooltip y animación (responsive fix)
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("ecoCanvas");
   const ctx = canvas.getContext("2d");
@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let puntos = [];
   let animFrame;
+
+  // 🧩 FIX: ajustar tamaño dinámicamente al ancho disponible
+  function resizeCanvas() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientWidth * 0.75; // proporción 4:3
+    if (window.lastData) drawChart(window.lastData, false);
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
 
   const drawLineAnimated = (points, color, offset = 0, speed = 60) => {
     ctx.strokeStyle = color;
@@ -38,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         i++;
         animFrame = setTimeout(step, speed);
       } else {
-        // último punto
         const x = 50 + (i + offset) * 60;
         const y = 250 - (points[i].temp - 20) * 25;
         ctx.fillStyle = color;
@@ -56,16 +64,16 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.font = "10px monospace";
     points.forEach((p, i) => {
       const x = 50 + i * 60;
-      ctx.fillText(p.hora, x - 10, 270);
+      ctx.fillText(p.hora, x - 10, canvas.height - 30);
     });
   };
 
   const drawLegend = () => {
     ctx.fillStyle = "#00bfff";
     ctx.font = "12px monospace";
-    ctx.fillText("Datos pasados", 50, 290);
+    ctx.fillText("Datos pasados", 50, canvas.height - 10);
     ctx.fillStyle = "#00ff88";
-    ctx.fillText("Predicción", 180, 290);
+    ctx.fillText("Predicción", 180, canvas.height - 10);
   };
 
   const drawInfo = (region, current) => {
@@ -89,10 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    // Redibujar gráfico
     if (window.lastData) drawChart(window.lastData, false);
 
-    // Buscar punto cercano
     for (const p of puntos) {
       const dx = mouseX - p.x;
       const dy = mouseY - p.y;
@@ -115,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
         drawLineAnimated(data.prediccion, "#00ff88", data.datos_pasados.length);
       }, data.datos_pasados.length * 60);
     } else {
-      // Dibujar estático si es hover o redibujo
       const drawStatic = (points, color, offset = 0) => {
         ctx.beginPath();
         ctx.strokeStyle = color;
@@ -165,6 +170,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btn.addEventListener("click", fetchPrediction);
   canvas.addEventListener("mousemove", handleHover);
-  console.log("AI–EcoPredict listo con animación y tooltip.");
+  console.log("AI–EcoPredict listo con animación, tooltip y canvas responsive.");
 });
-
