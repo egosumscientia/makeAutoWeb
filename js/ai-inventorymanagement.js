@@ -22,6 +22,14 @@ document.addEventListener("slideChanged", (e) => {
     wrapper.style.color = "#f1f5f9";
     wrapper.style.fontSize = "10px";
 
+    const demoDescription = document.createElement("p");
+    demoDescription.className = "ai-demo-description";
+    demoDescription.textContent =
+      "Este demo muestra cómo una API con inteligencia artificial analiza y visualiza automáticamente el estado del inventario en tiempo real.";
+
+    container.appendChild(demoDescription);
+
+
     // ===== Button =====
     const button = document.createElement("button");
     button.textContent = "Simular Inventario";
