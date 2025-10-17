@@ -57,6 +57,65 @@ function setupAudioSense() {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
       }
+
+      /* ---- Layout fixes for mobile ---- */
+      .ai-input {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .custom-file-upload {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        background-color: #10b981;
+        color: white;
+        font-weight: 600;
+        padding: 12px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .custom-file-upload:active {
+        opacity: 0.9;
+        transform: scale(0.98);
+      }
+
+      #audioFile {
+        display: none;
+      }
+
+      #analyzeBtn {
+        width: 100%;
+        background-color: #10b981;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 0;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      #analyzeBtn:active {
+        opacity: 0.9;
+        transform: scale(0.98);
+      }
+
+      @media (max-width: 400px) {
+        .custom-file-upload,
+        #analyzeBtn {
+          font-size: 0.9rem;
+          padding: 10px 0;
+        }
+      }
     `;
     document.head.appendChild(style);
   }
