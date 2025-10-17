@@ -1,7 +1,7 @@
 
 /**
- * AI-InventoryManagement — Responsive Mobile-First
- * Optimized Chart.js scaling and mobile layout
+ * AI-InventoryManagement — 60% Compact Pro
+ * Mantiene proporciones, reduce altura al 60% del tamaño anterior.
  */
 
 document.addEventListener("slideChanged", (e) => {
@@ -10,49 +10,66 @@ document.addEventListener("slideChanged", (e) => {
     if (!container) return;
 
     container.innerHTML = "";
-    container.className = "ai-inventory-container";
 
-    // ===== Main wrapper =====
+    // ===== Layout wrapper =====
     const wrapper = document.createElement("div");
-    wrapper.className = "ai-inventory-wrapper";
-
-    // ===== Legend / description =====
-    const legend = document.createElement("p");
-    legend.textContent =
-      "Este demo muestra cómo una API con inteligencia artificial analiza y visualiza automáticamente el estado del inventario en tiempo real.";
-    legend.className = "ai-inventory-legend";
+    wrapper.style.display = "flex";
+    wrapper.style.flexDirection = "column";
+    wrapper.style.alignItems = "center";
+    wrapper.style.justifyContent = "center";
+    wrapper.style.gap = "8px";
+    wrapper.style.padding = "6px";
+    wrapper.style.color = "#f1f5f9";
+    wrapper.style.fontSize = "10px";
 
     // ===== Button =====
     const button = document.createElement("button");
     button.textContent = "Simular Inventario";
-    button.className = "ai-btn ai-inventory-btn";
+    button.className =
+      "ai-btn px-3 py-1 bg-emerald-500 text-white rounded-md shadow hover:bg-emerald-600 transition";
 
     // ===== Chart container =====
     const chartBox = document.createElement("div");
-    chartBox.className = "ai-inventory-chart-box";
+    chartBox.style.width = "72%";
+    chartBox.style.maxWidth = "420px";
+    chartBox.style.background = "#0f172a";
+    chartBox.style.borderRadius = "8px";
+    chartBox.style.padding = "10px";
+    chartBox.style.boxShadow = "0 0 5px rgba(0,0,0,0.25)";
+    chartBox.style.textAlign = "center";
 
     const chartTitle = document.createElement("h3");
     chartTitle.textContent = "Inventario Actual";
-    chartTitle.className = "ai-inventory-chart-title";
-
-    const canvasWrapper = document.createElement("div");
-    canvasWrapper.className = "ai-inventory-canvas-wrapper";
+    chartTitle.style.marginBottom = "4px";
+    chartTitle.style.color = "#10b981";
+    chartTitle.style.fontSize = "0.9rem";
+    chartTitle.style.fontWeight = "bold";
+    chartTitle.style.borderBottom = "1px solid rgba(16,185,129,0.4)";
+    chartTitle.style.paddingBottom = "4px";
 
     const canvas = document.createElement("canvas");
     canvas.id = "inventoryChart";
-    canvas.className = "ai-inventory-canvas";
-
-    canvasWrapper.appendChild(canvas);
+    // 🔽 60% de la altura anterior (~82px → 50px)
+    canvas.style.width = "100%";
+    
     chartBox.appendChild(chartTitle);
-    chartBox.appendChild(canvasWrapper);
+    chartBox.appendChild(canvas);
 
     // ===== Result box =====
     const resultBox = document.createElement("div");
     resultBox.id = "inventoryResult";
-    resultBox.className = "ai-inventory-result";
+    resultBox.style.width = "72%";
+    resultBox.style.maxWidth = "420px";
+    resultBox.style.background = "#0f172a";
+    resultBox.style.borderRadius = "8px";
+    resultBox.style.padding = "8px 12px";
+    resultBox.style.boxShadow = "0 0 5px rgba(0,0,0,0.25)";
+    resultBox.style.textAlign = "left";
+    resultBox.style.fontSize = "9.5px";
+    resultBox.style.lineHeight = "1.2";
+    resultBox.style.color = "#e2e8f0";
 
     // ===== Assemble =====
-    wrapper.appendChild(legend);
     wrapper.appendChild(button);
     wrapper.appendChild(chartBox);
     wrapper.appendChild(resultBox);
@@ -68,21 +85,21 @@ document.addEventListener("slideChanged", (e) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
 
-        // Short labels for mobile readability
+        // Etiquetas cortas
         const shortLabels = ["Elec", "Ropa", "Hogar", "Jugu", "Libros"];
         const shortData = data.categories.slice(0, 5).map((c, i) => ({
           name: shortLabels[i],
           qty: c.qty,
         }));
 
-        // Destroy previous chart
+        // Destruir gráfico anterior si existe
         if (window.inventoryChartInstance) {
           window.inventoryChartInstance.destroy();
         }
 
-        const ctx = canvas.getContext("2d");
+        const ctx = document.getElementById("inventoryChart").getContext("2d");
 
-        // --- Responsive Chart Configuration ---
+        // --- Chart ---
         window.inventoryChartInstance = new Chart(ctx, {
           type: "bar",
           data: {
@@ -95,70 +112,53 @@ document.addEventListener("slideChanged", (e) => {
                 borderColor: "rgba(16,185,129,1)",
                 borderWidth: 1,
                 borderRadius: 3,
-                barThickness: "flex",
-                maxBarThickness: 35,
-                categoryPercentage: 0.8,
-                barPercentage: 0.9,
+                barThickness: 18,
+                categoryPercentage: 0.7,
               },
             ],
           },
           options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            aspectRatio: 1.8,
+          maintainAspectRatio: true,
+          responsive: true,
+          aspectRatio: 2.0,
             plugins: {
               legend: {
-                display: false,
+                labels: {
+                  color: "#e2e8f0",
+                  font: { size: 7 },
+                },
               },
             },
             scales: {
               x: {
                 ticks: {
                   color: "#e2e8f0",
-                  font: { 
-                    size: window.innerWidth < 768 ? 10 : 12 
-                  },
+                  font: { size: 8 },
+                  align: "center",
+                  crossAlign: "center",
                 },
                 grid: { display: false },
               },
               y: {
                 beginAtZero: true,
-                ticks: { 
-                  color: "#e2e8f0", 
-                  font: { 
-                    size: window.innerWidth < 768 ? 9 : 11 
-                  }
-                },
-                grid: { color: "rgba(255,255,255,0.08)" },
+                ticks: { color: "#e2e8f0", font: { size: 7 } },
+                grid: { color: "rgba(255,255,255,0.05)" },
               },
             },
           },
         });
 
-        // --- Summary grid ---
+        // --- Summary box ---
         resultBox.innerHTML = `
-          <h3 class="ai-inventory-summary-title">Resumen</h3>
-          <div class="ai-inventory-summary-grid">
-            <div class="ai-inventory-summary-item">
-              <span class="label">Total:</span>
-              <span class="value">${data.summary.totalItems}</span>
-            </div>
-            <div class="ai-inventory-summary-item">
-              <span class="label">Bajo:</span>
-              <span class="value">${data.summary.lowStock}</span>
-            </div>
-            <div class="ai-inventory-summary-item">
-              <span class="label">Sobrestock:</span>
-              <span class="value">${data.summary.overStock}</span>
-            </div>
-            <div class="ai-inventory-summary-item">
-              <span class="label">Rotación:</span>
-              <span class="value">${data.summary.rotationRate}</span>
-            </div>
-            <div class="ai-inventory-summary-item">
-              <span class="label">Valor:</span>
-              <span class="value">$${data.summary.totalValueUSD.toLocaleString()}</span>
-            </div>
+          <h3 style="color:#10b981; text-align:center; margin-bottom:4px; font-size:0.85rem; border-bottom:1px solid rgba(16,185,129,0.4); padding-bottom:3px;">
+            Resumen
+          </h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px 8px;">
+            <p><b>Total:</b> ${data.summary.totalItems}</p>
+            <p><b>Bajo:</b> ${data.summary.lowStock}</p>
+            <p><b>Sobrestock:</b> ${data.summary.overStock}</p>
+            <p><b>Rotación:</b> ${data.summary.rotationRate}</p>
+            <p><b>Valor:</b> $${data.summary.totalValueUSD.toLocaleString()}</p>
           </div>
         `;
       } catch (err) {
