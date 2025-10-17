@@ -1,4 +1,5 @@
-// ai-ecopredict.js — versión final con etiquetas de temperatura en cada punto
+
+// ai-ecopredict.js — versión final con fondo negro uniforme y estado inicial animado
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("ecoCanvas");
   const ctx = canvas.getContext("2d");
@@ -8,7 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let puntos = [];
   let animFrame;
+  let idleAnim;
 
+  // ------------------ CANVAS SETUP ------------------
   function resizeCanvas() {
     const width = canvas.clientWidth || 300;
     canvas.width = width;
@@ -20,10 +23,61 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", resizeCanvas);
 
   document.addEventListener("slideChanged", (e) => {
-    if (e.detail.index === 1) setTimeout(resizeCanvas, 200);
+    if (e.detail.index === 1) {
+      setTimeout(() => {
+        resizeCanvas();
+        if (!window.lastData) drawIdleState();
+      }, 200);
+    }
   });
 
-  // --- Dibujo animado de la línea ---
+  // ------------------ FONDO NEGRO ------------------
+  function drawBackground() {
+    ctx.fillStyle = "#0b0b0b"; // fondo negro igual al tema del sitio
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // ------------------ ESTADO INICIAL ------------------
+  function drawIdleState() {
+    cancelAnimationFrame(idleAnim);
+    drawBackground();
+
+    ctx.font = "18px monospace";
+    ctx.fillStyle = "#00ffd0";
+    ctx.fillText("AI–EcoPredict listo 🌍", 60, 120);
+
+    ctx.font = "13px monospace";
+    ctx.fillStyle = "#888";
+    ctx.fillText("Presiona 'Predecir' para generar datos", 60, 150);
+
+    // Círculo pulsante animado
+    let radius = 8;
+    let growing = true;
+
+    const pulse = () => {
+      drawBackground();
+      ctx.font = "18px monospace";
+      ctx.fillStyle = "#00ffd0";
+      ctx.fillText("AI–EcoPredict listo 🌍", 60, 120);
+
+      ctx.font = "13px monospace";
+      ctx.fillStyle = "#888";
+      ctx.fillText("Presiona 'Predecir' para generar datos", 60, 150);
+
+      ctx.beginPath();
+      ctx.arc(canvas.width - 60, 120, radius, 0, 2 * Math.PI);
+      ctx.strokeStyle = "#00ffd0";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      radius += growing ? 0.4 : -0.4;
+      if (radius > 15 || radius < 8) growing = !growing;
+      idleAnim = requestAnimationFrame(pulse);
+    };
+    pulse();
+  }
+
+  // ------------------ GRAFICADO ------------------
   const drawLineAnimated = (points, color, offset = 0, speed = 60) => {
     ctx.strokeStyle = color;
     ctx.lineWidth = 2;
@@ -48,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.arc(x1, y1, 3, 0, 2 * Math.PI);
         ctx.fill();
 
-        // Texto de temperatura
+        // Texto temperatura
         ctx.fillStyle = "#00ffd0";
         ctx.font = "11px monospace";
         ctx.fillText(`${points[i].temp.toFixed(1)}°`, x1 - 10, y1 - 10);
@@ -59,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         const x = 50 + (i + offset) * 60;
         const y = 260 - (points[i].temp - 20) * 25;
-
         ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(x, y, 3, 0, 2 * Math.PI);
@@ -97,7 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const drawChart = (data, animate = true) => {
+    cancelAnimationFrame(idleAnim);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBackground();
     puntos = [];
     clearTimeout(animFrame);
 
@@ -133,7 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
           ctx.fillStyle = "#00ffd0";
           ctx.font = "11px monospace";
           ctx.fillText(`${p.temp.toFixed(1)}°`, x - 10, y - 10);
-
           puntos.push({ x, y, hora: p.hora, temp: p.temp });
         });
       };
@@ -148,12 +202,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const fetchPrediction = async () => {
     btn.disabled = true;
+    cancelAnimationFrame(idleAnim);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBackground();
+
+    ctx.fillStyle = "#00ffd0";
+    ctx.font = "14px monospace";
+    ctx.fillText("Obteniendo datos...", 80, 130);
 
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-
       window.lastData = data;
       drawChart(data, true);
     } catch (err) {
@@ -166,5 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   btn.addEventListener("click", fetchPrediction);
-  console.log("AI–EcoPredict listo con temperatura visible en cada punto.");
+  drawIdleState();
+  console.log("AI–EcoPredict listo con fondo negro uniforme y animación de espera.");
 });
