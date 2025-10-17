@@ -1,5 +1,5 @@
 
-// ai-ecopredict.js — versión final con fondo negro uniforme y estado inicial animado
+// ai-ecopredict.js — versión con spinner centrado al final del texto
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("ecoCanvas");
   const ctx = canvas.getContext("2d");
@@ -16,7 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const width = canvas.clientWidth || 300;
     canvas.width = width;
     canvas.height = width * 0.75;
-    if (ctx && window.lastData) drawChart(window.lastData, false);
+
+    if (ctx) {
+      if (window.lastData) {
+        drawChart(window.lastData, false);
+      } else {
+        drawIdleState();
+      }
+    }
   }
 
   resizeCanvas();
@@ -33,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ------------------ FONDO NEGRO ------------------
   function drawBackground() {
-    ctx.fillStyle = "#0b0b0b"; // fondo negro igual al tema del sitio
+    ctx.fillStyle = "#0b0b0b";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -42,38 +49,53 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelAnimationFrame(idleAnim);
     drawBackground();
 
-    ctx.font = "18px monospace";
-    ctx.fillStyle = "#00ffd0";
-    ctx.fillText("AI–EcoPredict listo 🌍", 60, 120);
+    const title = "AI–EcoPredict listo 🌍";
+    const subtitle = "Presiona 'Predecir' para generar datos";
 
-    ctx.font = "13px monospace";
-    ctx.fillStyle = "#888";
-    ctx.fillText("Presiona 'Predecir' para generar datos", 60, 150);
+    const titleFont = "18px monospace";
+    const subtitleFont = "13px monospace";
+    const titleColor = "#00ffd0";
+    const subtitleColor = "#888";
 
-    // Círculo pulsante animado
     let radius = 8;
     let growing = true;
 
     const pulse = () => {
       drawBackground();
-      ctx.font = "18px monospace";
-      ctx.fillStyle = "#00ffd0";
-      ctx.fillText("AI–EcoPredict listo 🌍", 60, 120);
 
-      ctx.font = "13px monospace";
-      ctx.fillStyle = "#888";
-      ctx.fillText("Presiona 'Predecir' para generar datos", 60, 150);
+      // Título
+      ctx.font = titleFont;
+      ctx.fillStyle = titleColor;
+      const titleWidth = ctx.measureText(title).width;
+      const titleX = (canvas.width - titleWidth) / 2;
+      const titleY = Math.round(canvas.height * 0.35);
+      ctx.fillText(title, titleX, titleY);
+
+      // Subtítulo
+      ctx.font = subtitleFont;
+      ctx.fillStyle = subtitleColor;
+      const subtitleWidth = ctx.measureText(subtitle).width;
+      const subtitleX = (canvas.width - subtitleWidth) / 2;
+      const subtitleY = titleY + 30;
+      ctx.fillText(subtitle, subtitleX, subtitleY);
+
+      // Spinner (centrado debajo del subtítulo)
+      const spinnerY = subtitleY + 30; // posición fija bajo el subtítulo
+      const spinnerX = canvas.width / 2; // centrado horizontalmente
 
       ctx.beginPath();
-      ctx.arc(canvas.width - 60, 120, radius, 0, 2 * Math.PI);
+      ctx.arc(spinnerX, spinnerY, radius, 0, 2 * Math.PI);
       ctx.strokeStyle = "#00ffd0";
       ctx.lineWidth = 2;
       ctx.stroke();
 
+      // Animación del pulso
       radius += growing ? 0.4 : -0.4;
       if (radius > 15 || radius < 8) growing = !growing;
+
       idleAnim = requestAnimationFrame(pulse);
     };
+
     pulse();
   }
 
@@ -96,13 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.lineTo(x2, y2);
         ctx.stroke();
 
-        // Puntos
         ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(x1, y1, 3, 0, 2 * Math.PI);
         ctx.fill();
 
-        // Texto temperatura
         ctx.fillStyle = "#00ffd0";
         ctx.font = "11px monospace";
         ctx.fillText(`${points[i].temp.toFixed(1)}°`, x1 - 10, y1 - 10);
@@ -121,7 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.fillStyle = "#00ffd0";
         ctx.font = "11px monospace";
         ctx.fillText(`${points[i].temp.toFixed(1)}°`, x - 10, y - 10);
-
         puntos.push({ x, y, hora: points[i].hora, temp: points[i].temp });
       }
     };
