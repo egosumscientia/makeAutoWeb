@@ -216,6 +216,6 @@ document.addEventListener("slideChanged", (e) => {
   });
 
   // Aplicar escalado uniforme al contenedor completo
-  container.style.transform = "scale(0.8)";
+  container.style.transform = "scale(0.85)";
   container.style.transformOrigin = "top center";
 });
