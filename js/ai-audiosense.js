@@ -199,4 +199,8 @@ document.addEventListener("slideChanged", (e) => {
       button.disabled = false;
     }
   });
+
+  // Aplicar escalado uniforme al contenedor completo
+  container.style.transform = "scale(0.75)";
+  container.style.transformOrigin = "top center";
 });

@@ -1,4 +1,4 @@
-// ai-ecopredict.js — versión final responsiva con spinner restaurado y compatibilidad Safari
+// ai-ecopredict.js — versión con línea y valor medio en eje Y
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("ecoCanvas");
   const ctx = canvas.getContext("2d");
@@ -6,189 +6,199 @@ document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "https://5835qh1c9b.execute-api.us-east-1.amazonaws.com";
   let idleAnim;
 
-  // ------------------ FONDO ------------------
-  function clearBackground() {
-    ctx.fillStyle = "#0b0b0b";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  function getCssSize(el) {
+    const r = el.getBoundingClientRect();
+    return { width: r.width, height: r.height };
   }
 
-  // ------------------ ESTADO INICIAL (SPINNER) ------------------
+  function setCanvasSize() {
+    const { width, height } = getCssSize(canvas);
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    const w = Math.max(100, Math.round(width));
+    const h = Math.max(100, Math.round(height || Math.max(220, width * 0.55)));
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    canvas.width = Math.round(w * ratio);
+    canvas.height = Math.round(h * ratio);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    return { cssWidth: w, cssHeight: h };
+  }
+
+  function clearBackground(w, h) {
+    ctx.fillStyle = "#0b0b0b";
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  // Spinner inicial
   function drawIdleState() {
+    const { cssWidth: w, cssHeight: h } = setCanvasSize();
     cancelAnimationFrame(idleAnim);
-    clearBackground();
+    clearBackground(w, h);
 
     const title = "AI–EcoPredict listo 🌍";
     const subtitle = "Presiona 'Predecir' para generar datos";
     let radius = 8, growing = true;
 
     const loop = () => {
-      clearBackground();
+      clearBackground(w, h);
       ctx.fillStyle = "#00ffd0";
-      ctx.font = `${canvas.height * 0.08}px monospace`;
-      const tw = ctx.measureText(title).width;
-      ctx.fillText(title, (canvas.width - tw) / 2, canvas.height * 0.35);
+      ctx.font = `${Math.round(h * 0.08)}px monospace`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText(title, w / 2, h * 0.18);
 
       ctx.fillStyle = "#888";
-      ctx.font = `${canvas.height * 0.06}px monospace`;
-      const sw = ctx.measureText(subtitle).width;
-      ctx.fillText(subtitle, (canvas.width - sw) / 2, canvas.height * 0.47);
+      ctx.font = `${Math.round(h * 0.05)}px monospace`;
+      ctx.fillText(subtitle, w / 2, h * 0.30);
 
       ctx.beginPath();
-      ctx.arc(canvas.width / 2, canvas.height * 0.63, radius, 0, 2 * Math.PI);
+      ctx.arc(w / 2, h * 0.58, radius, 0, Math.PI * 2);
       ctx.strokeStyle = "#00ffd0";
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      radius += growing ? 0.4 : -0.4;
-      if (radius > 15 || radius < 8) growing = !growing;
+      radius += growing ? 0.45 : -0.45;
+      if (radius > 18) growing = false;
+      if (radius < 8) growing = true;
       idleAnim = requestAnimationFrame(loop);
     };
     loop();
   }
 
-  // ------------------ CONFIGURACIÓN CANVAS ------------------
-  function resizeCanvas() {
-    const width = canvas.parentElement.offsetWidth;
-    const height = Math.max(220, width * 0.55);
-    canvas.width = width;
-    canvas.height = height;
-    if (window.lastData) drawChart(window.lastData);
-  }
-
-  window.addEventListener("resize", resizeCanvas);
-
-  // Mostrar spinner unos ms antes del primer resize
-  drawIdleState();
-  setTimeout(resizeCanvas, 200);
-
-  // ------------------ GRAFICADO PRINCIPAL ------------------
   function drawChart(data) {
+    const { cssWidth: w, cssHeight: h } = setCanvasSize();
     cancelAnimationFrame(idleAnim);
-    clearBackground();
+    clearBackground(w, h);
 
-    const points = [...data.datos_pasados, ...data.prediccion];
+    const points = [...(data.datos_pasados || []), ...(data.prediccion || [])];
+    if (!points.length) return drawIdleState();
+
     const temps = points.map(p => p.temp);
     const min = Math.min(...temps);
     const max = Math.max(...temps);
     const range = max - min || 1;
+    const mid = (max + min) / 2; // Valor medio
 
-    const padX = canvas.width * 0.1;
-    const padY = canvas.height * 0.15;
-    const chartW = canvas.width - padX * 2;
-    const chartH = canvas.height - padY * 2;
+    const padX = w * 0.12;
+    const padY = h * 0.15;
+    const chartW = w - padX * 1.6;
+    const chartH = h - padY * 2;
 
-    // --- Título ---
+    // Título
     ctx.fillStyle = "#00ffd0";
-    ctx.font = `${canvas.height * 0.045}px monospace`;
+    ctx.font = `${h * 0.045}px monospace`;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
-    const titleText = `📍 ${data.region} — ${points.at(-1).temp.toFixed(2)} °C a las ${points.at(-1).hora}`;
-    ctx.fillText(titleText, padX * 0.3, padY * 0.08);
+    const last = points[points.length - 1];
+    ctx.fillText(`📍 ${data.region} — ${last.temp.toFixed(2)} °C a las ${last.hora}`, padX * 0.3, padY * 0.06);
 
-    // --- Curva ---
-    ctx.lineWidth = 2;
-    const grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    // Curva
+    const grad = ctx.createLinearGradient(0, 0, w, 0);
     grad.addColorStop(0, "#00ffd0");
     grad.addColorStop(1, "#00bfff");
     ctx.strokeStyle = grad;
-    ctx.fillStyle = "#00ffd0";
+    ctx.lineWidth = 2;
 
     ctx.beginPath();
     points.forEach((p, i) => {
       const x = padX + (i / (points.length - 1)) * chartW;
       const y = padY + chartH * (1 - (p.temp - min) / range);
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
     });
     ctx.stroke();
 
-    // --- Puntos y etiquetas ---
-    const labelFs = Math.max(10, Math.round(canvas.height * 0.035));
-    ctx.font = `${labelFs}px monospace`;
+    // Puntos
     ctx.fillStyle = "#00ffd0";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle"; // Safari-safe baseline
-
-    const step = Math.max(1, Math.floor(points.length / 6));
-    let lastLabelBox = null;
-
     points.forEach((p, i) => {
       const x = padX + (i / (points.length - 1)) * chartW;
       const y = padY + chartH * (1 - (p.temp - min) / range);
-
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, Math.PI * 2);
       ctx.fill();
-
-      if (!(i % step === 0 || i === points.length - 1)) return;
-
-      const text = `${p.temp.toFixed(1)}°`;
-      const textW = ctx.measureText(text).width;
-      const margin = 8;
-      let ly = y - 14;
-
-      if (ly > padY + chartH - (labelFs + margin)) ly = y - (labelFs + 8);
-      if (ly < padY + labelFs + margin) ly = y + (labelFs + 4);
-
-      if (lastLabelBox) {
-        const box = { x: x - textW / 2, y: ly - labelFs, w: textW, h: labelFs + 6 };
-        const interseca =
-          !(box.x + box.w < lastLabelBox.x ||
-            lastLabelBox.x + lastLabelBox.w < box.x ||
-            box.y + box.h < lastLabelBox.y ||
-            lastLabelBox.y + lastLabelBox.h < box.y);
-        if (interseca) ly = lastLabelBox.y - 6;
-        lastLabelBox = { x: x - textW / 2, y: ly - labelFs, w: textW, h: labelFs + 6 };
-      } else {
-        lastLabelBox = { x: x - textW / 2, y: ly - labelFs, w: textW, h: labelFs + 6 };
-      }
-
-      ctx.fillText(text, x, ly);
     });
 
-    // --- Eje inferior ---
+    // Eje Y simple
+    ctx.strokeStyle = "#444";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padX, padY);
+    ctx.lineTo(padX, padY + chartH);
+    ctx.stroke();
+
+    // 🔹 Línea de referencia media
+    const yMid = padY + chartH * (1 - (mid - min) / range);
+    ctx.strokeStyle = "#222";
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(padX, yMid);
+    ctx.lineTo(padX + chartW, yMid);
+    ctx.stroke();
+
+    // 🔹 Etiquetas Y
     ctx.fillStyle = "#888";
-    ctx.font = `${canvas.height * 0.032}px monospace`;
-    ctx.textBaseline = "alphabetic";
+    ctx.font = `${h * 0.032}px monospace`;
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.fillText(max.toFixed(1) + "°", padX - 6, padY + 5);
+    ctx.fillText(mid.toFixed(1) + "°", padX - 6, yMid);
+    ctx.fillText(min.toFixed(1) + "°", padX - 6, padY + chartH - 5);
+
+    // Eje X (horas)
+    ctx.fillStyle = "#888";
+    ctx.textAlign = "center";
+    const step = Math.max(1, Math.floor(points.length / 6));
     points.forEach((p, i) => {
       if (i % step === 0 || i === points.length - 1) {
         const x = padX + (i / (points.length - 1)) * chartW;
-        ctx.textAlign = "center";
-        ctx.fillText(p.hora, x, canvas.height - padY * 0.35);
+        ctx.fillText(p.hora, x, h - padY * 0.35);
       }
     });
 
-    // --- Leyenda ---
-    const legendFs = Math.round(canvas.height * 0.038);
+    // Leyenda
     ctx.fillStyle = "#00bfff";
-    ctx.font = `${legendFs}px monospace`;
+    ctx.font = `${h * 0.038}px monospace`;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("Temperatura", padX, padY + 6);
+    ctx.fillText("Temperatura", padX + 5, padY + 6);
   }
 
-  // ------------------ FETCH AWS ------------------
-  const fetchPrediction = async () => {
+  async function fetchPrediction() {
     btn.disabled = true;
-    cancelAnimationFrame(idleAnim);
-    clearBackground();
+    const { cssWidth: w, cssHeight: h } = setCanvasSize();
+    clearBackground(w, h);
     ctx.fillStyle = "#00ffd0";
-    ctx.font = `${canvas.height * 0.06}px monospace`;
+    ctx.font = `${Math.round(h * 0.06)}px monospace`;
     ctx.textAlign = "center";
-    ctx.fillText("Obteniendo datos...", canvas.width / 2, canvas.height / 2);
+    ctx.textBaseline = "middle";
+    ctx.fillText("Obteniendo datos...", w / 2, h / 2);
 
     try {
       const res = await fetch(API_URL);
       const data = await res.json();
       window.lastData = data;
       drawChart(data);
-    } catch (e) {
-      console.error("Error fetching data:", e);
+    } catch (err) {
+      console.error("Error fetching data:", err);
       ctx.fillStyle = "#ff4444";
-      ctx.fillText("Error al obtener datos", canvas.width / 2, canvas.height / 2);
+      ctx.fillText("Error al obtener datos", w / 2, h / 2);
     } finally {
       btn.disabled = false;
     }
-  };
+  }
 
   btn.addEventListener("click", fetchPrediction);
+  drawIdleState();
+
+  // Reinicio automático cuando el slide vuelve a ser visible
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        window.lastData = null;
+        drawIdleState();
+      }
+    }
+  }, { threshold: 0.6 });
+
+  io.observe(canvas);
 });
