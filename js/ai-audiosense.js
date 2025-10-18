@@ -11,6 +11,10 @@ document.addEventListener("slideChanged", (e) => {
   const container = document.querySelector(".carousel-item:nth-child(3)");
   if (!container) return;
 
+  document.body.style.overflowX = "hidden";
+  container.style.overflowX = "hidden";
+  container.style.maxWidth = "100vw";
+
   container.innerHTML = "";
 
   // ===== Descripción =====
@@ -25,14 +29,13 @@ document.addEventListener("slideChanged", (e) => {
   const WAVE_W = Math.min(window.innerWidth * 0.9, 420);
   const WAVE_H = 100;
   const waveCanvas = document.createElement("canvas");
-  waveCanvas.width = WAVE_W;
+  waveCanvas.width = Math.floor(WAVE_W);
   waveCanvas.height = WAVE_H;
   waveCanvas.style.display = "block";
   waveCanvas.style.margin = "0 auto 16px auto";
   waveCanvas.style.borderRadius = "8px";
   waveCanvas.style.background = "#0f172a";
   waveCanvas.style.maxWidth = "100%";
-  waveCanvas.style.width = "100%";
   waveCanvas.style.height = "auto";
   container.appendChild(waveCanvas);
 
@@ -81,6 +84,16 @@ document.addEventListener("slideChanged", (e) => {
   chartCanvas.style.maxWidth = "100%";
   chartCanvas.style.width = "100%";
   chartCanvas.style.height = "auto";
+
+  // ===== Ajuste de altura adaptativo para móviles =====
+  if (window.innerHeight < 600) {
+    chartCanvas.height = 180;
+    chartCanvas.style.maxHeight = "240px";
+  } else {
+    chartCanvas.height = 260;
+    chartCanvas.style.maxHeight = "260px";
+  }
+
   container.appendChild(chartCanvas);
 
   // ===== Caja KPI =====
@@ -101,6 +114,8 @@ document.addEventListener("slideChanged", (e) => {
   const resultText = document.createElement("p");
   resultText.id = "audioResult";
   resultText.style.margin = "6px 0 0 0";
+  resultText.style.textAlign = "center";
+  resultText.style.width = "100%";
   container.appendChild(resultText);
 
   // ===== Acción del botón =====
@@ -201,6 +216,6 @@ document.addEventListener("slideChanged", (e) => {
   });
 
   // Aplicar escalado uniforme al contenedor completo
-  container.style.transform = "scale(0.75)";
+  container.style.transform = "scale(0.8)";
   container.style.transformOrigin = "top center";
 });
