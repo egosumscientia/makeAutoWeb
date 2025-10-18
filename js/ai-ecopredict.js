@@ -42,13 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const loop = () => {
       clearBackground(w, h);
       ctx.fillStyle = "#00ffd0";
-      ctx.font = `${Math.round(h * 0.08)}px monospace`;
+      ctx.font = `${Math.round(h * 0.06)}px monospace`;
       ctx.textAlign = "center";
       ctx.textBaseline = "top";
       ctx.fillText(title, w / 2, h * 0.18);
 
       ctx.fillStyle = "#888";
-      ctx.font = `${Math.round(h * 0.05)}px monospace`;
+      ctx.font = `${Math.round(h * 0.04)}px monospace`;
       ctx.fillText(subtitle, w / 2, h * 0.30);
 
       ctx.beginPath();

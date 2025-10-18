@@ -49,7 +49,7 @@ document.addEventListener("slideChanged", (e) => {
       const y =
         WAVE_H / 2 +
         Math.sin((x + t) * 0.04) * (WAVE_H * 0.22) *
-        Math.sin(t * 0.02 + x * 0.012);
+          Math.sin(t * 0.02 + x * 0.012);
       if (x === 0) wctx.moveTo(x, y);
       else wctx.lineTo(x, y);
     }
@@ -118,21 +118,32 @@ document.addEventListener("slideChanged", (e) => {
     setTimeout(() => waveCanvas.remove(), 400);
 
     try {
-      const apiUrl = "https://y86gcq22ul.execute-api.us-east-1.amazonaws.com/default/analyze-audio";
+      const apiUrl =
+        "https://y86gcq22ul.execute-api.us-east-1.amazonaws.com/default/analyze-audio";
 
       const res = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ audio: "mock_base64_audio_data" })
+        body: JSON.stringify({ audio: "mock_base64_audio_data" }),
       });
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
-      const { rms_db, frequency_dominant, bands, levels_db, anomaly_detected, confidence, message } = data;
+      const {
+        rms_db,
+        frequency_dominant,
+        bands,
+        levels_db,
+        anomaly_detected,
+        confidence,
+        message,
+      } = data;
 
       if (window.audioChart) {
-        try { window.audioChart.destroy(); } catch {}
+        try {
+          window.audioChart.destroy();
+        } catch {}
       }
 
       chartCanvas.style.display = "block";
@@ -142,35 +153,39 @@ document.addEventListener("slideChanged", (e) => {
         type: "bar",
         data: {
           labels: bands,
-          datasets: [{
-            label: "Nivel (dB)",
-            data: levels_db,
-            backgroundColor: "rgba(34,211,238,0.8)",
-            borderColor: "rgba(34,211,238,1)",
-            borderWidth: 1,
-            borderRadius: 5
-          }]
+          datasets: [
+            {
+              label: "Nivel (dB)",
+              data: levels_db,
+              backgroundColor: "rgba(34,211,238,0.8)",
+              borderColor: "rgba(34,211,238,1)",
+              borderWidth: 1,
+              borderRadius: 5,
+            },
+          ],
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { labels: { color: "#e2e8f0", font: { size: 11 } } },
-            tooltip: { intersect: false, mode: "index" }
+            legend: {
+              labels: { color: "#e2e8f0", font: { size: 11 } },
+            },
+            tooltip: { intersect: false, mode: "index" },
           },
           scales: {
             x: {
               ticks: { color: "#e2e8f0", font: { size: 10 } },
-              grid: { color: "rgba(255,255,255,0.06)" }
+              grid: { color: "rgba(255,255,255,0.06)" },
             },
             y: {
               ticks: { color: "#e2e8f0", font: { size: 10 } },
               grid: { color: "rgba(255,255,255,0.06)" },
-              beginAtZero: true
-            }
+              beginAtZero: true,
+            },
           },
-          layout: { padding: { left: 6, right: 6, top: 6, bottom: 6 } }
-        }
+          layout: { padding: { left: 6, right: 6, top: 6, bottom: 6 } },
+        },
       });
 
       // ===== Diagnóstico IA =====
@@ -191,7 +206,6 @@ document.addEventListener("slideChanged", (e) => {
       resultText.innerHTML = `<span style='color:${color};'>${message}</span>`;
       button.textContent = "Reanalizar";
       button.disabled = false;
-
     } catch (err) {
       console.error(err);
       resultText.textContent = "❌ Error al procesar el audio.";
@@ -199,4 +213,8 @@ document.addEventListener("slideChanged", (e) => {
       button.disabled = false;
     }
   });
+
+  // Aplicar escalado uniforme al contenedor completo
+  container.style.transform = "scale(0.8)";
+  container.style.transformOrigin = "top center";
 });
