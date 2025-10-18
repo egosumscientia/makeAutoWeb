@@ -1,5 +1,5 @@
 /**
- * AI-InventoryManagement — Versión final con Lambda pública y CORS funcional
+ * AI-InventoryManagement — Versión final ampliada ligeramente
  * makeAutomatic – 2025
  */
 
@@ -16,10 +16,10 @@ document.addEventListener("slideChanged", (e) => {
     wrapper.style.flexDirection = "column";
     wrapper.style.alignItems = "center";
     wrapper.style.justifyContent = "center";
-    wrapper.style.gap = "8px";
-    wrapper.style.padding = "6px";
+    wrapper.style.gap = "14px";
+    wrapper.style.padding = "12px";
     wrapper.style.color = "#f1f5f9";
-    wrapper.style.fontSize = "10px";
+    wrapper.style.fontSize = "11px";
 
     const demoDescription = document.createElement("p");
     demoDescription.className = "ai-demo-description";
@@ -32,30 +32,31 @@ document.addEventListener("slideChanged", (e) => {
     const button = document.createElement("button");
     button.textContent = "Simular Inventario";
     button.className =
-      "ai-btn px-3 py-1 bg-emerald-500 text-white rounded-md shadow hover:bg-emerald-600 transition";
+      "ai-btn px-4 py-1.5 bg-emerald-500 text-white rounded-md shadow hover:bg-emerald-600 transition";
 
     // ===== Contenedor del gráfico =====
     const chartBox = document.createElement("div");
-    chartBox.style.width = "72%";
-    chartBox.style.maxWidth = "420px";
+    chartBox.style.width = "92%";                 // un poco más ancho
+    chartBox.style.maxWidth = "680px";
     chartBox.style.background = "#0f172a";
-    chartBox.style.borderRadius = "8px";
-    chartBox.style.padding = "10px";
-    chartBox.style.boxShadow = "0 0 5px rgba(0,0,0,0.25)";
+    chartBox.style.borderRadius = "12px";
+    chartBox.style.padding = "16px";
+    chartBox.style.boxShadow = "0 0 10px rgba(0,0,0,0.35)";
     chartBox.style.textAlign = "center";
 
     const chartTitle = document.createElement("h3");
     chartTitle.textContent = "Inventario Actual";
-    chartTitle.style.marginBottom = "4px";
+    chartTitle.style.marginBottom = "8px";
     chartTitle.style.color = "#10b981";
-    chartTitle.style.fontSize = "0.9rem";
+    chartTitle.style.fontSize = "1.05rem";
     chartTitle.style.fontWeight = "bold";
     chartTitle.style.borderBottom = "1px solid rgba(16,185,129,0.4)";
-    chartTitle.style.paddingBottom = "4px";
+    chartTitle.style.paddingBottom = "6px";
 
     const canvas = document.createElement("canvas");
     canvas.id = "inventoryChart";
     canvas.style.width = "100%";
+    canvas.style.height = "250px"; // un poco más alto
 
     chartBox.appendChild(chartTitle);
     chartBox.appendChild(canvas);
@@ -63,15 +64,15 @@ document.addEventListener("slideChanged", (e) => {
     // ===== Caja de resultados =====
     const resultBox = document.createElement("div");
     resultBox.id = "inventoryResult";
-    resultBox.style.width = "72%";
-    resultBox.style.maxWidth = "420px";
+    resultBox.style.width = "92%";
+    resultBox.style.maxWidth = "680px";
     resultBox.style.background = "#0f172a";
-    resultBox.style.borderRadius = "8px";
-    resultBox.style.padding = "8px 12px";
-    resultBox.style.boxShadow = "0 0 5px rgba(0,0,0,0.25)";
+    resultBox.style.borderRadius = "12px";
+    resultBox.style.padding = "12px 16px";
+    resultBox.style.boxShadow = "0 0 10px rgba(0,0,0,0.35)";
     resultBox.style.textAlign = "left";
-    resultBox.style.fontSize = "9.5px";
-    resultBox.style.lineHeight = "1.2";
+    resultBox.style.fontSize = "10.5px";
+    resultBox.style.lineHeight = "1.35";
     resultBox.style.color = "#e2e8f0";
 
     // ===== Ensamblar =====
@@ -91,7 +92,7 @@ document.addEventListener("slideChanged", (e) => {
           method: "GET",
           mode: "cors",
           headers: {
-            "Accept": "application/json",
+            Accept: "application/json",
           },
         });
 
@@ -123,34 +124,33 @@ document.addEventListener("slideChanged", (e) => {
                 data: shortData.map((c) => c.qty),
                 backgroundColor: "rgba(16,185,129,0.75)",
                 borderColor: "rgba(16,185,129,1)",
-                borderWidth: 1,
-                borderRadius: 3,
-                barThickness: 18,
-                categoryPercentage: 0.7,
+                borderWidth: 1.4,
+                borderRadius: 4,
+                barThickness: 32, // más gruesas
+                categoryPercentage: 0.62,
               },
             ],
           },
           options: {
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             responsive: true,
-            aspectRatio: 2.0,
             plugins: {
               legend: {
                 labels: {
                   color: "#e2e8f0",
-                  font: { size: 7 },
+                  font: { size: 10 },
                 },
               },
             },
             scales: {
               x: {
-                ticks: { color: "#e2e8f0", font: { size: 8 } },
+                ticks: { color: "#e2e8f0", font: { size: 10 } },
                 grid: { display: false },
               },
               y: {
                 beginAtZero: true,
-                ticks: { color: "#e2e8f0", font: { size: 7 } },
-                grid: { color: "rgba(255,255,255,0.05)" },
+                ticks: { color: "#e2e8f0", font: { size: 9 } },
+                grid: { color: "rgba(255,255,255,0.08)" },
               },
             },
           },
@@ -158,10 +158,10 @@ document.addEventListener("slideChanged", (e) => {
 
         // === Mostrar resumen ===
         resultBox.innerHTML = `
-          <h3 style="color:#10b981; text-align:center; margin-bottom:4px; font-size:0.85rem; border-bottom:1px solid rgba(16,185,129,0.4); padding-bottom:3px;">
+          <h3 style="color:#10b981; text-align:center; margin-bottom:8px; font-size:1rem; border-bottom:1px solid rgba(16,185,129,0.4); padding-bottom:4px;">
             Resumen
           </h3>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px 8px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:3px 14px;">
             <p><b>Total:</b> ${data.summary.totalItems}</p>
             <p><b>Bajo:</b> ${data.summary.lowStock}</p>
             <p><b>Sobrestock:</b> ${data.summary.overStock}</p>

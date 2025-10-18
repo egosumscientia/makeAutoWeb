@@ -1,8 +1,8 @@
 /**
- * AI-AudioSense – Final AWS Lambda Connected Version
+ * AI-AudioSense – Final AWS Lambda Connected Version (Responsive)
  * - Usa POST hacia API Gateway con AWS_PROXY
  * - Muestra resultados reales de Lambda (rms, freq, bands, dB)
- * - Compatible con Chart.js
+ * - Compatible con Chart.js y adaptable a pantallas móviles
  */
 
 document.addEventListener("slideChanged", (e) => {
@@ -13,15 +13,16 @@ document.addEventListener("slideChanged", (e) => {
 
   container.innerHTML = "";
 
-  // Descripción
+  // ===== Descripción =====
   const desc = document.createElement("p");
   desc.textContent =
     "Analiza sonidos industriales para detectar patrones anómalos en motores, compresores o líneas de producción.";
   desc.style.marginBottom = "1rem";
+  desc.style.fontSize = window.innerWidth < 400 ? "0.9rem" : "1rem";
   container.appendChild(desc);
 
-  // Onda decorativa
-  const WAVE_W = 420;
+  // ===== Onda decorativa =====
+  const WAVE_W = Math.min(window.innerWidth * 0.9, 420);
   const WAVE_H = 100;
   const waveCanvas = document.createElement("canvas");
   waveCanvas.width = WAVE_W;
@@ -30,11 +31,16 @@ document.addEventListener("slideChanged", (e) => {
   waveCanvas.style.margin = "0 auto 16px auto";
   waveCanvas.style.borderRadius = "8px";
   waveCanvas.style.background = "#0f172a";
+  waveCanvas.style.maxWidth = "100%";
+  waveCanvas.style.width = "100%";
+  waveCanvas.style.height = "auto";
   container.appendChild(waveCanvas);
 
   const wctx = waveCanvas.getContext("2d");
   let t = 0;
-  (function animWave() {
+  let waveAnimId;
+
+  function animWave() {
     wctx.clearRect(0, 0, WAVE_W, WAVE_H);
     wctx.beginPath();
     wctx.strokeStyle = "#22d3ee";
@@ -49,19 +55,21 @@ document.addEventListener("slideChanged", (e) => {
     }
     wctx.stroke();
     t += 1.2;
-    requestAnimationFrame(animWave);
-  })();
+    waveAnimId = requestAnimationFrame(animWave);
+  }
+  animWave();
 
-  // Botón
+  // ===== Botón =====
   const button = document.createElement("button");
   button.textContent = "Analizar Audio";
   button.className = "ai-btn";
   button.style.display = "inline-block";
   button.style.margin = "12px 0 12px 0";
+  button.style.fontSize = window.innerWidth < 400 ? "0.85rem" : "1rem";
   container.appendChild(button);
 
-  // Canvas del gráfico
-  const CHART_W = 420;
+  // ===== Canvas del gráfico =====
+  const CHART_W = Math.min(window.innerWidth * 0.9, 420);
   const CHART_H = 260;
   const chartCanvas = document.createElement("canvas");
   chartCanvas.id = "audioCanvas";
@@ -71,9 +79,11 @@ document.addEventListener("slideChanged", (e) => {
   chartCanvas.style.borderRadius = "8px";
   chartCanvas.style.margin = "0 auto";
   chartCanvas.style.maxWidth = "100%";
+  chartCanvas.style.width = "100%";
+  chartCanvas.style.height = "auto";
   container.appendChild(chartCanvas);
 
-  // Caja KPI
+  // ===== Caja KPI =====
   const kpiBox = document.createElement("div");
   kpiBox.id = "audioKPIBox";
   kpiBox.style.display = "none";
@@ -93,13 +103,19 @@ document.addEventListener("slideChanged", (e) => {
   resultText.style.margin = "6px 0 0 0";
   container.appendChild(resultText);
 
-  // Acción del botón
+  // ===== Acción del botón =====
   button.addEventListener("click", async () => {
     button.disabled = true;
     button.textContent = "Analizando...";
     resultText.textContent = "Procesando sonido...";
     chartCanvas.style.display = "none";
     kpiBox.style.display = "none";
+
+    // 🔥 Detener animación y aplicar fade-out a la onda
+    cancelAnimationFrame(waveAnimId);
+    waveCanvas.style.transition = "opacity 0.4s ease-out";
+    waveCanvas.style.opacity = "0";
+    setTimeout(() => waveCanvas.remove(), 400);
 
     try {
       const apiUrl = "https://y86gcq22ul.execute-api.us-east-1.amazonaws.com/default/analyze-audio";
@@ -136,7 +152,7 @@ document.addEventListener("slideChanged", (e) => {
           }]
         },
         options: {
-          responsive: false,
+          responsive: true,
           maintainAspectRatio: false,
           plugins: {
             legend: { labels: { color: "#e2e8f0", font: { size: 11 } } },
@@ -157,7 +173,7 @@ document.addEventListener("slideChanged", (e) => {
         }
       });
 
-      // KPI
+      // ===== Diagnóstico IA =====
       const color = anomaly_detected ? "#f87171" : "#10b981";
       const label = anomaly_detected ? "Anómalo" : "Normal";
 
