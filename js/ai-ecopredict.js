@@ -32,8 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("slideChanged", (e) => {
     if (e.detail.index === 1) {
       setTimeout(() => {
+        // Reiniciar el estado del demo cada vez que se selecciona
+        window.lastData = null;
+        cancelAnimationFrame(idleAnim);
+        cancelAnimationFrame(animFrame);
+        drawIdleState();
         resizeCanvas();
-        if (!window.lastData) drawIdleState();
       }, 200);
     }
   });
