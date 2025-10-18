@@ -1,43 +1,31 @@
 /**
- * AI-AudioSense – Stable Classic
- * Reversión a tamaños normales + fix anti-estiramiento del canvas.
- * - Sin escalado del contenedor
- * - Gráficos a tamaño legible (~420x260)
- * - Canvas con dimensiones fijas (no se deforma verticalmente)
- * - No se tocan HTML ni CSS
+ * AI-AudioSense – Final AWS Lambda Connected Version
+ * - Usa POST hacia API Gateway con AWS_PROXY
+ * - Muestra resultados reales de Lambda (rms, freq, bands, dB)
+ * - Compatible con Chart.js
  */
 
 document.addEventListener("slideChanged", (e) => {
-  // Slide "AI-AudioSense" es el 3er item en tu index.html
   if (e.detail.index !== 2) return;
 
   const container = document.querySelector(".carousel-item:nth-child(3)");
   if (!container) return;
 
-  // Limpia y revierte cualquier estilo que haya quedado de versiones previas
   container.innerHTML = "";
-  container.style.removeProperty("transform");
-  container.style.removeProperty("transform-origin");
-  container.style.removeProperty("margin-top");
-  container.style.removeProperty("min-height");
-  container.style.removeProperty("overflow");
 
-  // ──────────────────────────────────────────────────────────────
-  // Cabecera breve
+  // Descripción
   const desc = document.createElement("p");
   desc.textContent =
     "Analiza sonidos industriales para detectar patrones anómalos en motores, compresores o líneas de producción.";
   desc.style.marginBottom = "1rem";
   container.appendChild(desc);
 
-  // ──────────────────────────────────────────────────────────────
-  // Onda decorativa (tamaño clásico, no responsive para evitar saltos)
+  // Onda decorativa
   const WAVE_W = 420;
   const WAVE_H = 100;
-
   const waveCanvas = document.createElement("canvas");
-  waveCanvas.width = WAVE_W;   // atributo → tamaño real de lienzo
-  waveCanvas.height = WAVE_H;  // atributo → tamaño real de lienzo
+  waveCanvas.width = WAVE_W;
+  waveCanvas.height = WAVE_H;
   waveCanvas.style.display = "block";
   waveCanvas.style.margin = "0 auto 16px auto";
   waveCanvas.style.borderRadius = "8px";
@@ -64,8 +52,7 @@ document.addEventListener("slideChanged", (e) => {
     requestAnimationFrame(animWave);
   })();
 
-  // ──────────────────────────────────────────────────────────────
-  // Botón principal
+  // Botón
   const button = document.createElement("button");
   button.textContent = "Analizar Audio";
   button.className = "ai-btn";
@@ -73,24 +60,20 @@ document.addEventListener("slideChanged", (e) => {
   button.style.margin = "12px 0 12px 0";
   container.appendChild(button);
 
-  // ──────────────────────────────────────────────────────────────
-  // Canvas del gráfico (tamaño fijo y legible; anti-stretch)
-  const CHART_W = 420;  // ancho real del lienzo
-  const CHART_H = 260;  // alto real del lienzo
-
+  // Canvas del gráfico
+  const CHART_W = 420;
+  const CHART_H = 260;
   const chartCanvas = document.createElement("canvas");
   chartCanvas.id = "audioCanvas";
-  chartCanvas.width = CHART_W;   // 🔒 fija tamaño real
-  chartCanvas.height = CHART_H;  // 🔒 fija tamaño real
+  chartCanvas.width = CHART_W;
+  chartCanvas.height = CHART_H;
   chartCanvas.style.display = "none";
   chartCanvas.style.borderRadius = "8px";
   chartCanvas.style.margin = "0 auto";
-  chartCanvas.style.display = "none";
-  chartCanvas.style.maxWidth = "100%"; // por si el contenedor es más estrecho
+  chartCanvas.style.maxWidth = "100%";
   container.appendChild(chartCanvas);
 
-  // ──────────────────────────────────────────────────────────────
-  // Panel KPI
+  // Caja KPI
   const kpiBox = document.createElement("div");
   kpiBox.id = "audioKPIBox";
   kpiBox.style.display = "none";
@@ -105,14 +88,12 @@ document.addEventListener("slideChanged", (e) => {
   kpiBox.style.boxShadow = "0 0 8px rgba(0,0,0,0.3)";
   container.appendChild(kpiBox);
 
-  // Texto de estado
   const resultText = document.createElement("p");
   resultText.id = "audioResult";
   resultText.style.margin = "6px 0 0 0";
   container.appendChild(resultText);
 
-  // ──────────────────────────────────────────────────────────────
-  // Acción
+  // Acción del botón
   button.addEventListener("click", async () => {
     button.disabled = true;
     button.textContent = "Analizando...";
@@ -121,37 +102,33 @@ document.addEventListener("slideChanged", (e) => {
     kpiBox.style.display = "none";
 
     try {
-      const apiUrl = "https://g6274s7qce.execute-api.us-east-1.amazonaws.com";
-      const res = await fetch(apiUrl);
+      const apiUrl = "https://y86gcq22ul.execute-api.us-east-1.amazonaws.com/default/analyze-audio";
+
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ audio: "mock_base64_audio_data" })
+      });
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
-      // Simulación de inferencia (valores plausibles)
-      const rms = (60 + Math.random() * 20).toFixed(1);
-      const freq = (120 + Math.random() * 500).toFixed(0);
-      const anomaly = (Math.random() * 25).toFixed(1);
-      const label = anomaly > 15 ? "Anómalo" : "Normal";
-      const color = anomaly > 15 ? "#f87171" : "#10b981";
-      const machineType = ["Motor", "Compresor", "Ventilador", "Bomba"][
-        Math.floor(Math.random() * 4)
-      ];
+      const { rms_db, frequency_dominant, bands, levels_db, anomaly_detected, confidence, message } = data;
 
-      // Destruye instancias previas si las hubiera
       if (window.audioChart) {
         try { window.audioChart.destroy(); } catch {}
       }
 
-      // Muestra el gráfico a tamaño fijo y estable
       chartCanvas.style.display = "block";
       const ctx = chartCanvas.getContext("2d");
 
       window.audioChart = new Chart(ctx, {
         type: "bar",
         data: {
-          labels: data.categories.map((c) => c.name),
+          labels: bands,
           datasets: [{
             label: "Nivel (dB)",
-            data: data.categories.map((c) => c.qty / 10),
+            data: levels_db,
             backgroundColor: "rgba(34,211,238,0.8)",
             borderColor: "rgba(34,211,238,1)",
             borderWidth: 1,
@@ -159,7 +136,6 @@ document.addEventListener("slideChanged", (e) => {
           }]
         },
         options: {
-          // 🔒 clave: NO responsive, NO maintainAspectRatio → respeta width/height del canvas
           responsive: false,
           maintainAspectRatio: false,
           plugins: {
@@ -182,22 +158,24 @@ document.addEventListener("slideChanged", (e) => {
       });
 
       // KPI
+      const color = anomaly_detected ? "#f87171" : "#10b981";
+      const label = anomaly_detected ? "Anómalo" : "Normal";
+
       kpiBox.innerHTML = `
         <h3 style="color:${color}; margin-bottom:6px;">Diagnóstico IA</h3>
         <ul style="list-style:none; padding-left:0; margin:0;">
-          <li>🔊 <b>Nivel RMS:</b> ${rms} dB</li>
-          <li>🎚️ <b>Frecuencia dominante:</b> ${freq} Hz</li>
-          <li>🧠 <b>Probabilidad de anomalía:</b> ${anomaly}%</li>
-          <li>⚙️ <b>Equipo detectado:</b> ${machineType}</li>
+          <li>🔊 <b>Nivel RMS:</b> ${rms_db ?? "N/A"} dB</li>
+          <li>🎚️ <b>Frecuencia dominante:</b> ${frequency_dominant ?? "N/A"} Hz</li>
+          <li>🧠 <b>Confianza IA:</b> ${(confidence * 100).toFixed(1)}%</li>
           <li>📊 <b>Estado:</b> <span style="color:${color}; font-weight:600;">${label}</span></li>
         </ul>
       `;
       kpiBox.style.display = "block";
 
-      resultText.innerHTML =
-        "<span style='color:#10b981;'>✅ Análisis completado con éxito.</span>";
+      resultText.innerHTML = `<span style='color:${color};'>${message}</span>`;
       button.textContent = "Reanalizar";
       button.disabled = false;
+
     } catch (err) {
       console.error(err);
       resultText.textContent = "❌ Error al procesar el audio.";

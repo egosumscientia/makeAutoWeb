@@ -1,7 +1,6 @@
-
 /**
- * AI-InventoryManagement — 60% Compact Pro
- * Mantiene proporciones, reduce altura al 60% del tamaño anterior.
+ * AI-InventoryManagement — Versión final con Lambda pública y CORS funcional
+ * makeAutomatic – 2025
  */
 
 document.addEventListener("slideChanged", (e) => {
@@ -29,14 +28,13 @@ document.addEventListener("slideChanged", (e) => {
 
     container.appendChild(demoDescription);
 
-
-    // ===== Button =====
+    // ===== Botón =====
     const button = document.createElement("button");
     button.textContent = "Simular Inventario";
     button.className =
       "ai-btn px-3 py-1 bg-emerald-500 text-white rounded-md shadow hover:bg-emerald-600 transition";
 
-    // ===== Chart container =====
+    // ===== Contenedor del gráfico =====
     const chartBox = document.createElement("div");
     chartBox.style.width = "72%";
     chartBox.style.maxWidth = "420px";
@@ -57,13 +55,12 @@ document.addEventListener("slideChanged", (e) => {
 
     const canvas = document.createElement("canvas");
     canvas.id = "inventoryChart";
-    // 🔽 60% de la altura anterior (~82px → 50px)
     canvas.style.width = "100%";
-    
+
     chartBox.appendChild(chartTitle);
     chartBox.appendChild(canvas);
 
-    // ===== Result box =====
+    // ===== Caja de resultados =====
     const resultBox = document.createElement("div");
     resultBox.id = "inventoryResult";
     resultBox.style.width = "72%";
@@ -77,37 +74,45 @@ document.addEventListener("slideChanged", (e) => {
     resultBox.style.lineHeight = "1.2";
     resultBox.style.color = "#e2e8f0";
 
-    // ===== Assemble =====
+    // ===== Ensamblar =====
     wrapper.appendChild(button);
     wrapper.appendChild(chartBox);
     wrapper.appendChild(resultBox);
     container.appendChild(wrapper);
 
-    // ===== Event: Button click =====
+    // ===== Evento: click en el botón =====
     button.addEventListener("click", async () => {
-      const apiUrl = "https://g6274s7qce.execute-api.us-east-1.amazonaws.com";
+      const apiUrl =
+        "https://4khu7h5wdj7aivcyybxsgayuyu0lyhoy.lambda-url.us-east-1.on.aws/";
       resultBox.innerHTML = "<em>Consultando datos...</em>";
 
       try {
-        const res = await fetch(apiUrl);
+        const res = await fetch(apiUrl, {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Accept": "application/json",
+          },
+        });
+
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
 
-        // Etiquetas cortas
+        // Etiquetas abreviadas
         const shortLabels = ["Elec", "Ropa", "Hogar", "Jugu", "Libros"];
         const shortData = data.categories.slice(0, 5).map((c, i) => ({
           name: shortLabels[i],
           qty: c.qty,
         }));
 
-        // Destruir gráfico anterior si existe
+        // Destruir gráfico previo
         if (window.inventoryChartInstance) {
           window.inventoryChartInstance.destroy();
         }
 
         const ctx = document.getElementById("inventoryChart").getContext("2d");
 
-        // --- Chart ---
+        // === Renderizar gráfico ===
         window.inventoryChartInstance = new Chart(ctx, {
           type: "bar",
           data: {
@@ -126,9 +131,9 @@ document.addEventListener("slideChanged", (e) => {
             ],
           },
           options: {
-          maintainAspectRatio: true,
-          responsive: true,
-          aspectRatio: 2.0,
+            maintainAspectRatio: true,
+            responsive: true,
+            aspectRatio: 2.0,
             plugins: {
               legend: {
                 labels: {
@@ -139,12 +144,7 @@ document.addEventListener("slideChanged", (e) => {
             },
             scales: {
               x: {
-                ticks: {
-                  color: "#e2e8f0",
-                  font: { size: 8 },
-                  align: "center",
-                  crossAlign: "center",
-                },
+                ticks: { color: "#e2e8f0", font: { size: 8 } },
                 grid: { display: false },
               },
               y: {
@@ -156,7 +156,7 @@ document.addEventListener("slideChanged", (e) => {
           },
         });
 
-        // --- Summary box ---
+        // === Mostrar resumen ===
         resultBox.innerHTML = `
           <h3 style="color:#10b981; text-align:center; margin-bottom:4px; font-size:0.85rem; border-bottom:1px solid rgba(16,185,129,0.4); padding-bottom:3px;">
             Resumen
@@ -172,7 +172,7 @@ document.addEventListener("slideChanged", (e) => {
       } catch (err) {
         console.error(err);
         resultBox.innerHTML =
-          "<span style='color:#f87171;'>Error al obtener datos.</span>";
+          "<span style='color:#f87171;'>Error al obtener datos (ver consola).</span>";
       }
     });
   }
