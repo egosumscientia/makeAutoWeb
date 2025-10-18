@@ -1,4 +1,4 @@
-// ai-ecopredict.js — versión con suavizado realista tipo sensor
+// ai-ecopredict.js — versión con suavizado realista tipo sensor + corrección DPI móvil
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("ecoCanvas");
   const ctx = canvas.getContext("2d");
@@ -8,18 +8,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let idleAnim;
 
+  // ------------------ AJUSTE DPI UNIVERSAL ------------------
+  function fixDpi(width, height) {
+    const dpi = window.devicePixelRatio || 1;
+    canvas.width = width * dpi;
+    canvas.height = height * dpi;
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+    ctx.scale(dpi, dpi);
+  }
+
   // ------------------ CONFIGURACIÓN CANVAS ------------------
   function resizeCanvas() {
     const parent = canvas.parentElement;
-    const width = parent.offsetWidth; // más estable en Android
-    const height = Math.max(200, width * 0.6); // proporción flexible
+    const width = parent.offsetWidth;
+    const height = Math.max(200, width * 0.6);
+
     canvas.style.width = "100%";
     canvas.style.height = "auto";
 
-    if (canvas.width !== width || canvas.height !== height) {
-      canvas.width = width;
-      canvas.height = height;
-    }
+    fixDpi(width, height);
 
     if (ctx) {
       if (window.lastData) {
@@ -72,19 +79,19 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.font = titleFont;
       ctx.fillStyle = titleColor;
       const titleWidth = ctx.measureText(title).width;
-      const titleX = (canvas.width - titleWidth) / 2;
-      const titleY = Math.round(canvas.height * 0.35);
+      const titleX = (canvas.width / (window.devicePixelRatio || 1) - titleWidth) / 2;
+      const titleY = Math.round((canvas.height / (window.devicePixelRatio || 1)) * 0.35);
       ctx.fillText(title, titleX, titleY);
 
       ctx.font = subtitleFont;
       ctx.fillStyle = subtitleColor;
       const subtitleWidth = ctx.measureText(subtitle).width;
-      const subtitleX = (canvas.width - subtitleWidth) / 2;
+      const subtitleX = (canvas.width / (window.devicePixelRatio || 1) - subtitleWidth) / 2;
       const subtitleY = titleY + 30;
       ctx.fillText(subtitle, subtitleX, subtitleY);
 
       const spinnerY = subtitleY + 30;
-      const spinnerX = canvas.width / 2;
+      const spinnerX = (canvas.width / (window.devicePixelRatio || 1)) / 2;
 
       ctx.beginPath();
       ctx.arc(spinnerX, spinnerY, radius, 0, 2 * Math.PI);
@@ -106,18 +113,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const padX = 40;
     const padY = 40;
     const temps = all.map(p => p.temp);
-    // Escala más realista (±5 °C por defecto o rango mínimo 4 °C)
     let min = Math.min(...temps);
     let max = Math.max(...temps);
-    const range = Math.max(4, max - min + 1); // mínimo rango visible
+    const range = Math.max(4, max - min + 1);
     const mid = (max + min) / 2;
 
-    // Centramos la escala (rango simétrico)
     min = mid - range / 2;
     max = mid + range / 2;
 
     const yScale = (canvas.clientHeight - padY * 2) / (max - min);
-
     const xStep = (canvas.clientWidth - padX * 2) / (all.length - 1);
     return { padX, padY, min, max, yScale, xStep };
   }
@@ -150,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const original = [...data.datos_pasados, ...data.prediccion];
 
-    // Suavizado tipo sensor real
     const smoothData = (arr, factor = 0.4) => {
       const result = [arr[0]];
       for (let i = 1; i < arr.length; i++) {
@@ -165,10 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const all = smoothData(original);
     const dims = getChartDims(all);
     const current = all[all.length - 1];
+    const yOffsetFix = 10; // compensación vertical universal
 
     drawInfo(data.region, current);
 
-    // Línea principal
     ctx.save();
     const gradient = ctx.createLinearGradient(0, 0, canvas.clientWidth, 0);
     gradient.addColorStop(0, "#00ffd0");
@@ -179,24 +182,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     all.forEach((p, i) => {
       const x = dims.padX + i * dims.xStep;
-      const y = canvas.clientHeight - dims.padY - (p.temp - dims.min) * dims.yScale;
+      const y =
+        canvas.clientHeight -
+        dims.padY -
+        (p.temp - dims.min) * dims.yScale -
+        yOffsetFix;
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
     ctx.stroke();
     ctx.restore();
 
-    // Puntos
     ctx.fillStyle = "#00ffd0";
     all.forEach((p, i) => {
       const x = dims.padX + i * dims.xStep;
-      const y = canvas.clientHeight - dims.padY - (p.temp - dims.min) * dims.yScale;
+      const y =
+        canvas.clientHeight -
+        dims.padY -
+        (p.temp - dims.min) * dims.yScale -
+        yOffsetFix;
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, Math.PI * 2);
       ctx.fill();
     });
 
-    // Etiquetas
     const labelStep = Math.max(1, Math.floor(all.length / 6));
     ctx.font = `${Math.round(canvas.clientWidth * 0.02)}px monospace`;
     ctx.fillStyle = "#00ffd0";
@@ -204,7 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
     all.forEach((p, i) => {
       if (i % labelStep === 0 || i === all.length - 1) {
         const x = dims.padX + i * dims.xStep;
-        const y = canvas.clientHeight - dims.padY - (p.temp - dims.min) * dims.yScale;
+        const y =
+          canvas.clientHeight -
+          dims.padY -
+          (p.temp - dims.min) * dims.yScale -
+          yOffsetFix;
         const yOffset = i % 2 === 0 ? -14 : 16;
         ctx.fillText(`${p.temp.toFixed(1)}°`, x - 10, y + yOffset);
       }
@@ -240,5 +253,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btn.addEventListener("click", fetchPrediction);
   drawIdleState();
-  console.log("AI–EcoPredict listo con suavizado realista tipo sensor.");
+  console.log("AI–EcoPredict listo con corrección DPI y suavizado realista.");
 });
