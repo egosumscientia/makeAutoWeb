@@ -3,7 +3,7 @@
 // Vector visual adaptation of human preferences
 // =============================================
 
-const apiUrl = "https://77stzif1o3.execute-api.us-east-1.amazonaws.com/default/";
+const apiUrl = "https://xktoesq7ujs5llzmjtoncmep240dgpxa.lambda-url.us-east-1.on.aws/";
 const dims = ["dulce", "salado", "ácido", "amargo", "umami", "picante", "crujiente"];
 let values = [0.4, 0.6, 0.3, 0.2, 0.8, 0.4, 0.6];
 let radarChart;
