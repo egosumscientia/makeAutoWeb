@@ -165,8 +165,9 @@ document.addEventListener("slideChanged", (e) => {
           ],
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
+          responsive: false,
+          maintainAspectRatio: true,
+          aspectRatio: 1.6,
           plugins: {
             legend: {
               labels: { color: "#e2e8f0", font: { size: 11 } },
