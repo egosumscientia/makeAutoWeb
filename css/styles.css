@@ -677,26 +677,65 @@ html, body {
   }
 }
 
-/* === FIX DEFINITIVO: altura fija del carrusel === */
+/* === FIX DEFINITIVO: flechas siempre centradas === */
 .carousel {
   position: relative;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  height: 600px;       /* fija el alto total */
-  overflow: hidden;    /* evita que se asomen otros slides */
 }
 
-.carousel-btn.prev,
-.carousel-btn.next {
+/* Fuerza las flechas a basarse en el carrusel, no en el contenido interno */
+.carousel-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
+  z-index: 20;
 }
 
-@media (max-width: 600px) {
-  .carousel {
-    height: 520px; /* un poco más bajo en pantallas pequeñas */
+/* Asegura que el contenido interno no afecte su posición */
+.carousel-inner {
+  position: relative;
+}
+
+/* Evita saltos cuando cambia la altura de los slides */
+.carousel-item {
+  position: relative;
+  padding-bottom: 2rem; /* deja espacio para el botón inferior */
+}
+
+/* Móvil: ajuste fino */
+@media (max-width: 768px) {
+  .carousel-btn {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* === FLECHAS INMÓVILES: anclaje a altura base === */
+.carousel {
+  position: relative;
+  /* altura base por defecto; la podemos ajustar por JS */
+  --carousel-base-h: 600px;
+}
+
+/* flechas centradas respecto a la altura base, no al contenido variable */
+.carousel-btn {
+  position: absolute;
+  top: calc(var(--carousel-base-h) / 2);
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+/* escritorio: base un poco mayor */
+@media (min-width: 769px) {
+  .carousel { --carousel-base-h: 600px; }
+}
+
+/* móvil: base menor, y sin cortes de contenido */
+@media (max-width: 768px) {
+  .carousel { 
+    --carousel-base-h: 520px;
+    overflow: visible;              /* el contenido puede crecer sin recortarse */
+  }
+  .carousel-item { 
+    padding-bottom: 2rem;           /* respiración inferior */
   }
 }

@@ -45,3 +45,24 @@ document.addEventListener("slideChanged", (e) => {
     document.dispatchEvent(new CustomEvent("ecoPredictInit"));
   }
 });
+
+// Bloquea la referencia vertical de las flechas a una altura base medida una sola vez
+window.addEventListener("load", () => {
+  const car = document.querySelector(".carousel");
+  const active = document.querySelector(".carousel-item.active") || document.querySelector(".carousel-item");
+  if (!car || !active) return;
+  // Medimos una base razonable (sin animaciones); si prefieres fija, comenta estas dos líneas
+  const base = Math.max(520, Math.min(700, active.getBoundingClientRect().height));
+  car.style.setProperty("--carousel-base-h", base + "px");
+});
+
+// Si quieres que se reajuste al rotar el móvil, descomenta:
+/*
+window.addEventListener("resize", () => {
+  const car = document.querySelector(".carousel");
+  const active = document.querySelector(".carousel-item.active");
+  if (!car || !active) return;
+  const base = Math.max(520, Math.min(700, active.getBoundingClientRect().height));
+  car.style.setProperty("--carousel-base-h", base + "px");
+});
+*/
