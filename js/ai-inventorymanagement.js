@@ -10,6 +10,16 @@ document.addEventListener("slideChanged", (e) => {
 
     container.innerHTML = "";
 
+    // ===== Título principal (igual que otros demos) =====
+    const title = document.createElement("h3");
+    title.textContent = "AI–InventoryManagement";
+    title.style.color = "#22d3ee";        // mismo tono cian que los otros
+    title.style.marginBottom = "0.5rem";
+    title.style.fontSize = window.innerWidth < 400 ? "1.1rem" : "1.25rem";
+    title.style.fontWeight = "600";
+    title.style.textAlign = "center";
+    container.appendChild(title);
+
     // ===== Layout wrapper =====
     const wrapper = document.createElement("div");
     wrapper.style.display = "flex";

@@ -13,6 +13,16 @@ document.addEventListener("slideChanged", (e) => {
 
   container.innerHTML = "";
 
+  // ===== Título principal (igual que otros demos) =====
+  const title = document.createElement("h3");
+  title.textContent = "AI–AudioSense";
+  title.style.color = "#22d3ee";        // tono azul cian igual al resto
+  title.style.marginBottom = "0.5rem";
+  title.style.fontSize = window.innerWidth < 400 ? "1.1rem" : "1.25rem";
+  title.style.fontWeight = "600";
+  container.appendChild(title);
+
+
   // ===== Descripción =====
   const desc = document.createElement("p");
   desc.textContent =

@@ -676,3 +676,27 @@ html, body {
     max-height: 150px !important;
   }
 }
+
+/* === FIX DEFINITIVO: altura fija del carrusel === */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  height: 600px;       /* fija el alto total */
+  overflow: hidden;    /* evita que se asomen otros slides */
+}
+
+.carousel-btn.prev,
+.carousel-btn.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+@media (max-width: 600px) {
+  .carousel {
+    height: 520px; /* un poco más bajo en pantallas pequeñas */
+  }
+}
