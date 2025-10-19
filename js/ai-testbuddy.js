@@ -111,3 +111,46 @@ window.addEventListener("resize", () => {
 window.addEventListener("load", () => {
   setTimeout(drawRadar, 300);
 });
+
+// === Reinicio del demo cuando su slide entra al viewport ===
+// Guarda el estado inicial una sola vez
+const __ma_initialValues = Array.isArray(values) ? [...values] : [0.4,0.6,0.3,0.2,0.8,0.4,0.6];
+
+function __ma_resetAITestBuddy() {
+  try {
+    values = [...__ma_initialValues];
+    const replyEl = document.getElementById("reply");
+    const explanationEl = document.getElementById("explanation");
+    if (replyEl) replyEl.innerText = "";
+    if (explanationEl) explanationEl.innerText = "";
+    drawRadar();
+    console.log("[AI-TestBuddy] Estado reiniciado por visibilidad del carrusel.");
+  } catch (e) {
+    console.warn("[AI-TestBuddy] No se pudo reiniciar:", e);
+  }
+}
+
+// Encuentra el slide que contiene el radar (sin requerir IDs nuevos)
+function __ma_getRadarSlide() {
+  const radar = document.getElementById("tasteRadar");
+  return radar ? radar.closest(".carousel-item") : null;
+}
+
+// Observa la visibilidad del slide en el viewport
+(function __ma_attachIO(){
+  const slide = __ma_getRadarSlide();
+  if (!slide) return;
+
+  let wasVisible = false;
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const nowVisible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+      if (nowVisible && !wasVisible) {
+        __ma_resetAITestBuddy();
+      }
+      wasVisible = nowVisible;
+    }
+  }, { threshold: [0.0, 0.5, 1.0] });
+
+  io.observe(slide);
+})();
