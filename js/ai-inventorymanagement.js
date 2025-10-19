@@ -1,5 +1,5 @@
 /**
- * AI-InventoryManagement — Versión final ampliada ligeramente
+ * AI-InventoryManagement — Versión dinámica mínima
  * makeAutomatic – 2025
  */
 
@@ -10,10 +10,10 @@ document.addEventListener("slideChanged", (e) => {
 
     container.innerHTML = "";
 
-    // ===== Título principal (igual que otros demos) =====
+    // ===== Título principal =====
     const title = document.createElement("h3");
     title.textContent = "AI–InventoryManagement";
-    title.style.color = "#22d3ee";        // mismo tono cian que los otros
+    title.style.color = "#22d3ee";
     title.style.marginBottom = "0.5rem";
     title.style.fontSize = window.innerWidth < 400 ? "1.1rem" : "1.25rem";
     title.style.fontWeight = "600";
@@ -35,7 +35,6 @@ document.addEventListener("slideChanged", (e) => {
     demoDescription.className = "ai-demo-description";
     demoDescription.textContent =
       "Este demo muestra cómo una API con inteligencia artificial analiza y visualiza automáticamente el estado del inventario en tiempo real.";
-
     container.appendChild(demoDescription);
 
     // ===== Botón =====
@@ -46,7 +45,7 @@ document.addEventListener("slideChanged", (e) => {
 
     // ===== Contenedor del gráfico =====
     const chartBox = document.createElement("div");
-    chartBox.style.width = "92%";                 // un poco más ancho
+    chartBox.style.width = "92%";
     chartBox.style.maxWidth = "680px";
     chartBox.style.background = "#0f172a";
     chartBox.style.borderRadius = "12px";
@@ -66,7 +65,7 @@ document.addEventListener("slideChanged", (e) => {
     const canvas = document.createElement("canvas");
     canvas.id = "inventoryChart";
     canvas.style.width = "100%";
-    canvas.style.height = "250px"; // un poco más alto
+    canvas.style.height = "250px";
 
     chartBox.appendChild(chartTitle);
     chartBox.appendChild(canvas);
@@ -91,7 +90,7 @@ document.addEventListener("slideChanged", (e) => {
     wrapper.appendChild(resultBox);
     container.appendChild(wrapper);
 
-    // ===== Evento: click en el botón =====
+    // ===== Evento: click =====
     button.addEventListener("click", async () => {
       const apiUrl =
         "https://4khu7h5wdj7aivcyybxsgayuyu0lyhoy.lambda-url.us-east-1.on.aws/";
@@ -101,13 +100,21 @@ document.addEventListener("slideChanged", (e) => {
         const res = await fetch(apiUrl, {
           method: "GET",
           mode: "cors",
-          headers: {
-            Accept: "application/json",
-          },
+          headers: { Accept: "application/json" },
         });
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
+
+        // 🔸 Variaciones simples ±10%
+        data.categories.forEach((c) => {
+          const factor = 1 + (Math.random() * 0.2 - 0.1);
+          c.qty = Math.round(c.qty * factor);
+        });
+        data.summary.totalItems = data.categories.reduce((a, c) => a + c.qty, 0);
+        data.summary.rotationRate = `${(Math.random() * 30 + 10).toFixed(1)}%`;
+        data.summary.totalValueUSD =
+          data.summary.totalItems * 40 + Math.floor(Math.random() * 4000);
 
         // Etiquetas abreviadas
         const shortLabels = ["Elec", "Ropa", "Hogar", "Jugu", "Libros"];
@@ -136,7 +143,7 @@ document.addEventListener("slideChanged", (e) => {
                 borderColor: "rgba(16,185,129,1)",
                 borderWidth: 1.4,
                 borderRadius: 4,
-                barThickness: 32, // más gruesas
+                barThickness: 32,
                 categoryPercentage: 0.62,
               },
             ],
@@ -144,6 +151,10 @@ document.addEventListener("slideChanged", (e) => {
           options: {
             maintainAspectRatio: false,
             responsive: true,
+            animation: {
+              duration: 800,
+              easing: "easeOutQuart",
+            },
             plugins: {
               legend: {
                 labels: {
