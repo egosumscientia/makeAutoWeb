@@ -70,15 +70,46 @@ async function sendToTestBuddy(message) {
 function updateUI(data) {
   const replyEl = document.getElementById("reply");
   const explanationEl = document.getElementById("explanation");
+
+  // --- Actualiza los textos de respuesta ---
   if (data.reply && !data.reply.includes("Perfil reiniciado")) {
     replyEl.innerText = data.reply;
   } else replyEl.innerText = "";
+
   if (data.explanation && !data.explanation.includes("Este demo demuestra")) {
     explanationEl.innerText = data.explanation;
   } else explanationEl.innerText = "";
-  values = dims.map((d) => data.vector?.[d] ?? 0);
+
+  // --- Mantén el estado anterior ---
+  const prevValues = [...values];
+  let newValues = [...prevValues];
+
+  // --- Detecta si hay un "Ajuste del eje ..." en la respuesta ---
+  const match = data.reply?.match(/eje '([^']+)'/);
+  const targetDim = match ? match[1] : null;
+
+  if (targetDim) {
+    // Copia los valores actuales y ajusta solo el eje detectado
+    for (let i = 0; i < dims.length; i++) {
+      const d = dims[i];
+      if (d === targetDim) {
+        // Cada anillo del radar equivale a 0.2 -> queremos 2 pasos por nivel
+        const step = data.reply.includes("+") ? +0.1 : -0.1;
+        const nextValue = prevValues[i] + step;
+        newValues[i] = Math.min(1, Math.max(0, nextValue));
+      }
+
+    }
+  } else if (data.vector) {
+    // Si no se detectó un ajuste puntual, usa el vector completo del backend
+    newValues = dims.map((d) => data.vector?.[d] ?? prevValues[d]);
+  }
+
+  values = newValues;
   drawRadar();
 }
+
+
 
 // --- AI Demo Setup ---
 function setupAIInteraction() {
@@ -115,6 +146,8 @@ window.addEventListener("load", () => {
 // === Reinicio del demo cuando su slide entra al viewport ===
 // Guarda el estado inicial una sola vez
 const __ma_initialValues = [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4];
+//const __ma_initialValues = Array.isArray(values) ? [...values] : [0.4,0.6,0.3,0.2,0.8,0.4,0.6];
+
 
 function __ma_resetAITestBuddy() {
   try {
