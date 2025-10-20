@@ -436,29 +436,35 @@ html, body {
   }
 }
 
-/* === FIX: as/* === Fix para AI-TestBuddy Radar === */
-/* === FIX FINAL para AI-TestBuddy Radar === */
+
+/* === FIX FINAL — solo para AI-TestBuddy === */
 #tasteRadar {
   display: block;
-  width: 100%;
-  max-width: 420px;
-  aspect-ratio: 1 / 1;  /* 🔹 mantiene forma circular */
   margin: 0 auto;
+  width: min(90vw, 340px); /* mantiene el ancho máximo sin deformar */
+  aspect-ratio: 1 / 1;     /* cuadrado perfecto */
+  height: auto;
   background: transparent;
+  transform: none !important;
+}
+
+/* Contenedor estable sin desbordar */
+.ai-demo {
+  overflow: hidden;
+  min-height: unset;
+}
+
+/* Fija el canvas dentro del carrusel sin flex distortion */
+.carousel-item canvas#tasteRadar {
+  flex: 0 0 auto !important;
+  align-self: center;
+  justify-self: center;
 }
 
 
 /* Asegura que el contenedor del radar no se expanda infinito */
 .ai-demo {
   overflow: hidden;
-}
-
-/* Ajuste responsive para pantallas pequeñas */
-@media (max-width: 768px) {
-  #tasteRadar {
-    height: 240px !important;   /* un poco más compacto en móvil */
-    max-width: 100% !important;
-  }
 }
 
 
