@@ -5,16 +5,26 @@
 
 const apiUrl = "https://xktoesq7ujs5llzmjtoncmep240dgpxa.lambda-url.us-east-1.on.aws/";
 const dims = ["dulce", "salado", "ácido", "amargo", "umami", "picante", "crujiente"];
-let values = [0.4, 0.6, 0.3, 0.2, 0.8, 0.4, 0.6];
+let values = [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4];
 let radarChart;
+let __lastUserMsg = "";
+
+// --- Normalización y coincidencia exacta ---
+function normalizeES(s) {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "");
+}
+const dimsNorm = dims.map(normalizeES);
 
 // --- Radar Chart Initialization ---
 function drawRadar() {
   const canvas = document.getElementById("tasteRadar");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  ctx.canvas.width = 400;
-  ctx.canvas.height = 400;
+  ctx.canvas.width = canvas.clientWidth;
+  ctx.canvas.height = canvas.clientHeight;
 
   if (radarChart) radarChart.destroy();
 
@@ -43,6 +53,8 @@ function drawRadar() {
         },
       },
       plugins: { legend: { display: false } },
+      responsive: true,
+      maintainAspectRatio: false,
     },
   });
 
@@ -71,7 +83,6 @@ function updateUI(data) {
   const replyEl = document.getElementById("reply");
   const explanationEl = document.getElementById("explanation");
 
-  // --- Actualiza los textos de respuesta ---
   if (data.reply && !data.reply.includes("Perfil reiniciado")) {
     replyEl.innerText = data.reply;
   } else replyEl.innerText = "";
@@ -80,51 +91,85 @@ function updateUI(data) {
     explanationEl.innerText = data.explanation;
   } else explanationEl.innerText = "";
 
-  // --- Mantén el estado anterior ---
   const prevValues = [...values];
   let newValues = [...prevValues];
 
-  // --- Detecta si hay un "Ajuste del eje ..." en la respuesta ---
-  const match = data.reply?.match(/eje '([^']+)'/);
-  const targetDim = match ? match[1] : null;
+  // --- Detecta el eje basado en el mensaje del usuario ---
+  const userMsgNorm = normalizeES(__lastUserMsg);
 
-  if (targetDim) {
-    // Copia los valores actuales y ajusta solo el eje detectado
+  function findDimFromUserMsg(msgNorm) {
     for (let i = 0; i < dims.length; i++) {
-      const d = dims[i];
-      if (d === targetDim) {
-        // Cada anillo del radar equivale a 0.2 -> queremos 2 pasos por nivel
-        const step = data.reply.includes("+") ? +0.1 : -0.1;
+      const dimNorm = dimsNorm[i];
+      const re = new RegExp(
+        `(?:^|[^\\p{L}\\p{N}])${dimNorm}(?:$|[^\\p{L}\\p{N}])`,
+        "u"
+      );
+      if (re.test(msgNorm)) return dims[i];
+    }
+    return null;
+  }
+
+  let targetDim = findDimFromUserMsg(userMsgNorm);
+
+  // --- Detecta comandos de equilibrio o reinicio ---
+  if (/equilibrad|reiniciad|reset|inicial/i.test(__lastUserMsg)) {
+    values = [...__ma_initialValues];
+    drawRadar();
+    replyEl.innerText = "Perfil equilibrado restaurado.";
+    console.log("[AI-TestBuddy] Estado equilibrado restaurado.");
+    return;
+  }
+
+  if (!targetDim) {
+    values = prevValues;
+    drawRadar();
+    return;
+  }
+
+  // --- Ajuste solo del eje válido ---
+  for (let i = 0; i < dims.length; i++) {
+    const d = dims[i];
+    if (d === targetDim) {
+       // Detecta explícitamente la dirección en el mensaje del usuario
+        const hasMas = /\b(mas|más|\+)\b/i.test(__lastUserMsg);
+        const hasMenos = /\b(menos|-)\b/i.test(__lastUserMsg);
+
+        // Si no hay "más" ni "menos", no cambia nada
+        if (!hasMas && !hasMenos) {
+          newValues[i] = prevValues[i];
+          continue;
+        }
+
+        const step = hasMas ? +0.1 : -0.1;
         const nextValue = prevValues[i] + step;
         newValues[i] = Math.min(1, Math.max(0, nextValue));
-      }
-
+    } else {
+      newValues[i] = prevValues[i];
     }
-  } else if (data.vector) {
-    // Si no se detectó un ajuste puntual, usa el vector completo del backend
-    newValues = dims.map((d) => data.vector?.[d] ?? prevValues[d]);
   }
 
   values = newValues;
   drawRadar();
 }
 
-
-
 // --- AI Demo Setup ---
 function setupAIInteraction() {
   const sendBtn = document.getElementById("sendBtn");
   const msgInput = document.getElementById("msg");
   if (!sendBtn || !msgInput) return;
+
   sendBtn.onclick = () => {
     const msg = msgInput.value.trim();
     if (!msg) return;
+    __lastUserMsg = msg; // Guarda lo que el usuario escribió
     sendToTestBuddy(msg);
     msgInput.value = "";
   };
+
   msgInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") sendBtn.click();
   });
+
   drawRadar();
 }
 
@@ -144,10 +189,7 @@ window.addEventListener("load", () => {
 });
 
 // === Reinicio del demo cuando su slide entra al viewport ===
-// Guarda el estado inicial una sola vez
 const __ma_initialValues = [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4];
-//const __ma_initialValues = Array.isArray(values) ? [...values] : [0.4,0.6,0.3,0.2,0.8,0.4,0.6];
-
 
 function __ma_resetAITestBuddy() {
   try {
@@ -163,27 +205,29 @@ function __ma_resetAITestBuddy() {
   }
 }
 
-// Encuentra el slide que contiene el radar (sin requerir IDs nuevos)
 function __ma_getRadarSlide() {
   const radar = document.getElementById("tasteRadar");
   return radar ? radar.closest(".carousel-item") : null;
 }
 
-// Observa la visibilidad del slide en el viewport
-(function __ma_attachIO(){
+(function __ma_attachIO() {
   const slide = __ma_getRadarSlide();
   if (!slide) return;
 
   let wasVisible = false;
-  const io = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      const nowVisible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
-      if (nowVisible && !wasVisible) {
-        __ma_resetAITestBuddy();
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const nowVisible =
+          entry.isIntersecting && entry.intersectionRatio >= 0.5;
+        if (nowVisible && !wasVisible) {
+          __ma_resetAITestBuddy();
+        }
+        wasVisible = nowVisible;
       }
-      wasVisible = nowVisible;
-    }
-  }, { threshold: [0.0, 0.5, 1.0] });
+    },
+    { threshold: [0.0, 0.5, 1.0] }
+  );
 
   io.observe(slide);
 })();
