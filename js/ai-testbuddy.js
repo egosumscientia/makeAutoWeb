@@ -112,7 +112,7 @@ function updateUI(data) {
   let targetDim = findDimFromUserMsg(userMsgNorm);
 
   // --- Detecta comandos de equilibrio o reinicio ---
-  if (/equilibrad|reiniciad|reset|inicial/i.test(__lastUserMsg)) {
+  if (/^equilibrado$/i.test(__lastUserMsg.trim())) {
     values = [...__ma_initialValues];
     drawRadar();
     replyEl.innerText = "Perfil equilibrado restaurado.";
