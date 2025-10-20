@@ -114,7 +114,7 @@ window.addEventListener("load", () => {
 
 // === Reinicio del demo cuando su slide entra al viewport ===
 // Guarda el estado inicial una sola vez
-const __ma_initialValues = Array.isArray(values) ? [...values] : [0.4,0.6,0.3,0.2,0.8,0.4,0.6];
+const __ma_initialValues = [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4];
 
 function __ma_resetAITestBuddy() {
   try {
