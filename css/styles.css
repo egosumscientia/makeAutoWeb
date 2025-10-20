@@ -436,13 +436,29 @@ html, body {
   }
 }
 
-/* === FIX: asegurar que el radar sea visible === */
+/* === FIX: as/* === Fix para AI-TestBuddy Radar === */
+/* === FIX FINAL para AI-TestBuddy Radar === */
 #tasteRadar {
   display: block;
   width: 100%;
-  height: 360px;      /* altura visible inicial */
-  max-height: 400px;
+  max-width: 420px;
+  aspect-ratio: 1 / 1;  /* 🔹 mantiene forma circular */
   margin: 0 auto;
+  background: transparent;
+}
+
+
+/* Asegura que el contenedor del radar no se expanda infinito */
+.ai-demo {
+  overflow: hidden;
+}
+
+/* Ajuste responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  #tasteRadar {
+    height: 240px !important;   /* un poco más compacto en móvil */
+    max-width: 100% !important;
+  }
 }
 
 

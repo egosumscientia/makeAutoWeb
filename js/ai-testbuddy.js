@@ -22,13 +22,6 @@ const dimsNorm = dims.map(normalizeES);
 function drawRadar() {
   const canvas = document.getElementById("tasteRadar");
   if (!canvas) return;
-
-  // 🩵 Fix: asegura tamaño real antes de dibujar (móviles y carrusel)
-  if (canvas.clientWidth === 0 || canvas.clientHeight === 0) {
-    setTimeout(drawRadar, 300);
-    return;
-  }
-
   const ctx = canvas.getContext("2d");
   ctx.canvas.width = canvas.clientWidth;
   ctx.canvas.height = canvas.clientHeight;
@@ -62,12 +55,12 @@ function drawRadar() {
       plugins: { legend: { display: false } },
       responsive: true,
       maintainAspectRatio: false,
+      aspectRatio: 1, // <-- fuerza proporción cuadrada perfecta
     },
   });
 
   console.log("Drawing radar with:", { dims, values });
 }
-
 
 // --- Backend Communication ---
 async function sendToTestBuddy(message) {
@@ -120,7 +113,7 @@ function updateUI(data) {
   let targetDim = findDimFromUserMsg(userMsgNorm);
 
   // --- Detecta comandos de equilibrio o reinicio ---
-  if (/equilibrado/i.test(__lastUserMsg.trim())) {
+  if (/^equilibrado$/i.test(__lastUserMsg.trim())) {
     values = [...__ma_initialValues];
     drawRadar();
     replyEl.innerText = "Perfil equilibrado restaurado.";
@@ -239,4 +232,3 @@ function __ma_getRadarSlide() {
 
   io.observe(slide);
 })();
-
