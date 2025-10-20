@@ -139,8 +139,8 @@ document.addEventListener("slideChanged", (e) => {
               {
                 label: "Cantidad",
                 data: shortData.map((c) => c.qty),
-                backgroundColor: "rgba(16,185,129,0.75)",
-                borderColor: "rgba(16,185,129,1)",
+                backgroundColor: "rgba(34,211,238,0.75)",   // mismo color que el título (#22d3ee)
+                borderColor: "rgba(34,211,238,1)",
                 borderWidth: 1.4,
                 borderRadius: 4,
                 barThickness: 32,
