@@ -54,7 +54,7 @@ function drawRadar() {
       },
       plugins: { legend: { display: false } },
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       aspectRatio: 1, // <-- fuerza proporción cuadrada perfecta
     },
   });
