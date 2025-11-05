@@ -60,6 +60,28 @@
       </div>
     </section>
 
+    <section class="service ai-demo-block" id="ai-foodsales">
+      <h2>🍔 AI Food Sales – Agente Inteligente de Ventas</h2>
+      <p>
+        Demostración interactiva del agente de IA especializado en ventas de alimentos.
+        Escribe pedidos o preguntas como “3 paquetes de papas fritas” o “precio del queso mozzarella”.
+      </p>
+      <div class="ai-chat">
+        <div id="chat-box" class="ai-chat-box"></div>
+        <div class="ai-chat-input">
+          <input id="user-input" type="text" placeholder="Escribe tu mensaje aquí..." />
+          <button id="send-btn">Enviar</button>
+        </div>
+        <div class="ai-chat-actions">
+          <button id="clear-chat" class="ai-secondary-btn">🧹 Limpiar chat</button>
+          <button id="confirm-order" class="ai-secondary-btn">✅ Confirmar orden</button>
+        </div>
+      </div>
+      <button id="show-catalog" class="ai-btn-cat">📦 Ver catálogo disponible</button>
+      <div id="catalog-list" class="ai-catalog" style="display:none;"></div>
+    </section>
+
+
     <section id="ai-demo-carousel" class="ai-demo">
       <h2>Demos de Inteligencia Artificial</h2>
 
@@ -145,5 +167,6 @@
   <script src="js/ai-ecopredict.js" defer></script>
   <script src="js/ai-audiosense.js" defer></script>
   <script src="js/ai-inventorymanagement.js" defer></script>
+  <script src="js/ai-foodsales.js" defer></script>
 </body>
 </html>

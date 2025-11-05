@@ -761,3 +761,159 @@ html, body {
     padding-bottom: 2rem;           /* respiración inferior */
   }
 }
+
+.ai-demo-block {
+  background-color: #111827;
+  color: #f3f4f6;
+  padding: 16px;
+  margin: 18px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+  max-width: 540px;
+  font-size: 0.85rem;
+}
+
+.ai-demo-block h2 {
+  color: #00b4d8;
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 1.1rem;
+}
+
+.ai-chat-box {
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px;
+  background: #1f2937;
+  height: 210px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+.ai-chat-input {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.ai-chat-input input {
+  width: 60%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: #111;
+  color: #f3f4f6;
+  font-size: 0.85rem;
+}
+
+.ai-chat-input button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background: #00b4d8;
+  color: white;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 0.8rem;
+}
+
+.ai-btn-cat {
+  margin-top: 8px;
+  background: #00b4d8;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.ai-catalog {
+  background: #1f2937;
+  color: #f3f4f6;
+  padding: 8px;
+  margin-top: 6px;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+}
+
+.ai-catalog .item {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 4px 3px;
+  border-bottom: 1px solid #2b3441;
+  cursor: pointer;
+}
+
+.ai-catalog .item:hover {
+  background: #111827;
+}
+
+.ai-catalog .name {
+  font-weight: 600;
+}
+
+.ai-catalog .meta {
+  opacity: .9;
+  font-size: .85rem;
+}
+
+/* --- Botones secundarios (Limpiar chat / Confirmar orden) --- */
+.ai-chat-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ai-secondary-btn {
+  background-color: #111827;
+  color: #00b4d8;
+  border: 1px solid #00b4d8;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(0,180,216,0.25);
+}
+
+.ai-secondary-btn:hover {
+  background-color: #00b4d8;
+  color: #fff;
+  transform: scale(1.02);
+}
+
+
+@media (max-width: 480px) {
+  .ai-demo-block {
+    padding: 12px;
+    margin: 14px auto;
+    font-size: 0.8rem;
+    max-width: 95%;
+  }
+  .ai-demo-block h2 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .ai-chat-box {
+    height: 180px;
+    padding: 6px;
+  }
+  .ai-chat-input input {
+    width: 55%;
+    padding: 4px;
+    font-size: 0.8rem;
+  }
+  .ai-chat-input button, .ai-btn-cat, .ai-secondary-btn {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+  .ai-catalog {
+    max-height: 140px;
+    font-size: 0.8rem;
+  }
+}
