@@ -917,3 +917,17 @@ html, body {
     font-size: 0.8rem;
   }
 }
+
+/* === Centrado del botón "Ver catálogo disponible" === */
+#show-catalog {
+  display: block;
+  margin: 12px auto 0 auto; /* centra horizontalmente */
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  #show-catalog {
+    width: 90%;
+    margin-top: 10px;
+  }
+}
