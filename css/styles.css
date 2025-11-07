@@ -1090,3 +1090,16 @@ html, body {
     display: inline-block !important;
   }
 }
+
+/* === FIX DEFINITIVO: centra el botón "Ver catálogo disponible" === */
+#show-catalog {
+  display: block;
+  margin: 0.8rem auto;           /* lo centra horizontalmente */
+  text-align: center;
+}
+
+/* Asegura que el contenedor no lo empuje a un lado */
+.ai-demo-block,
+.ai-chat-actions {
+  text-align: center;
+}
