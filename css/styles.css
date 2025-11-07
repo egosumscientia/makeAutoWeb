@@ -1043,3 +1043,16 @@ html, body {
     padding: 0.7rem 1.2rem;
   }
 }
+
+/* Fix: que el bloque GPT tenga el mismo “arranque” que el OS */
+.ai-assistant h2 {
+  margin: 0 0 0.8rem 0 !important;      /* elimina el margen superior del h2 */
+  margin-block-start: 0 !important;     /* refuerzo contra estilos del UA */
+}
+
+/* Normaliza el padding vertical del contenedor GPT */
+.ai-assistant {
+  padding: 16px !important;             /* igual a #makeautomatic-os */
+  border-top: none !important;          /* opcional: evita “banda” visual arriba */
+  margin: 18px auto !important;         /* separación externa uniforme */
+}
