@@ -986,3 +986,60 @@ html, body {
   text-align: center;
 }
 
+.service p {
+  text-align: center;
+}
+
+.ai-assistant {
+  background-color: var(--color-bg) !important;
+}
+
+.ai-assistant {
+  background-color: var(--color-surface) !important;
+  max-width: 540px;
+  margin: 0 auto 2rem auto;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+}
+
+#makeautomatic-os p,
+#makeautomatic-os li {
+  color: var(--color-text-muted) !important;
+}
+
+#makeautomatic-os ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+#makeautomatic-os li {
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+#makeautomatic-os li {
+  text-align: center;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+#makeautomatic-os p,
+#makeautomatic-os li {
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+}
+
+@media (max-width: 600px) {
+  .ai-assistant .ai-btn {
+    max-width: 280px;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    font-size: 0.9rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
