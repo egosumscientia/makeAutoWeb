@@ -16,50 +16,46 @@ document.addEventListener("DOMContentLoaded", async () => {
   const synonyms = await loadSynonyms("assets/data/synonyms.json");
 
   // -------- Catálogo UI --------
-const showBtn = document.getElementById("show-catalog");
-const listEl  = document.getElementById("catalog-list");
+  const showBtn = document.getElementById("show-catalog");
+  const listEl = document.getElementById("catalog-list");
 
-// render simple del catálogo
-function renderCatalog(items){
-  listEl.innerHTML = items.map(p => `
-    <div class="item" data-name="${p.nombre}">
-      <div>
-        <div class="name">${p.nombre}</div>
-        <div class="meta">${p.formato} · ${p.categoria} · ${p.sku}</div>
+  // render simple del catálogo
+  function renderCatalog(items) {
+    listEl.innerHTML = items
+      .map(
+        (p) => `
+      <div class="item" data-name="${p.nombre}">
+        <div>
+          <div class="name">${p.nombre}</div>
+          <div class="meta">${p.formato} · ${p.categoria} · ${p.sku}</div>
+        </div>
+        <div class="meta">${Number(p.precio).toLocaleString()} COP</div>
       </div>
-      <div class="meta">${Number(p.precio).toLocaleString()} COP</div>
-    </div>
-  `).join("");
+    `
+      )
+      .join("");
 
-  // clic: pasar el nombre al input sin borrar el texto previo
-    listEl.querySelectorAll(".item").forEach(row => {
-    row.addEventListener("click", () => {
+    // clic: reemplazar el texto del input por el nombre del producto
+    listEl.querySelectorAll(".item").forEach((row) => {
+      row.addEventListener("click", () => {
         const name = row.getAttribute("data-name");
-
-        // si el input ya tiene texto, agregamos el nuevo nombre al final
-        if (input.value.trim()) {
-        input.value = input.value.trim() + " y " + name;
-        } else {
         input.value = name;
-        }
-
         input.focus();
+      });
     });
-    });
-}
-
-// toggle abrir/cerrar
-showBtn.addEventListener("click", ()=>{
-  if(listEl.style.display === "none"){
-    renderCatalog(catalog);
-    listEl.style.display = "block";
-    showBtn.textContent = "🔽 Ocultar catálogo";
-  }else{
-    listEl.style.display = "none";
-    showBtn.textContent = "📦 Ver catálogo disponible";
   }
-});
 
+  // toggle abrir/cerrar catálogo
+  showBtn.addEventListener("click", () => {
+    if (listEl.style.display === "none") {
+      renderCatalog(catalog);
+      listEl.style.display = "block";
+      showBtn.textContent = "🔽 Ocultar catálogo";
+    } else {
+      listEl.style.display = "none";
+      showBtn.textContent = "📦 Ver catálogo disponible";
+    }
+  });
 
   // Mostrar mensajes
   function addMessage(sender, text) {
@@ -89,30 +85,47 @@ showBtn.addEventListener("click", ()=>{
     input.value = "";
   }
 
-    // -------- BOTONES EXTRA --------
+  // -------- BOTONES EXTRA --------
   const clearBtn = document.getElementById("clear-chat");
   const confirmBtn = document.getElementById("confirm-order");
 
   // Limpiar chat
   clearBtn.addEventListener("click", () => {
     chatBox.innerHTML = "";
+    window.__cart = []; // limpiar carrito
     addMessage("bot", "🧹 Chat limpiado. Puedes comenzar un nuevo pedido.");
   });
 
   // Confirmar orden
   confirmBtn.addEventListener("click", () => {
-    const messages = chatBox.innerHTML.trim();
-    if (!messages) {
+    const cart = window.__cart || [];
+    if (cart.length === 0) {
       addMessage("bot", "⚠️ No hay ningún pedido para confirmar.");
       return;
     }
 
+    const totalFinal = cart.reduce((s, i) => s + i.subtotal, 0);
     const orderId = "ORD-" + Math.floor(Math.random() * 1000000);
-        addMessage(
-        "bot",
-        `✅ <strong>Orden confirmada.</strong><br>ID de orden: <strong>${orderId}</strong><br>Tu solicitud ha sido registrada correctamente.`
-        );
-    });
+
+    const resumen = cart
+      .map(
+        (i) =>
+          `${i.nombre} (${i.cantidad}) × ${i.precio.toLocaleString()} = ${i.subtotal.toLocaleString()} COP`
+      )
+      .join("<br>");
+
+    addMessage(
+      "bot",
+      `
+✅ <strong>Orden confirmada.</strong><br>
+ID de orden: <strong>${orderId}</strong><br>
+${resumen}<br>
+💰 <strong>Total final:</strong> ${totalFinal.toLocaleString()} COP
+  `
+    );
+
+    window.__cart = [];
+  });
 });
 
 // =================== FUNCIONES AUXILIARES ===================
@@ -166,62 +179,65 @@ async function loadSynonyms(url) {
   }
 }
 
-// =================== MOTOR PRINCIPAL ===================
+// carrito global
+window.__cart = window.__cart || [];
 
+// función principal
 function processMessage(msg, catalog, synonyms) {
   msg = msg.toLowerCase();
-
   const results = [];
 
-  // Buscar múltiples productos
+  // buscar productos mencionados (más flexible)
   for (const [nombre, aliasList] of Object.entries(synonyms)) {
-    if (aliasList.some(alias => msg.includes(alias.toLowerCase()))) {
-      const foundProduct = catalog.find(
-        p => p.nombre.toLowerCase() === nombre.toLowerCase()
-      );
-      if (foundProduct) results.push(foundProduct);
+    for (const alias of aliasList) {
+      if (msg.includes(alias.toLowerCase())) {
+        const found = catalog.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
+        if (found && !results.some(r => r.nombre === found.nombre)) {
+          results.push(found);
+        }
+        break; // deja de revisar más alias del mismo producto
+      }
     }
   }
 
-  if (results.length === 0) {
-    return "No reconozco esos productos en el catálogo. Prueba con otros nombres o categorías.";
-  }
+  if (results.length === 0)
+    return "No reconozco esos productos en el catálogo.";
 
-  // Buscar cantidades (si hay varias, se asocian en orden de aparición)
-  const qtyMatches = msg.match(/\d+/g) || [];
-  const quantities = qtyMatches.map(q => parseInt(q));
+  // buscar cantidad por producto
+  const quantities = [];
+  for (const [nombre, aliasList] of Object.entries(synonyms)) {
+    for (const alias of aliasList) {
+      const re = new RegExp(`(\\d+(?:[\\.,]\\d+)?)\\s*(?:${alias})`, "i");
+      const m = msg.match(re);
+      if (m) {
+        quantities.push(parseFloat(m[1].replace(",", ".")));
+        break;
+      }
+    }
+  }
+  if (quantities.length === 0) quantities.push(1);
 
   let totalGlobal = 0;
   let reply = "";
 
   results.forEach((prod, idx) => {
     const quantity = quantities[idx] || 1;
-    const price = prod.precio * quantity;
-    let discountApplied = false;
-    let discountPercent = 0;
+    const subtotal = prod.precio * quantity;
+    totalGlobal += subtotal;
 
-    const descMatch = prod.descuento.match(/(\d+)% a partir de (\d+)/);
-    if (descMatch) {
-      discountPercent = parseInt(descMatch[1]);
-      const minQty = parseInt(descMatch[2]);
-      if (quantity >= minQty) discountApplied = true;
-    }
-
-    const finalPrice = discountApplied
-      ? price * (1 - discountPercent / 100)
-      : price;
-
-    totalGlobal += finalPrice;
+    // acumular en carrito
+    window.__cart.push({
+      nombre: prod.nombre,
+      cantidad: quantity,
+      precio: prod.precio,
+      subtotal: subtotal,
+    });
 
     reply += `
 <strong>Producto:</strong> ${prod.nombre}<br>
-<strong>Cantidad:</strong> ${quantity} ${prod.formato}<br>
+<strong>Cantidad:</strong> ${quantity}<br>
 <strong>Precio unitario:</strong> ${prod.precio.toLocaleString()} COP<br>
-<strong>Total:</strong> ${finalPrice.toLocaleString()} COP<br>
-${discountApplied
-  ? `✅ Descuento aplicado: ${discountPercent}%`
-  : `ℹ️ Descuento disponible: ${prod.descuento}`
-}<br><br>`;
+<strong>Total:</strong> ${subtotal.toLocaleString()} COP<br><br>`;
   });
 
   reply += `<strong>💰 Total general:</strong> ${totalGlobal.toLocaleString()} COP`;
