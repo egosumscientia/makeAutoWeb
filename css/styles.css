@@ -1103,3 +1103,51 @@ html, body {
 .ai-chat-actions {
   text-align: center;
 }
+
+/* === FIX: chat y catálogo alineados a la izquierda === */
+#ai-foodsales .ai-chat,
+#ai-foodsales .ai-chat-box,
+#ai-foodsales .ai-chat-input,
+#ai-foodsales .ai-catalog {
+  text-align: left !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+/* === FIX FINAL: solo chat y catálogo alineados a la izquierda === */
+#ai-foodsales .ai-chat-box,
+#ai-foodsales .ai-catalog {
+  text-align: left !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+/* Input y botones permanecen centrados */
+#ai-foodsales .ai-chat-input,
+#ai-foodsales .ai-chat-actions,
+#ai-foodsales #show-catalog {
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+/* Asegura que el catálogo aparezca alineado al borde izquierdo del bloque */
+#ai-foodsales #catalog-list {
+  display: block;
+  text-align: left !important;
+  margin-left: 0 !important;
+}
+
+/* === FIX FINAL CHAT REAL: mensajes alineados a la izquierda === */
+#ai-foodsales .ai-chat-box {
+  text-align: left !important;
+}
+
+/* Cada mensaje del usuario o del bot se muestra alineado al margen izquierdo */
+#ai-foodsales .ai-chat-box p,
+#ai-foodsales .ai-chat-box div,
+#ai-foodsales .ai-chat-box span {
+  text-align: left !important;
+  display: block !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
