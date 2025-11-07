@@ -1068,3 +1068,25 @@ html, body {
   }
 }
 
+/* === FIX botón Enviar en móviles === */
+@media (max-width: 600px) {
+  .ai-demo .ai-input button {
+    width: auto !important;
+    min-width: 120px !important;
+    max-width: 180px !important;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+    display: inline-block !important;
+  }
+}
+
+/* === FIX botón "Ver catálogo disponible" en móviles === */
+@media (max-width: 600px) {
+  #show-catalog {
+    width: auto !important;
+    max-width: 260px !important;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+    display: inline-block !important;
+  }
+}
