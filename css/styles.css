@@ -931,3 +931,22 @@ html, body {
     margin-top: 10px;
   }
 }
+
+/* Ajuste específico para el botón de descarga del OS */
+#makeautomatic-os .ai-btn {
+  display: inline-block;
+  width: auto;
+  padding: 0.8rem 1.8rem;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+/* Centrar y limitar ancho en móviles */
+@media (max-width: 600px) {
+  #makeautomatic-os .ai-btn {
+    max-width: 80%;
+    font-size: 0.9rem;
+    padding: 0.7rem 1.5rem;
+  }
+}
+
