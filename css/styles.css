@@ -1056,3 +1056,15 @@ html, body {
   border-top: none !important;          /* opcional: evita “banda” visual arriba */
   margin: 18px auto !important;         /* separación externa uniforme */
 }
+
+/* === FIX para botón makeAutomaticGPT en móviles === */
+@media (max-width: 600px) {
+  .ai-btn {
+    width: auto !important;
+    max-width: 260px !important;
+    padding: 0.7rem 1.3rem !important;
+    font-size: 0.9rem !important;
+    display: inline-block !important;
+  }
+}
+
