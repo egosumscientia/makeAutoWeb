@@ -161,3 +161,13 @@ button:hover{background-color:#009999}
 @media(max-width:600px){.modal-content{width:90%;max-width:320px;max-height:65vh;padding:.8rem;gap:.5rem}.product-card{font-size:.8rem;padding:.5rem}.product-card h3{font-size:.9rem}.close-btn{font-size:.8rem;padding:.4rem 1rem}}
 html{-webkit-text-size-adjust:100%}
 body.modal-open{overflow:hidden!important;height:100vh}
+/* --- Fix texto recortado en móviles --- */
+#ai-demo-carousel .carousel-item:nth-child(3) p {
+  margin-top: 0.6rem;   /* separa del borde superior */
+  line-height: 1.5;     /* mejora el render de texto */
+}
+
+#ai-demo-carousel .carousel-item:nth-child(3) {
+  padding-top: 0.5rem;  /* evita corte en algunos navegadores Android */
+}
+
