@@ -163,6 +163,25 @@
         makeAutomaticGPT
       </a>
     </section>
+
+    <section class="ai-demo-block" id="makeautomatic-cloud-demo">
+      <h2>Cloud Demo</h2>
+      <p>
+        Demostración interactiva del sistema en la nube desarrollado con
+        <strong>AWS Lambda</strong>, <strong>API Gateway</strong> y <strong>DynamoDB</strong>.
+        Muestra productos y servicios gestionados desde infraestructura sin servidor.
+      </p>
+
+      <button id="cloud-btn" class="ai-btn">Ver Servicios en la Nube</button>
+
+      <div id="cloud-modal" class="modal">
+        <div class="modal-content">
+          <h3>Productos Cloud</h3>
+          <div id="product-list"></div>
+          <button id="close-cloud-modal" class="close-btn">Cerrar</button>
+        </div>
+      </div>
+    </section>
   
     <footer class="footer">
       <p class="footer-slogan">
@@ -187,5 +206,6 @@
   <script src="js/ai-audiosense.js" defer></script>
   <script src="js/ai-inventorymanagement.js" defer></script>
   <script src="js/ai-foodsales.js" defer></script>
+  <script src="js/cloud-demo.js" defer></script>
 </body>
 </html>

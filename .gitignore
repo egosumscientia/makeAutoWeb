@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.egg-info/
+*.egg
+*.env
+*.venv
+env/
+venv/
+ENV/
+VENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# HTML/CSS/JS
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.map
+dist/
+build/
+node_modules/
+bower_components/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+*.terraform/
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+*.auto.tfvars
+*.auto.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# VS Code
+.vscode/
+
+# OS/System
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+htmlcov/
+
+# Others
+.cache/
+__snapshots__/

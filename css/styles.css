@@ -1151,3 +1151,172 @@ html, body {
   margin-left: 0 !important;
   margin-right: auto !important;
 }
+
+/*cloud-demo */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0a0f0f;
+  color: #e0ffff;
+  text-align: center;
+}
+header {
+  padding: 2rem;
+  background-color: #071b1b;
+}
+h1 {
+  color: #00ffff;
+}
+button {
+  background-color: #00b3b3;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+button:hover {
+  background-color: #009999;
+}
+
+/* --- Modal compacto tipo ventana flotante (versión final) --- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background-color: #102020;
+  padding: 1.5rem 1.2rem 1.8rem; /* top, sides, bottom */
+  border-radius: 12px;
+  width: 85%;
+  max-width: 340px;     /* tamaño equilibrado */
+  max-height: 50vh;     /* menos alto, más tipo ventana */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
+  opacity: 0;
+  transform: scale(0.96);
+  transition: all 0.25s ease-out;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  background: rgba(16, 32, 32, 0.85);
+  border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+/* efecto al abrir */
+.modal[style*="display: flex"] .modal-content {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.product-card {
+  background-color: #0f1f1f;
+  border: 1px solid #00cccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.product-card h3 {
+  color: #00ffff;
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.close-btn {
+  background-color: #ff3333;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+  align-self: center;
+  margin-top: 0.5rem;
+  transition: background 0.2s ease-in-out;
+}
+
+.close-btn:hover {
+  background-color: #cc0000;
+}
+
+/* mejora en móviles */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+    max-width: 320px;
+    max-height: 55vh;
+    padding: 0.8rem;
+    gap: 0.5rem;
+  }
+  .product-card {
+    font-size: 0.8rem;
+  }
+  .product-card h3 {
+    font-size: 0.9rem;
+  }
+}
+
+/* === FIX FINAL: texto gris en Cloud Demo === */
+#makeautomatic-cloud-demo p,
+#makeautomatic-cloud-demo strong {
+  color: #94a3b8 !important;  /* gris suave como los demás bloques */
+}
+/* === FIX FINAL: tamaño y espaciado uniforme en Cloud Demo === */
+#makeautomatic-cloud-demo p {
+  font-size: 0.95rem !important;   /* igual que los otros bloques */
+  line-height: 1.6 !important;     /* mismo interlineado */
+  margin-bottom: 0.6rem !important;
+  text-align: center !important;
+}
+
+/* Mejora para móviles */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+    max-width: 320px;
+    max-height: 65vh;
+    padding: 0.8rem;
+    gap: 0.5rem;
+  }
+
+  .product-card {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+
+  .product-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .close-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body.modal-open {
+  overflow: hidden !important;
+  height: 100vh;
+}
