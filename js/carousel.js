@@ -52,7 +52,9 @@ window.addEventListener("load", () => {
   const active = document.querySelector(".carousel-item.active") || document.querySelector(".carousel-item");
   if (!car || !active) return;
   // Medimos una base razonable (sin animaciones); si prefieres fija, comenta estas dos líneas
-  const base = Math.max(520, Math.min(700, active.getBoundingClientRect().height));
+  // usa exactamente la altura del slide activo, sin aumentarla
+  const base = active.getBoundingClientRect().height;
+
   car.style.setProperty("--carousel-base-h", base + "px");
 });
 
