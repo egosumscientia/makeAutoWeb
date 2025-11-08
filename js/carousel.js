@@ -51,12 +51,12 @@ window.addEventListener("load", () => {
   const car = document.querySelector(".carousel");
   const active = document.querySelector(".carousel-item.active") || document.querySelector(".carousel-item");
   if (!car || !active) return;
-  // Medimos una base razonable (sin animaciones); si prefieres fija, comenta estas dos líneas
-  // usa exactamente la altura del slide activo, sin aumentarla
-  const base = active.getBoundingClientRect().height;
 
+  // Altura flexible: se ajusta al contenido, nunca corta ni añade margen extra
+  const base = active.scrollHeight;
   car.style.setProperty("--carousel-base-h", base + "px");
 });
+
 
 // Si quieres que se reajuste al rotar el móvil, descomenta:
 /*
