@@ -58,8 +58,19 @@ document.addEventListener("slideChanged", (e) => {
   container.appendChild(canvas);
 
   function resizeCanvas() {
-    canvas.width = Math.min(container.clientWidth * 0.9, 420);
-    canvas.height = Math.min(container.clientHeight * 0.45 || 180, 180);
+    const w = container.clientWidth;
+    canvas.width = Math.min(w * 0.9, 380);
+
+    if (window.innerWidth < 600) {
+      // móviles
+      canvas.height = 130;
+    } else if (window.innerWidth < 1024) {
+      // tablet
+      canvas.height = 150;
+    } else {
+      // escritorio
+      canvas.height = 170;
+    }
   }
 
   resizeCanvas();

@@ -1,14 +1,16 @@
 /**
- * AI-AudioSense – Fondo animado de ondas (solo inicio)
- * makeAutomatic – 2025
- * Onda visual hasta que se pulse "Analizar Audio"
+ * AI-AudioSense – demo mínimo funcional
+ * Reemplaza el archivo completo con este contenido.
  */
 
 document.addEventListener("slideChanged", (e) => {
-  if (e.detail.index !== 2) return;
+  // Este demo vive en el slide #3 (índice 2)
+  if (!e || e.detail?.index !== 2) return;
 
   const container = document.querySelector(".carousel-item:nth-child(3)");
   if (!container) return;
+
+  // Render limpio SIEMPRE que entres al slide (evita duplicados)
   container.innerHTML = "";
 
   // ===== Título =====
@@ -45,62 +47,16 @@ document.addEventListener("slideChanged", (e) => {
   // ===== Canvas =====
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
-  canvas.style.display = "block";
-  canvas.style.margin = "0 auto";
-  canvas.style.background = "#0f172a";
-  canvas.style.borderRadius = "8px";
-  canvas.style.boxShadow = "0 0 8px rgba(0,0,0,0.35)";
+  Object.assign(canvas.style, {
+    display: "block",
+    margin: "0 auto",
+    background: "#0f172a",
+    borderRadius: "8px",
+    boxShadow: "0 0 8px rgba(0,0,0,0.35)",
+  });
   container.appendChild(canvas);
 
-  function resizeCanvas() {
-    canvas.width = Math.min(container.clientWidth * 0.9, 420);
-    canvas.height = Math.min(container.clientHeight * 0.45 || 180, 180);
-  }
-
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-
-  // ===== Animación de onda inicial =====
-  let phase = 0;
-  let running = true;
-
-  function drawWave() {
-    if (!running) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const midY = canvas.height / 2;
-    const amp = canvas.height / 6;
-    const freq = 0.03;
-
-    // onda principal celeste
-    ctx.beginPath();
-    for (let x = 0; x < canvas.width; x++) {
-      const y = midY + Math.sin(x * freq + phase) * amp;
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.strokeStyle = "rgba(34,211,238,0.6)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // onda secundaria verde
-    ctx.beginPath();
-    for (let x = 0; x < canvas.width; x++) {
-      const y = midY + Math.cos(x * freq * 1.2 + phase + 1) * (amp * 0.6);
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.strokeStyle = "rgba(16,185,129,0.4)";
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    phase += 0.05;
-    requestAnimationFrame(drawWave);
-  }
-
-  drawWave();
-
-  // ===== Caja Diagnóstico =====
+  // ===== Caja de resultados =====
   const kpiBox = document.createElement("div");
   Object.assign(kpiBox.style, {
     margin: "1rem auto 0 auto",
@@ -123,30 +79,75 @@ document.addEventListener("slideChanged", (e) => {
   });
   container.appendChild(resultText);
 
-  // ===== Dibuja barras =====
+  // ===== Tamaño responsivo del canvas =====
+  function resizeCanvas() {
+    const w = container.clientWidth || 400;
+    canvas.width = Math.min(w * 0.9, 360);
+    if (window.innerWidth < 600) canvas.height = 120;       // móvil
+    else if (window.innerWidth < 1024) canvas.height = 140; // tablet
+    else canvas.height = 160;                                // desktop
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  // ===== Animación de ondas inicial =====
+  let running = true;
+  let phase = 0;
+  function drawWave() {
+    if (!running) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const midY = canvas.height / 2;
+    const amp = canvas.height / 6;
+    const f = 0.03;
+
+    // onda 1
+    ctx.beginPath();
+    for (let x = 0; x < canvas.width; x++) {
+      const y = midY + Math.sin(x * f + phase) * amp;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = "rgba(34,211,238,0.6)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // onda 2
+    ctx.beginPath();
+    for (let x = 0; x < canvas.width; x++) {
+      const y = midY + Math.cos(x * f * 1.2 + phase + 1) * (amp * 0.6);
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = "rgba(16,185,129,0.4)";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    phase += 0.05;
+    requestAnimationFrame(drawWave);
+  }
+  drawWave();
+
+  // ===== Barras =====
   function drawBars(labels, values) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const padding = 40;
     const chartW = canvas.width - padding * 2;
     const chartH = canvas.height - 50;
-    const barGap = 10;
-    const barWidth = chartW / values.length - barGap;
-    const maxVal = Math.max(...values) * 1.1;
+    const gap = 10;
+    const bw = chartW / values.length - gap;
+    const maxVal = Math.max(...values, 1) * 1.1;
 
     ctx.font = `${Math.max(9, canvas.width / 45)}px Segoe UI`;
     ctx.textAlign = "center";
 
-    values.forEach((val, i) => {
-      const x = padding + i * (barWidth + barGap);
-      const h = (val / maxVal) * chartH;
+    values.forEach((v, i) => {
+      const x = padding + i * (bw + gap);
+      const h = (v / maxVal) * chartH;
       const y = canvas.height - 30 - h;
-
       ctx.fillStyle = "rgba(34,211,238,0.8)";
-      ctx.fillRect(x, y, barWidth, h);
+      ctx.fillRect(x, y, bw, h);
       ctx.strokeStyle = "rgba(34,211,238,1)";
-      ctx.strokeRect(x, y, barWidth, h);
+      ctx.strokeRect(x, y, bw, h);
       ctx.fillStyle = "#e2e8f0";
-      ctx.fillText(labels[i], x + barWidth / 2, canvas.height - 15);
+      ctx.fillText(labels[i], x + bw / 2, canvas.height - 15);
     });
 
     ctx.fillStyle = "#94a3b8";
@@ -154,9 +155,9 @@ document.addEventListener("slideChanged", (e) => {
     ctx.fillText("Nivel (dB)", canvas.width / 2, canvas.height - 3);
   }
 
-  // ===== Evento botón =====
+  // ===== Acción del botón =====
   button.addEventListener("click", async () => {
-    running = false; // detener la onda
+    running = false;                     // detiene ondas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     button.disabled = true;
     button.textContent = "Analizando...";
@@ -185,6 +186,10 @@ document.addEventListener("slideChanged", (e) => {
         message,
       } = data;
 
+      // asegura que título y descripción estén visibles
+      title.style.display = "block";
+      desc.style.display = "block";
+
       drawBars(bands, levels_db);
 
       const color = anomaly_detected ? "#f87171" : "#10b981";
@@ -199,9 +204,8 @@ document.addEventListener("slideChanged", (e) => {
           <li>📊 <b>Estado:</b> <span style="color:${color}; font-weight:600;">${label}</span></li>
         </ul>`;
       kpiBox.style.display = "block";
-
-      resultText.innerHTML = `<span style='color:${color};'>${message}</span>`;
-      button.textContent = "Analizar";
+      resultText.innerHTML = `<span style="color:${color};">${message}</span>`;
+      button.textContent = "Analizar Audio";
       button.disabled = false;
     } catch (err) {
       console.error(err);
