@@ -1,1322 +1,164 @@
+/* makeAutomatic styles.css – versión estable */
 :root {
-  --color-bg: #0A0F1D;
-  --color-surface: #111827;
-  --color-primary: #22D3EE;
-  --color-secondary: #3B82F6;
-  --color-text-main: #F1F5F9;
-  --color-text-muted: #94A3B8;
-  --color-accent: #10B981;
-  --color-accent-hover: #059669;
-  --color-whatsapp: #25D366;
-  --color-whatsapp-hover: #128C7E;
+  --color-bg:#0A0F1D;
+  --color-surface:#111827;
+  --color-primary:#22D3EE;
+  --color-secondary:#3B82F6;
+  --color-text-main:#F1F5F9;
+  --color-text-muted:#94A3B8;
+  --color-accent:#10B981;
+  --color-accent-hover:#059669;
+  --color-whatsapp:#25D366;
+  --color-whatsapp-hover:#128C7E;
 }
+html,body{margin:0;padding:0;height:100%;background-color:var(--color-bg);color:var(--color-text-main);font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+header{background-color:transparent;padding:2rem 1rem;text-align:center}
+header img{max-width:150px;margin-bottom:1rem}
+header h1{margin:0;font-size:2rem}
+.intro{padding:2rem 1rem;text-align:center;max-width:800px;margin:auto}
+.services{display:flex;flex-direction:column;align-items:center;gap:2rem;padding:2rem 1rem;max-width:1000px;margin:auto}
+.service{background-color:transparent;padding:1.5rem;border-radius:0;width:100%;box-shadow:none;border:none}
+.service h2{margin-top:0;color:var(--color-primary)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;padding:2rem 1rem;max-width:1000px;margin:auto}
+.gallery img{width:100%;height:200px;object-fit:cover;border-radius:8px}
+.gallery img.logo{object-fit:contain;background-color:var(--color-bg);padding:10px}
+footer{text-align:center;padding:2rem 1rem;margin-top:3rem;border-top:1px solid rgba(255,255,255,0.1);background-color:#0a0f1a;color:#ccc;font-family:'Inter',sans-serif}
+.footer-slogan{color:#00d4d4;font-size:1rem;margin-bottom:.5rem;letter-spacing:.5px}
+.footer-copy{font-size:.9rem;line-height:1.4}
+.footer .brand{color:#00d4d4;font-weight:600}
+.contact-info{margin-top:1rem;font-size:.95rem;color:var(--color-text-muted)}
+.portfolio{margin-top:2rem}
+.portfolio-btn{display:inline-block;background-color:var(--color-primary);color:#fff;padding:.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:bold;transition:background-color .3s}
+.portfolio-btn:hover{background-color:var(--color-secondary)}
+.whatsapp-btn{position:fixed;bottom:20px;right:20px;background-color:var(--color-whatsapp);color:#fff;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 4px 8px rgba(0,0,0,.2);z-index:100;transition:all .3s;text-decoration:none}
+.whatsapp-btn:hover{background-color:var(--color-whatsapp-hover);transform:scale(1.1)}
+.ai-demo{max-width:480px;margin:60px auto;padding:24px;background:#0d1117;color:var(--color-text-main);border-radius:12px;box-shadow:0 0 20px rgba(0,0,0,.3);font-family:'Roboto Mono',monospace;text-align:center;overflow:hidden}
+.ai-demo canvas{max-width:400px;max-height:400px;width:100%;height:auto}
+.ai-demo .ai-input{display:flex;gap:8px;margin-top:16px;justify-content:center;flex-wrap:wrap}
+.ai-demo input[type=text],.ai-demo input[type=number],.ai-demo input[type=email],.ai-demo input[type=password]{flex:1;padding:8px;border:none;border-radius:8px;background:#21262d;color:#fff}
+.ai-demo input[type=file]{display:none!important}
+.ai-demo button{background:var(--color-accent);color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .3s}
+.ai-demo button:hover{background:var(--color-accent-hover)}
+.ai-demo #reply{margin-top:12px;font-weight:bold}
+.ai-demo #explanation{font-size:.85em;color:var(--color-text-muted)}
+.intro,.contact-info,.gallery{background-color:transparent}
+.content{background-color:var(--color-bg);color:var(--color-text-main)}
+/* Carrusel principal */
+#ai-demo-carousel{background:#0d1117;color:var(--color-text-main);border-radius:12px;box-shadow:0 0 20px rgba(0,0,0,.3);padding:1.5rem 0;max-width:540px;margin:2rem auto;text-align:center}
+#ai-demo-carousel h2{color:var(--color-primary);font-size:1.4rem;margin-bottom:1rem}
+#ai-demo-carousel .carousel{position:relative;overflow:hidden;width:100%;max-width:480px;margin:0 auto}
 
-body {
-  margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--color-bg);
-  color: var(--color-text-main);
-}
-
-header {
-  background-color: transparent;
-  padding: 2rem 1rem;
-  text-align: center;
-}
-
-header img {
-  max-width: 150px;
-  margin-bottom: 1rem;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-
-.intro {
-  padding: 2rem 1rem;
-  text-align: center;
-  max-width: 800px;
-  margin: auto;
-}
-
-.services {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem 1rem;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.service {
-  background-color: transparent;
-  padding: 1.5rem;
-  border-radius: 0;
-  width: 100%;
-  box-shadow: none;
-  border: none;
-}
-
-.service h2 {
-  margin-top: 0;
-  color: var(--color-primary);
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 2rem 1rem;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.gallery img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.gallery img.logo {
-  object-fit: contain;
-  background-color: var(--color-bg);
-  padding: 10px;
-}
-
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  margin-top: 3rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: #0a0f1a;
-  color: #cccccc;
-  font-family: 'Inter', sans-serif;
-}
-
-.footer-slogan {
-  color: #00d4d4;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.5px;
-}
-
-.footer-copy {
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-.footer .brand {
-  color: #00d4d4;
-  font-weight: 600;
-}
-
-
-.contact-info {
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
-}
-
-.portfolio {
-  margin-top: 2rem;
-}
-
-.portfolio-btn {
-  display: inline-block;
-  background-color: var(--color-primary);
-  color: white;
-  padding: 0.8rem 1.2rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.portfolio-btn:hover {
-  background-color: var(--color-secondary);
-}
-
-/* WhatsApp Button */
-.whatsapp-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--color-whatsapp);
-  color: white;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  text-align: center;
-  font-size: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.whatsapp-btn:hover {
-  background-color: var(--color-whatsapp-hover);
-  transform: scale(1.1);
-}
-
-.whatsapp-btn::before {
-  content: "WhatsApp";
-  font-size: 0;
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.ai-demo {
-  max-width: 480px;
-  margin: 60px auto;
-  padding: 24px;
-  background: #0d1117;
-  color: var(--color-text-main);
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  font-family: 'Roboto Mono', monospace;
-  text-align: center;
-}
-
-.ai-demo canvas {
-  max-width: 400px;
-  max-height: 400px;
-  width: 100%;
-  height: auto;
-}
-
-
-.ai-demo .ai-input {
-  display: flex;
-  gap: 8px;
-  margin-top: 16px;
-  justify-content: center;
-}
-
-.ai-demo input[type="text"],
-.ai-demo input[type="number"],
-.ai-demo input[type="email"],
-.ai-demo input[type="password"] {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  border-radius: 8px;
-  background: #21262d;
-  color: white;
-}
-
-/* Oculta el input de archivos para usar el botón personalizado */
-.ai-demo input[type="file"] {
-  display: none !important;
-}
-
-
-.ai-demo button {
-  background: var(--color-accent);
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.ai-demo button:hover {
-  background: var(--color-accent-hover);
-}
-
-.ai-demo #reply {
-  margin-top: 12px;
-  font-weight: bold;
-}
-
-.ai-demo #explanation {
-  font-size: 0.85em;
-  color: var(--color-text-muted);
-}
-
-.intro,
-.contact-info,
-.gallery {
-  background-color: transparent;
-}
-
-html, body {
-  height: 100%;
-  background-color: var(--color-bg);
-}
-
-.content {
-  background-color: var(--color-bg);
-  color: var(--color-text-main);
-}
-
-/* === Carousel Section FIX para desplazamiento (No usar display: none) === */
-.carousel {
+/* Fix carrusel */
+#ai-demo-carousel .carousel {
   position: relative;
-  overflow: hidden;
+  overflow: hidden;       /* se mantiene aquí */
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
 }
 
-.carousel-inner {
-  display: flex; /* CRUCIAL: Muestra los slides uno al lado del otro */
+#ai-demo-carousel .carousel-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  width: auto;            /* antes 100% -> rompe el translateX */
+  overflow: visible;      /* no ocultes la pista */
   transition: transform 0.6s ease-in-out;
+  will-change: transform;
 }
 
-.carousel-item {
-  min-width: 100%; /* CRUCIAL: Cada slide ocupa el 100% del ancho del carrusel */
+#ai-demo-carousel .carousel-item {
+  flex: 0 0 100%;         /* 1 slide por vista */
+  width: 100%;
   box-sizing: border-box;
-  text-align: center;
-  flex-shrink: 0; /* Asegura que no se encoja */
-}
-
-.carousel-item img.carousel-image {
-  width: 100%;
-  max-height: 400px;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-/* ✅ Flechas visibles, centradas y dentro del área */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--color-accent);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  font-size: 20px;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  min-height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-}
-
-/* Centrado visual y márgenes seguros dentro del ancho */
-.carousel-btn.prev {
-  left: 10px;
-}
-
-.carousel-btn.next {
-  right: 10px;
-}
-
-/* Hover brillante sin desplazarlas */
-.carousel-btn:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Títulos de cada demo */
-.carousel h3 {
-  color: var(--color-primary);
-  margin-bottom: 8px;
-}
-
-/* Oculta imágenes rotas sin eliminar el espacio del contenedor */
-.carousel-item img {
-  display: block;
-  margin: 0 auto 12px auto;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-/* Si la imagen no carga, se oculta automáticamente */
-.carousel-item img:before,
-.carousel-item img:after {
-  content: "";
-}
-
-.carousel-item img[src=""],
-.carousel-item img:not([src]),
-.carousel-item img[src="demo2.png"],
-.carousel-item img[src="demo3.png"] {
-  display: none;
-}
-
-
-
-/* === FIX para móviles: aislar canvas y evitar desbordes === */
-@media (max-width: 768px) {
-  .ai-demo {
-    width: 100%;
-    max-width: 100%;
-    padding: 16px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .ai-demo canvas {
-    width: 100% !important;
-    height: auto !important;
-    max-width: 100% !important;
-    max-height: none !important;
-    display: block;
-    margin: 0 auto !important;
-  }
-
-  .carousel-item {
-    overflow: hidden;
-  }
-
-  .carousel-inner {
-    overflow: hidden;
-  }
-}
-
-#ecoCanvas {
-  aspect-ratio: 4 / 3;
-  width: 100%;
-  display: block;
-  min-height: 200px;
-}
-
-/* === FIX FINAL UNIFICADO (no duplica nada y mantiene el diseño) === */
-
-.carousel {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-.carousel-inner {
-  display: flex;
-  width: 100%;
-  transition: transform 0.6s ease-in-out;
-  overflow: hidden; /* evita que se vea el siguiente slide */
-}
-
-.carousel-item {
-  flex: 0 0 100%;          /* cada slide ocupa 100% */
-  max-width: 100%;
-  box-sizing: border-box;
-  min-height: 420px;       /* mantiene altura mínima */
-  text-align: center;
-}
-
-.ai-demo canvas {
-  width: 100%;
-  height: 360px;           /* altura visible estable */
-  max-height: 400px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Evita overflow en móviles */
-@media (max-width: 768px) {
-  .ai-demo {
-    width: 100%;
-    padding: 16px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-}
-
-
-/* === FIX FINAL — solo para AI-TestBuddy === */
-#tasteRadar {
-  display: block;
-  margin: 0 auto;
-  width: min(90vw, 340px); /* mantiene el ancho máximo sin deformar */
-  aspect-ratio: 1 / 1;     /* cuadrado perfecto */
-  height: auto;
-  background: transparent;
-  transform: none !important;
-}
-
-/* Contenedor estable sin desbordar */
-.ai-demo {
-  overflow: hidden;
-  min-height: unset;
-}
-
-/* Fija el canvas dentro del carrusel sin flex distortion */
-.carousel-item canvas#tasteRadar {
-  flex: 0 0 auto !important;
-  align-self: center;
-  justify-self: center;
-}
-
-
-/* Asegura que el contenedor del radar no se expanda infinito */
-.ai-demo {
-  overflow: hidden;
-}
-
-
-/* === FIX para asegurar visibilidad del segundo canvas === */
-.carousel-item canvas {
-  display: block !important;
-  width: 100% !important;
-  max-width: 480px;
-  height: auto !important;
-  margin: 0 auto;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-.carousel-inner {
-  overflow: visible !important;
-}
-
-#ecoCanvas {
-  min-height: 360px;
-  background: transparent;
-}
-
-/* === FIX FINAL VISUAL para mostrar ecoCanvas y mantener altura === */
-.carousel-item.active {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  min-height: 420px;
-}
-
-.ai-demo {
-  min-height: 500px; /* garantiza que haya espacio para el canvas en móvil */
-}
-
-.audio-info {
-  font-size: 0.9rem;
-  color: #a0a0a0;
-  margin-top: 0.5rem;
-  text-align: center;
-}
-
-/* Móviles: apilar elementos y centrar */
-@media (max-width: 600px) {
-  .ai-demo .ai-input {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .ai-demo .ai-input input[type="file"] {
-    max-width: 90%;
-  }
-
-  .ai-demo .ai-input button {
-    width: 90%;
-  }
-}
-
-/* === Ajuste de equilibrio visual de los botones === */
-.ai-demo .ai-input {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.custom-file-upload,
-.ai-demo .ai-input button {
-  background-color: var(--color-accent);
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  min-width: 200px;
-  text-align: center;
-}
-
-.ai-demo .ai-input button {
-  font-size: 0.9rem;
-}
-
-.custom-file-upload:hover,
-.ai-demo .ai-input button:hover {
-  background-color: var(--color-accent-hover);
-  transform: scale(1.04);
-}
-
-.audio-info {
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: #b0b0b0;
-  text-align: center;
-}
-
-/* === En pantallas pequeñas === */
-@media (max-width: 600px) {
-  .ai-demo .ai-input {
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .custom-file-upload,
-  .ai-demo .ai-input button {
-    width: 90%;
-    min-width: unset;
-  }
-}
-
-/* === FIX FINAL: mensaje centrado, sin tapar flechas, texto más pequeño === */
-#audioResult {
-  display: block;
-  max-width: 75%;            /* deja espacio libre para las flechas */
-  margin: 1rem auto 1.5rem;
-  padding: 0.25rem 0;
-  text-align: center;
-  word-break: break-word;
-  line-height: 1.4;
-  font-size: 0.85rem;        /* 🔹 más pequeño y proporcionado */
-  color: #f1f5f9;            /* texto legible sobre fondo oscuro */
-  position: relative;
-  z-index: 2;
-}
-
-/* En pantallas pequeñas: aún más compacto */
-@media (max-width: 600px) {
-  #audioResult {
-    max-width: 70%;
-    font-size: 0.8rem;
-  }
-}
-
-#msg {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #1f2937;
-  border-radius: 8px;
-  background-color: #1e293b;
-  color: #e2e8f0;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 0.8rem;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#msg::placeholder {
-  color: #64748b;
-  opacity: 0.9;
-}
-
-#msg:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 6px var(--color-accent);
-  background-color: #111827;
-}
-
-/* === Sección del Asistente GPT === */
-.ai-assistant {
-  text-align: center;
-  padding: 3rem 1rem;
-  background: #0d1117;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
-  color: var(--color-text-main);
-}
-
-.ai-assistant h2 {
-  color: var(--color-primary);
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
-
-.ai-assistant p {
-  max-width: 640px;
-  margin: 0 auto 2rem;
-  font-size: 1rem;
-  color: var(--color-text-muted);
-  line-height: 1.6;
-}
-
-.ai-btn {
-  display: inline-block;
-  background: var(--color-accent);
-  color: #fff;
-  padding: 0.8rem 1.6rem;
-  border-radius: 10px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.ai-btn:hover {
-  background: var(--color-accent-hover);
-  transform: scale(1.05);
-}
-
-/* Móvil */
-@media (max-width: 600px) {
-  .ai-assistant {
-    padding: 2rem 1rem;
-  }
-
-  .ai-assistant p {
-    font-size: 0.95rem;
-  }
-
-  .ai-btn {
-    width: 90%;
-  }
-}
-
-/* === FIX RESPONSIVO PARA EL DEMO INVENTORY === */
-#carousel-slide-3 canvas {
-  width: 100% !important;
-  height: auto !important;
-  max-width: 420px !important;
-  max-height: 180px !important; /* altura máxima visible */
-  margin: 0 auto !important;
-  display: block;
-}
-
-@media (max-width: 600px) {
-  #carousel-slide-3 canvas {
-    max-width: 320px !important;
-    max-height: 150px !important;
-  }
-}
-
-/* === FIX DEFINITIVO: flechas siempre centradas === */
-.carousel {
-  position: relative;
-}
-
-/* Fuerza las flechas a basarse en el carrusel, no en el contenido interno */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 20;
-}
-
-/* Asegura que el contenido interno no afecte su posición */
-.carousel-inner {
-  position: relative;
-}
-
-/* Evita saltos cuando cambia la altura de los slides */
-.carousel-item {
-  position: relative;
-  padding-bottom: 2rem; /* deja espacio para el botón inferior */
-}
-
-/* Móvil: ajuste fino */
-@media (max-width: 768px) {
-  .carousel-btn {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
-/* === FLECHAS INMÓVILES: anclaje a altura base === */
-.carousel {
-  position: relative;
-  /* altura base por defecto; la podemos ajustar por JS */
-  --carousel-base-h: 600px;
-}
-
-/* flechas centradas respecto a la altura base, no al contenido variable */
-.carousel-btn {
-  position: absolute;
-  top: calc(var(--carousel-base-h) / 2);
-  transform: translateY(-50%);
-  z-index: 20;
-}
-
-/* escritorio: base un poco mayor */
-@media (min-width: 769px) {
-  .carousel { --carousel-base-h: 600px; }
-}
-
-/* móvil: base menor, y sin cortes de contenido */
-@media (max-width: 768px) {
-  .carousel { 
-    --carousel-base-h: 520px;
-    overflow: visible;              /* el contenido puede crecer sin recortarse */
-  }
-  .carousel-item { 
-    padding-bottom: 2rem;           /* respiración inferior */
-  }
-}
-
-.ai-demo-block {
-  background-color: #111827;
-  color: #f3f4f6;
-  padding: 16px;
-  margin: 18px auto;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.25);
-  max-width: 540px;
-  font-size: 0.85rem;
-}
+  background: #0d1117;    /* fondo negro estable */
+}
+
+#ai-demo-carousel .carousel-item{flex:0 0 100%;text-align:center;box-sizing:border-box;height:auto;min-height:280px;max-height:480px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:1rem 0}
+#ai-demo-carousel .carousel-item.active{opacity:1;visibility:visible}
+#ai-demo-carousel h3{color:var(--color-primary);margin-bottom:.5rem}
+#ai-demo-carousel p{font-size:.9rem;color:var(--color-text-muted);margin-bottom:.5rem;max-width:90%;margin-left:auto;margin-right:auto}
+#ai-demo-carousel canvas{width:100%;height:auto;max-width:420px;max-height:360px;display:block;margin:0 auto .5rem;background:transparent}
+#ai-demo-carousel .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:var(--color-accent);color:#fff;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .3s,transform .2s;z-index:10}
+#ai-demo-carousel .carousel-btn:hover{background:var(--color-accent-hover);transform:translateY(-50%) scale(1.1)}
+#ai-demo-carousel .carousel-btn.prev{left:10px}
+#ai-demo-carousel .carousel-btn.next{right:10px}
+@media(max-width:768px){#ai-demo-carousel{max-width:95%;padding:1rem 0}#ai-demo-carousel .carousel-inner{min-height:260px;max-height:400px}#ai-demo-carousel .carousel-item{min-height:240px;max-height:400px;padding:.8rem 0}#ai-demo-carousel canvas{max-width:340px;max-height:300px}#ai-demo-carousel .carousel-btn{width:36px;height:36px;font-size:18px}}
+#ecoCanvas{aspect-ratio:4/3;width:100%;display:block;min-height:200px;background:transparent}
+#tasteRadar{display:block;margin:0 auto;width:min(90vw,340px);aspect-ratio:1/1;height:auto;background:transparent}
+#audioResult{display:block;max-width:75%;margin:1rem auto 1.5rem;padding:.25rem 0;text-align:center;word-break:break-word;line-height:1.4;font-size:.85rem;color:#f1f5f9;position:relative;z-index:2}
+@media(max-width:600px){#audioResult{max-width:70%;font-size:.8rem}}
+#msg{flex:1;padding:8px 12px;border:1px solid #1f2937;border-radius:8px;background-color:#1e293b;color:#e2e8f0;font-family:'Roboto Mono',monospace;font-size:.8rem;outline:none;transition:border-color .3s,box-shadow .3s}
+#msg::placeholder{color:#64748b;opacity:.9}
+#msg:focus{border-color:var(--color-accent);box-shadow:0 0 6px var(--color-accent);background-color:#111827}
+.ai-assistant{text-align:center;padding:3rem 1rem;background:#0d1117;border-top:1px solid rgba(255,255,255,.05);box-shadow:0 -4px 12px rgba(0,0,0,.3);color:var(--color-text-main)}
+.ai-assistant h2{color:var(--color-primary);font-size:1.8rem;margin-bottom:1rem}
+.ai-assistant p{max-width:640px;margin:0 auto 2rem;font-size:1rem;color:var(--color-text-muted);line-height:1.6}
+.ai-btn{display:inline-block;background:var(--color-accent);color:#fff;padding:.8rem 1.6rem;border-radius:10px;font-weight:600;text-decoration:none;transition:background .3s,transform .2s}
+.ai-btn:hover{background:var(--color-accent-hover);transform:scale(1.05)}
+@media(max-width:600px){.ai-assistant{padding:2rem 1rem}.ai-assistant p{font-size:.95rem}.ai-btn{width:90%}}
+.ai-demo-block{background-color:#111827;color:#f3f4f6;padding:16px;margin:18px auto;border-radius:10px;box-shadow:0 0 8px rgba(0,0,0,.25);max-width:540px;font-size:.85rem}
+.ai-demo-block h2{color:#00b4d8;text-align:center;margin-bottom:6px;font-size:1.1rem}
+.ai-chat-box{border:1px solid #333;border-radius:6px;padding:8px;background:#1f2937;height:210px;overflow-y:auto;margin-bottom:8px}
+.ai-chat-input{text-align:center;margin-bottom:6px}
+.ai-chat-input input{width:60%;padding:5px;border-radius:5px;border:1px solid #555;background:#111;color:#f3f4f6;font-size:.85rem}
+.ai-chat-input button{padding:5px 10px;border:none;border-radius:5px;background:#00b4d8;color:#fff;cursor:pointer;margin-left:5px;font-size:.8rem}
+.ai-btn-cat{margin-top:8px;background:#00b4d8;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:.85rem}
+.ai-catalog{background:#1f2937;color:#f3f4f6;padding:8px;margin-top:6px;border-radius:6px;max-height:180px;overflow-y:auto;font-size:.85rem}
+.ai-catalog .item{display:flex;justify-content:space-between;gap:6px;padding:4px 3px;border-bottom:1px solid #2b3441;cursor:pointer}
+.ai-catalog .item:hover{background:#111827}
+.ai-catalog .name{font-weight:600}
+.ai-catalog .meta{opacity:.9;font-size:.85rem}
+.ai-chat-actions{display:flex;justify-content:center;gap:8px;margin-top:8px}
+.ai-secondary-btn{background-color:#111827;color:#00b4d8;border:1px solid #00b4d8;border-radius:6px;padding:6px 10px;font-size:.8rem;font-weight:500;transition:all .2s;cursor:pointer;box-shadow:0 0 4px rgba(0,180,216,.25)}
+.ai-secondary-btn:hover{background-color:#00b4d8;color:#fff;transform:scale(1.02)}
+@media(max-width:480px){.ai-demo-block{padding:12px;margin:14px auto;font-size:.8rem;max-width:95%}.ai-demo-block h2{font-size:1rem;margin-bottom:6px}.ai-chat-box{height:180px;padding:6px}.ai-chat-input input{width:55%;padding:4px;font-size:.8rem}.ai-chat-input button,.ai-btn-cat,.ai-secondary-btn{padding:4px 8px;font-size:.75rem}.ai-catalog{max-height:140px;font-size:.8rem}}
+#show-catalog{display:block;margin:12px auto 0;text-align:center}
+@media(max-width:480px){#show-catalog{width:90%;margin-top:10px}}
+#makeautomatic-os .ai-btn{display:inline-block;width:auto;padding:.8rem 1.8rem;font-size:.95rem;white-space:nowrap}
+@media(max-width:600px){#makeautomatic-os .ai-btn{max-width:80%;font-size:.9rem;padding:.7rem 1.5rem}}
+.ai-demo-block h2,.ai-assistant h2,.service h2{font-size:1.6rem;font-weight:700;color:#28d7e6;margin-bottom:.8rem;text-align:center}
+.ai-demo-block,.ai-assistant{margin-top:2rem;margin-bottom:2rem}
+#makeautomatic-os h2{display:inline-flex!important;align-items:center;justify-content:center;gap:.5rem;margin:0 auto .8rem;text-align:center;width:100%;line-height:1.2}
+#makeautomatic-os p{margin-top:.5rem;text-align:center}
+.service p{text-align:center}
+.ai-assistant{background-color:var(--color-surface)!important;max-width:540px;margin:0 auto 2rem;padding:1.5rem;border-radius:10px;box-shadow:0 0 8px rgba(0,0,0,.25)}
+#makeautomatic-os p,#makeautomatic-os li{color:var(--color-text-muted)!important;text-align:center;line-height:1.6;margin-bottom:.6rem}
+#makeautomatic-os ul{list-style:none;padding:0;text-align:center}
+#makeautomatic-os li{color:var(--color-text-muted);margin-bottom:.5rem;text-align:center}
+@media(max-width:600px){.ai-assistant .ai-btn{max-width:280px;width:80%;display:block;margin:0 auto;font-size:.9rem;padding:.7rem 1.2rem}}
+.ai-assistant h2{margin:0 0 .8rem 0!important;margin-block-start:0!important}
+.ai-assistant{padding:16px!important;border-top:none!important;margin:18px auto!important}
+@media(max-width:600px){.ai-btn{width:auto!important;max-width:260px!important;padding:.7rem 1.3rem!important;font-size:.9rem!important;display:inline-block!important}}
+@media(max-width:600px){.ai-demo .ai-input button{width:auto!important;min-width:120px!important;max-width:180px!important;padding:8px 16px!important;font-size:.9rem!important;display:inline-block!important}}
+@media(max-width:600px){#show-catalog{width:auto!important;max-width:260px!important;padding:8px 16px!important;font-size:.9rem!important;display:inline-block!important}}
+#show-catalog{display:block;margin:.8rem auto;text-align:center}
+.ai-demo-block,.ai-chat-actions{text-align:center}
+#ai-foodsales .ai-chat,#ai-foodsales .ai-chat-box,#ai-foodsales .ai-chat-input,#ai-foodsales .ai-catalog{text-align:left!important;margin-left:0!important;margin-right:auto!important}
+#ai-foodsales .ai-chat-box,#ai-foodsales .ai-catalog{text-align:left!important;margin-left:0!important;margin-right:auto!important}
+#ai-foodsales .ai-chat-input,#ai-foodsales .ai-chat-actions,#ai-foodsales #show-catalog{text-align:center!important;justify-content:center!important}
+#ai-foodsales #catalog-list{display:block;text-align:left!important;margin-left:0!important}
+#ai-foodsales .ai-chat-box{text-align:left!important}
+#ai-foodsales .ai-chat-box p,#ai-foodsales .ai-chat-box div,#ai-foodsales .ai-chat-box span{text-align:left!important;display:block!important;margin-left:0!important;margin-right:auto!important}
+body{margin:0;font-family:Arial,sans-serif;background-color:#0a0f0f;color:#e0ffff;text-align:center}
+header{padding:2rem;background-color:#0A0F1D}
+h1{color:#00ffff}
+button{background-color:#00b3b3;border:none;padding:.8rem 1.5rem;font-size:.9rem;color:#fff;border-radius:6px;cursor:pointer;transition:background .3s}
+button:hover{background-color:#009999}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:1000;backdrop-filter:blur(2px)}
+.modal-content{background-color:#102020;padding:1.5rem 1.2rem 1.8rem;border-radius:12px;width:85%;max-width:340px;max-height:50vh;overflow-y:auto;display:flex;flex-direction:column;gap:.6rem;text-align:center;box-shadow:0 0 20px rgba(0,255,255,.25);opacity:0;transform:scale(.96);transition:all .25s ease-out;backdrop-filter:blur(8px);border:1px solid rgba(0,255,255,.15);background:rgba(16,32,32,.85)}
+.modal[style*="display: flex"] .modal-content{opacity:1;transform:scale(1)}
+.product-card{background-color:#0f1f1f;border:1px solid #00cccc;border-radius:8px;padding:.5rem;font-size:.85rem;text-align:left}
+.product-card h3{color:#00ffff;margin:.3rem 0;font-size:.95rem;text-align:center}
+.close-btn{background-color:#f33;padding:.4rem 1rem;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:.8rem;align-self:center;margin-top:.5rem;transition:background .2s}
+.close-btn:hover{background-color:#c00}
+@media(max-width:600px){.modal-content{width:90%;max-width:320px;max-height:55vh;padding:.8rem;gap:.5rem}.product-card{font-size:.8rem}.product-card h3{font-size:.9rem}}
+#makeautomatic-cloud-demo p,#makeautomatic-cloud-demo strong{color:#94a3b8!important}
+#makeautomatic-cloud-demo p{font-size:.95rem!important;line-height:1.6!important;margin-bottom:.6rem!important;text-align:center!important}
+@media(max-width:600px){.modal-content{width:90%;max-width:320px;max-height:65vh;padding:.8rem;gap:.5rem}.product-card{font-size:.8rem;padding:.5rem}.product-card h3{font-size:.9rem}.close-btn{font-size:.8rem;padding:.4rem 1rem}}
+html{-webkit-text-size-adjust:100%}
+body.modal-open{overflow:hidden!important;height:100vh}
 
-.ai-demo-block h2 {
-  color: #00b4d8;
-  text-align: center;
-  margin-bottom: 6px;
-  font-size: 1.1rem;
-}
-
-.ai-chat-box {
-  border: 1px solid #333;
-  border-radius: 6px;
-  padding: 8px;
-  background: #1f2937;
-  height: 210px;
-  overflow-y: auto;
-  margin-bottom: 8px;
-}
-
-.ai-chat-input {
-  text-align: center;
-  margin-bottom: 6px;
-}
-
-.ai-chat-input input {
-  width: 60%;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #555;
-  background: #111;
-  color: #f3f4f6;
-  font-size: 0.85rem;
-}
-
-.ai-chat-input button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background: #00b4d8;
-  color: white;
-  cursor: pointer;
-  margin-left: 5px;
-  font-size: 0.8rem;
-}
-
-.ai-btn-cat {
-  margin-top: 8px;
-  background: #00b4d8;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
-.ai-catalog {
-  background: #1f2937;
-  color: #f3f4f6;
-  padding: 8px;
-  margin-top: 6px;
-  border-radius: 6px;
-  max-height: 180px;
-  overflow-y: auto;
-  font-size: 0.85rem;
-}
-
-.ai-catalog .item {
-  display: flex;
-  justify-content: space-between;
-  gap: 6px;
-  padding: 4px 3px;
-  border-bottom: 1px solid #2b3441;
-  cursor: pointer;
-}
-
-.ai-catalog .item:hover {
-  background: #111827;
-}
-
-.ai-catalog .name {
-  font-weight: 600;
-}
-
-.ai-catalog .meta {
-  opacity: .9;
-  font-size: .85rem;
-}
-
-/* --- Botones secundarios (Limpiar chat / Confirmar orden) --- */
-.ai-chat-actions {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.ai-secondary-btn {
-  background-color: #111827;
-  color: #00b4d8;
-  border: 1px solid #00b4d8;
-  border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  box-shadow: 0 0 4px rgba(0,180,216,0.25);
-}
-
-.ai-secondary-btn:hover {
-  background-color: #00b4d8;
-  color: #fff;
-  transform: scale(1.02);
-}
-
-
-@media (max-width: 480px) {
-  .ai-demo-block {
-    padding: 12px;
-    margin: 14px auto;
-    font-size: 0.8rem;
-    max-width: 95%;
-  }
-  .ai-demo-block h2 {
-    font-size: 1rem;
-    margin-bottom: 6px;
-  }
-  .ai-chat-box {
-    height: 180px;
-    padding: 6px;
-  }
-  .ai-chat-input input {
-    width: 55%;
-    padding: 4px;
-    font-size: 0.8rem;
-  }
-  .ai-chat-input button, .ai-btn-cat, .ai-secondary-btn {
-    padding: 4px 8px;
-    font-size: 0.75rem;
-  }
-  .ai-catalog {
-    max-height: 140px;
-    font-size: 0.8rem;
-  }
-}
-
-/* === Centrado del botón "Ver catálogo disponible" === */
-#show-catalog {
-  display: block;
-  margin: 12px auto 0 auto; /* centra horizontalmente */
-  text-align: center;
-}
-
-@media (max-width: 480px) {
-  #show-catalog {
-    width: 90%;
-    margin-top: 10px;
-  }
-}
-
-/* Ajuste específico para el botón de descarga del OS */
-#makeautomatic-os .ai-btn {
-  display: inline-block;
-  width: auto;
-  padding: 0.8rem 1.8rem;
-  font-size: 0.95rem;
-  white-space: nowrap;
-}
-
-/* Centrar y limitar ancho en móviles */
-@media (max-width: 600px) {
-  #makeautomatic-os .ai-btn {
-    max-width: 80%;
-    font-size: 0.9rem;
-    padding: 0.7rem 1.5rem;
-  }
-}
-
-/* Unifica tamaño y espaciado de títulos principales */
-.ai-demo-block h2,
-.ai-assistant h2,
-.service h2 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #28d7e6; /* mismo tono azul de makeAutomatic */
-  margin-bottom: 0.8rem;
-  text-align: center;
-}
-
-/* Ajuste de márgenes entre bloques */
-.ai-demo-block,
-.ai-assistant {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-/* Alineación precisa del título con icono */
-#makeautomatic-os h2 {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 0 auto 0.8rem auto;
-  text-align: center;
-  width: 100%;
-  line-height: 1.2;
-}
-
-/* Compensa padding del contenedor para centrar visualmente */
-#makeautomatic-os p {
-  margin-top: 0.5rem;
-  text-align: center;
-}
-
-.service p {
-  text-align: center;
-}
-
-.ai-assistant {
-  background-color: var(--color-bg) !important;
-}
-
-.ai-assistant {
-  background-color: var(--color-surface) !important;
-  max-width: 540px;
-  margin: 0 auto 2rem auto;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.25);
-}
-
-#makeautomatic-os p,
-#makeautomatic-os li {
-  color: var(--color-text-muted) !important;
-}
-
-#makeautomatic-os ul {
-  list-style: none;
-  padding: 0;
-  text-align: center;
-}
-
-#makeautomatic-os li {
-  color: var(--color-text-muted);
-  margin-bottom: 0.5rem;
-}
-
-#makeautomatic-os li {
-  text-align: center;
-  color: var(--color-text-muted);
-  margin-bottom: 0.5rem;
-}
-
-#makeautomatic-os p,
-#makeautomatic-os li {
-  color: var(--color-text-muted);
-  text-align: center;
-  line-height: 1.6;
-  margin-bottom: 0.6rem;
-}
-
-@media (max-width: 600px) {
-  .ai-assistant .ai-btn {
-    max-width: 280px;
-    width: 80%;
-    display: block;
-    margin: 0 auto;
-    font-size: 0.9rem;
-    padding: 0.7rem 1.2rem;
-  }
-}
-
-/* Fix: que el bloque GPT tenga el mismo “arranque” que el OS */
-.ai-assistant h2 {
-  margin: 0 0 0.8rem 0 !important;      /* elimina el margen superior del h2 */
-  margin-block-start: 0 !important;     /* refuerzo contra estilos del UA */
-}
-
-/* Normaliza el padding vertical del contenedor GPT */
-.ai-assistant {
-  padding: 16px !important;             /* igual a #makeautomatic-os */
-  border-top: none !important;          /* opcional: evita “banda” visual arriba */
-  margin: 18px auto !important;         /* separación externa uniforme */
-}
-
-/* === FIX para botón makeAutomaticGPT en móviles === */
-@media (max-width: 600px) {
-  .ai-btn {
-    width: auto !important;
-    max-width: 260px !important;
-    padding: 0.7rem 1.3rem !important;
-    font-size: 0.9rem !important;
-    display: inline-block !important;
-  }
-}
-
-/* === FIX botón Enviar en móviles === */
-@media (max-width: 600px) {
-  .ai-demo .ai-input button {
-    width: auto !important;
-    min-width: 120px !important;
-    max-width: 180px !important;
-    padding: 8px 16px !important;
-    font-size: 0.9rem !important;
-    display: inline-block !important;
-  }
-}
-
-/* === FIX botón "Ver catálogo disponible" en móviles === */
-@media (max-width: 600px) {
-  #show-catalog {
-    width: auto !important;
-    max-width: 260px !important;
-    padding: 8px 16px !important;
-    font-size: 0.9rem !important;
-    display: inline-block !important;
-  }
-}
-
-/* === FIX DEFINITIVO: centra el botón "Ver catálogo disponible" === */
-#show-catalog {
-  display: block;
-  margin: 0.8rem auto;           /* lo centra horizontalmente */
-  text-align: center;
-}
-
-/* Asegura que el contenedor no lo empuje a un lado */
-.ai-demo-block,
-.ai-chat-actions {
-  text-align: center;
-}
-
-/* === FIX: chat y catálogo alineados a la izquierda === */
-#ai-foodsales .ai-chat,
-#ai-foodsales .ai-chat-box,
-#ai-foodsales .ai-chat-input,
-#ai-foodsales .ai-catalog {
-  text-align: left !important;
-  margin-left: 0 !important;
-  margin-right: auto !important;
-}
-
-/* === FIX FINAL: solo chat y catálogo alineados a la izquierda === */
-#ai-foodsales .ai-chat-box,
-#ai-foodsales .ai-catalog {
-  text-align: left !important;
-  margin-left: 0 !important;
-  margin-right: auto !important;
-}
-
-/* Input y botones permanecen centrados */
-#ai-foodsales .ai-chat-input,
-#ai-foodsales .ai-chat-actions,
-#ai-foodsales #show-catalog {
-  text-align: center !important;
-  justify-content: center !important;
-}
-
-/* Asegura que el catálogo aparezca alineado al borde izquierdo del bloque */
-#ai-foodsales #catalog-list {
-  display: block;
-  text-align: left !important;
-  margin-left: 0 !important;
-}
-
-/* === FIX FINAL CHAT REAL: mensajes alineados a la izquierda === */
-#ai-foodsales .ai-chat-box {
-  text-align: left !important;
-}
-
-/* Cada mensaje del usuario o del bot se muestra alineado al margen izquierdo */
-#ai-foodsales .ai-chat-box p,
-#ai-foodsales .ai-chat-box div,
-#ai-foodsales .ai-chat-box span {
-  text-align: left !important;
-  display: block !important;
-  margin-left: 0 !important;
-  margin-right: auto !important;
-}
-
-/*cloud-demo */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #0a0f0f;
-  color: #e0ffff;
-  text-align: center;
-}
-header {
-  padding: 2rem;
-  background-color: #0A0F1D;
-}
-h1 {
-  color: #00ffff;
-}
-button {
-  background-color: #00b3b3;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 0.9rem;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-button:hover {
-  background-color: #009999;
-}
-
-/* --- Modal compacto tipo ventana flotante (versión final) --- */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(2px);
-}
-
-.modal-content {
-  background-color: #102020;
-  padding: 1.5rem 1.2rem 1.8rem; /* top, sides, bottom */
-  border-radius: 12px;
-  width: 85%;
-  max-width: 340px;     /* tamaño equilibrado */
-  max-height: 50vh;     /* menos alto, más tipo ventana */
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
-  opacity: 0;
-  transform: scale(0.96);
-  transition: all 0.25s ease-out;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(0, 255, 255, 0.25);
-  backdrop-filter: blur(8px);
-  background: rgba(16, 32, 32, 0.85);
-  border: 1px solid rgba(0, 255, 255, 0.15);
-}
-
-/* efecto al abrir */
-.modal[style*="display: flex"] .modal-content {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.product-card {
-  background-color: #0f1f1f;
-  border: 1px solid #00cccc;
-  border-radius: 8px;
-  padding: 0.5rem;
-  font-size: 0.85rem;
-  text-align: left;
-}
-
-.product-card h3 {
-  color: #00ffff;
-  margin: 0.3rem 0;
-  font-size: 0.95rem;
-  text-align: center;
-}
-
-.close-btn {
-  background-color: #ff3333;
-  padding: 0.4rem 1rem;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  cursor: pointer;
-  font-size: 0.8rem;
-  align-self: center;
-  margin-top: 0.5rem;
-  transition: background 0.2s ease-in-out;
-}
-
-.close-btn:hover {
-  background-color: #cc0000;
-}
-
-/* mejora en móviles */
-@media (max-width: 600px) {
-  .modal-content {
-    width: 90%;
-    max-width: 320px;
-    max-height: 55vh;
-    padding: 0.8rem;
-    gap: 0.5rem;
-  }
-  .product-card {
-    font-size: 0.8rem;
-  }
-  .product-card h3 {
-    font-size: 0.9rem;
-  }
-}
-
-/* === FIX FINAL: texto gris en Cloud Demo === */
-#makeautomatic-cloud-demo p,
-#makeautomatic-cloud-demo strong {
-  color: #94a3b8 !important;  /* gris suave como los demás bloques */
-}
-/* === FIX FINAL: tamaño y espaciado uniforme en Cloud Demo === */
-#makeautomatic-cloud-demo p {
-  font-size: 0.95rem !important;   /* igual que los otros bloques */
-  line-height: 1.6 !important;     /* mismo interlineado */
-  margin-bottom: 0.6rem !important;
-  text-align: center !important;
-}
-
-/* Mejora para móviles */
-@media (max-width: 600px) {
-  .modal-content {
-    width: 90%;
-    max-width: 320px;
-    max-height: 65vh;
-    padding: 0.8rem;
-    gap: 0.5rem;
-  }
-
-  .product-card {
-    font-size: 0.8rem;
-    padding: 0.5rem;
-  }
-
-  .product-card h3 {
-    font-size: 0.9rem;
-  }
-
-  .close-btn {
-    font-size: 0.8rem;
-    padding: 0.4rem 1rem;
-  }
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-}
-body.modal-open {
-  overflow: hidden !important;
-  height: 100vh;
-}

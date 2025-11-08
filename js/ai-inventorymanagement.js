@@ -1,200 +1,179 @@
 /**
- * AI-InventoryManagement — Versión dinámica mínima
+ * AI-InventoryManagement – Animación inicial + simulación IA
  * makeAutomatic – 2025
+ * 100% responsivo y estable
  */
 
 document.addEventListener("slideChanged", (e) => {
-  if (e.detail.index === 3) {
-    const container = document.getElementById("carousel-slide-3");
-    if (!container) return;
+  if (e.detail.index !== 3) return;
 
-    container.innerHTML = "";
+  const container = document.getElementById("carousel-slide-3");
+  if (!container) return;
+  container.innerHTML = "";
 
-    // ===== Título principal =====
-    const title = document.createElement("h3");
-    title.textContent = "AI–InventoryManagement";
-    title.style.color = "#22d3ee";
-    title.style.marginBottom = "0.5rem";
-    title.style.fontSize = window.innerWidth < 400 ? "1.1rem" : "1.25rem";
-    title.style.fontWeight = "600";
-    title.style.textAlign = "center";
-    container.appendChild(title);
+  // ===== Título =====
+  const title = document.createElement("h3");
+  title.textContent = "AI–InventoryManagement";
+  Object.assign(title.style, {
+    color: "#22d3ee",
+    marginBottom: "0.5rem",
+    fontSize: "1.25rem",
+    fontWeight: "600",
+    textAlign: "center",
+  });
+  container.appendChild(title);
 
-    // ===== Layout wrapper =====
-    const wrapper = document.createElement("div");
-    wrapper.style.display = "flex";
-    wrapper.style.flexDirection = "column";
-    wrapper.style.alignItems = "center";
-    wrapper.style.justifyContent = "center";
-    wrapper.style.gap = "14px";
-    wrapper.style.padding = "12px";
-    wrapper.style.color = "#f1f5f9";
-    wrapper.style.fontSize = "11px";
+  // ===== Descripción =====
+  const desc = document.createElement("p");
+  desc.textContent =
+    "Analiza el inventario en tiempo real con inteligencia artificial. Datos obtenidos dinámicamente desde AWS Lambda.";
+  Object.assign(desc.style, {
+    color: "#94a3b8",
+    fontSize: "0.9rem",
+    textAlign: "center",
+    marginBottom: "1rem",
+  });
+  container.appendChild(desc);
 
-    const demoDescription = document.createElement("p");
-    demoDescription.className = "ai-demo-description";
-    demoDescription.textContent =
-      "Este demo muestra cómo una API con inteligencia artificial analiza y visualiza automáticamente el estado del inventario en tiempo real.";
-    container.appendChild(demoDescription);
+  // ===== Botón =====
+  const button = document.createElement("button");
+  button.textContent = "Simular Inventario";
+  button.className = "ai-btn";
+  button.style.display = "block";
+  button.style.margin = "0 auto 1rem auto";
+  container.appendChild(button);
 
-    // ===== Botón =====
-    const button = document.createElement("button");
-    button.textContent = "Simular Inventario";
-    button.className =
-      "ai-btn px-4 py-1.5 bg-emerald-500 text-white rounded-md shadow hover:bg-emerald-600 transition";
+  // ===== Canvas =====
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  Object.assign(canvas.style, {
+    display: "block",
+    margin: "0 auto 0.8rem auto",
+    background: "#0f172a",
+    borderRadius: "8px",
+    boxShadow: "0 0 8px rgba(0,0,0,0.35)",
+    width: "100%",
+    height: "auto",
+  });
+  container.appendChild(canvas);
 
-    // ===== Contenedor del gráfico =====
-    const chartBox = document.createElement("div");
-    chartBox.style.width = "92%";
-    chartBox.style.maxWidth = "680px";
-    chartBox.style.background = "#0f172a";
-    chartBox.style.borderRadius = "12px";
-    chartBox.style.padding = "16px";
-    chartBox.style.boxShadow = "0 0 10px rgba(0,0,0,0.35)";
-    chartBox.style.textAlign = "center";
-
-    const chartTitle = document.createElement("h3");
-    chartTitle.textContent = "Inventario Actual";
-    chartTitle.style.marginBottom = "8px";
-    chartTitle.style.color = "#10b981";
-    chartTitle.style.fontSize = "1.05rem";
-    chartTitle.style.fontWeight = "bold";
-    chartTitle.style.borderBottom = "1px solid rgba(16,185,129,0.4)";
-    chartTitle.style.paddingBottom = "6px";
-
-    const canvas = document.createElement("canvas");
-    canvas.id = "inventoryChart";
-    canvas.style.width = "100%";
-    canvas.style.height = "250px";
-
-    chartBox.appendChild(chartTitle);
-    chartBox.appendChild(canvas);
-
-    // ===== Caja de resultados =====
-    const resultBox = document.createElement("div");
-    resultBox.id = "inventoryResult";
-    resultBox.style.width = "92%";
-    resultBox.style.maxWidth = "680px";
-    resultBox.style.background = "#0f172a";
-    resultBox.style.borderRadius = "12px";
-    resultBox.style.padding = "12px 16px";
-    resultBox.style.boxShadow = "0 0 10px rgba(0,0,0,0.35)";
-    resultBox.style.textAlign = "left";
-    resultBox.style.fontSize = "10.5px";
-    resultBox.style.lineHeight = "1.35";
-    resultBox.style.color = "#e2e8f0";
-
-    // ===== Ensamblar =====
-    wrapper.appendChild(button);
-    wrapper.appendChild(chartBox);
-    wrapper.appendChild(resultBox);
-    container.appendChild(wrapper);
-
-    // ===== Evento: click =====
-    button.addEventListener("click", async () => {
-      const apiUrl =
-        "https://4khu7h5wdj7aivcyybxsgayuyu0lyhoy.lambda-url.us-east-1.on.aws/";
-      resultBox.innerHTML = "<em>Consultando datos...</em>";
-
-      try {
-        const res = await fetch(apiUrl, {
-          method: "GET",
-          mode: "cors",
-          headers: { Accept: "application/json" },
-        });
-
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-
-        // 🔸 Variaciones simples ±10%
-        data.categories.forEach((c) => {
-          const factor = 1 + (Math.random() * 0.2 - 0.1);
-          c.qty = Math.round(c.qty * factor);
-        });
-        data.summary.totalItems = data.categories.reduce((a, c) => a + c.qty, 0);
-        data.summary.rotationRate = `${(Math.random() * 30 + 10).toFixed(1)}%`;
-        data.summary.totalValueUSD =
-          data.summary.totalItems * 40 + Math.floor(Math.random() * 4000);
-
-        // Etiquetas abreviadas
-        const shortLabels = ["Elec", "Ropa", "Hogar", "Jugu", "Libros"];
-        const shortData = data.categories.slice(0, 5).map((c, i) => ({
-          name: shortLabels[i],
-          qty: c.qty,
-        }));
-
-        // Destruir gráfico previo
-        if (window.inventoryChartInstance) {
-          window.inventoryChartInstance.destroy();
-        }
-
-        const ctx = document.getElementById("inventoryChart").getContext("2d");
-
-        // === Renderizar gráfico ===
-        window.inventoryChartInstance = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: shortData.map((c) => c.name),
-            datasets: [
-              {
-                label: "Cantidad",
-                data: shortData.map((c) => c.qty),
-                backgroundColor: "rgba(34,211,238,0.75)",   // mismo color que el título (#22d3ee)
-                borderColor: "rgba(34,211,238,1)",
-                borderWidth: 1.4,
-                borderRadius: 4,
-                barThickness: 32,
-                categoryPercentage: 0.62,
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            animation: {
-              duration: 800,
-              easing: "easeOutQuart",
-            },
-            plugins: {
-              legend: {
-                labels: {
-                  color: "#e2e8f0",
-                  font: { size: 10 },
-                },
-              },
-            },
-            scales: {
-              x: {
-                ticks: { color: "#e2e8f0", font: { size: 10 } },
-                grid: { display: false },
-              },
-              y: {
-                beginAtZero: true,
-                ticks: { color: "#e2e8f0", font: { size: 9 } },
-                grid: { color: "rgba(255,255,255,0.08)" },
-              },
-            },
-          },
-        });
-
-        // === Mostrar resumen ===
-        resultBox.innerHTML = `
-          <h3 style="color:#10b981; text-align:center; margin-bottom:8px; font-size:1rem; border-bottom:1px solid rgba(16,185,129,0.4); padding-bottom:4px;">
-            Resumen
-          </h3>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:3px 14px;">
-            <p><b>Total:</b> ${data.summary.totalItems}</p>
-            <p><b>Bajo:</b> ${data.summary.lowStock}</p>
-            <p><b>Sobrestock:</b> ${data.summary.overStock}</p>
-            <p><b>Rotación:</b> ${data.summary.rotationRate}</p>
-            <p><b>Valor:</b> $${data.summary.totalValueUSD.toLocaleString()}</p>
-          </div>
-        `;
-      } catch (err) {
-        console.error(err);
-        resultBox.innerHTML =
-          "<span style='color:#f87171;'>Error al obtener datos (ver consola).</span>";
-      }
-    });
+  function resizeCanvas() {
+    canvas.width = Math.min(container.clientWidth * 0.9, 440);
+    canvas.height = Math.min(window.innerHeight * 0.35, 200);
   }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  // ===== Animación inicial (cajas que respiran) =====
+  let pulse = true;
+  let phase = 0;
+
+  function drawIdleAnimation() {
+    if (!pulse) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const numBoxes = 6;
+    const padding = 30;
+    const chartW = canvas.width - padding * 2;
+    const chartH = canvas.height - 60;
+    const gap = 10;
+    const boxW = chartW / numBoxes - gap;
+    const midY = canvas.height - 40;
+
+    for (let i = 0; i < numBoxes; i++) {
+      const height = chartH / 2 + Math.sin(phase + i * 0.5) * (chartH / 4);
+      const x = padding + i * (boxW + gap);
+      const y = midY - height;
+
+      const alpha = 0.5 + 0.3 * Math.sin(phase + i);
+      ctx.fillStyle = `rgba(34,211,238,${alpha.toFixed(2)})`;
+      ctx.fillRect(x, y, boxW, height);
+      ctx.strokeStyle = "rgba(34,211,238,0.8)";
+      ctx.strokeRect(x, y, boxW, height);
+    }
+
+    phase += 0.08;
+    requestAnimationFrame(drawIdleAnimation);
+  }
+
+  drawIdleAnimation();
+
+  // ===== Resumen =====
+  const summary = document.createElement("div");
+  Object.assign(summary.style, {
+    color: "#e2e8f0",
+    fontSize: "0.9rem",
+    textAlign: "center",
+    marginTop: "0.6rem",
+  });
+  container.appendChild(summary);
+
+  // ===== Dibuja barras reales =====
+  function drawBars(categories) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const padding = 40;
+    const chartWidth = canvas.width - padding * 2;
+    const chartHeight = canvas.height - 50;
+    const barGap = 10;
+    const barWidth = chartWidth / categories.length - barGap;
+    const maxVal = Math.max(...categories.map((c) => c.qty)) * 1.1;
+
+    ctx.font = "10px Segoe UI";
+    ctx.textAlign = "center";
+
+    categories.forEach((c, i) => {
+      const x = padding + i * (barWidth + barGap);
+      const h = (c.qty / maxVal) * chartHeight;
+      const y = canvas.height - 30 - h;
+
+      ctx.fillStyle = "rgba(34,211,238,0.8)";
+      ctx.fillRect(x, y, barWidth, h);
+      ctx.strokeStyle = "rgba(34,211,238,1)";
+      ctx.strokeRect(x, y, barWidth, h);
+      ctx.fillStyle = "#e2e8f0";
+      ctx.fillText(c.name.slice(0, 5), x + barWidth / 2, canvas.height - 15);
+    });
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "11px Segoe UI";
+    ctx.fillText("Cantidad", canvas.width / 2, canvas.height - 3);
+  }
+
+  // ===== Evento botón =====
+  button.addEventListener("click", async () => {
+    pulse = false; // detener animación
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    button.disabled = true;
+    button.textContent = "Consultando...";
+    summary.textContent = "";
+
+    try {
+      const res = await fetch(
+        "https://4khu7h5wdj7aivcyybxsgayuyu0lyhoy.lambda-url.us-east-1.on.aws/"
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const cats = data.categories.slice(0, 5);
+      drawBars(cats);
+
+      summary.innerHTML = `
+        <p><b>Total:</b> ${data.summary.totalItems} &nbsp;|&nbsp;
+        <b>Bajo:</b> ${data.summary.lowStock} &nbsp;|&nbsp;
+        <b>Sobrestock:</b> ${data.summary.overStock}</p>
+        <p><b>Rotación:</b> ${data.summary.rotationRate} &nbsp;|&nbsp;
+        <b>Valor:</b> $${data.summary.totalValueUSD.toLocaleString()}</p>
+      `;
+
+      button.textContent = "Simular";
+    } catch (err) {
+      console.error(err);
+      summary.innerHTML =
+        "<span style='color:#f87171;'>Error al obtener datos.</span>";
+      button.textContent = "Reintentar";
+    } finally {
+      button.disabled = false;
+    }
+  });
 });
