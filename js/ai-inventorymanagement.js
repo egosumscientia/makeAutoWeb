@@ -58,9 +58,10 @@ document.addEventListener("slideChanged", (e) => {
   container.appendChild(canvas);
 
   function resizeCanvas() {
-    canvas.width = Math.min(container.clientWidth * 0.9, 440);
-    canvas.height = Math.min(container.clientHeight * 0.6 || 200, 220);
+    canvas.width = Math.min(container.clientWidth * 0.9, 420);
+    canvas.height = Math.min(container.clientHeight * 0.45 || 180, 180);
   }
+
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
