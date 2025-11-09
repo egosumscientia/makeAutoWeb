@@ -218,3 +218,19 @@ input:focus {
     margin-bottom: 1.2rem !important;
   }
 }
+
+
+
+
+/* Ajuste fino del tamaño del demo */
+#ai-demo-carousel .carousel-item:nth-child(4) {
+  background: #0d1117 !important;
+  max-height: 480px !important;   /* vuelve al alto original */
+  overflow: hidden !important;
+  padding-bottom: 1.6rem !important;
+}
+
+#ai-demo-carousel .carousel-item:nth-child(4) canvas {
+  height: auto !important;
+  aspect-ratio: 16 / 10;
+}

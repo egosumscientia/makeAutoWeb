@@ -59,8 +59,9 @@ function renderInventoryDemo() {
   // ===== Tamaño responsivo =====
   function resizeCanvas() {
     const w = container.clientWidth;
-    canvas.width = Math.min(w * 0.9, 380);
-    canvas.height = w * 0.55; // 55 % del ancho visible
+    const drawW = Math.min(w * 0.9, 380);
+    canvas.width  = drawW;
+    canvas.height = Math.round(drawW * 0.62); // ~16:10
   }
 
   resizeCanvas();
@@ -151,6 +152,8 @@ function renderInventoryDemo() {
       const data = await res.json();
       const cats = data.categories.slice(0, 5);
       drawBars(cats);
+      // informar que cambió el alto del contenido
+      document.dispatchEvent(new Event("contentResized"));
       summary.innerHTML = `
         <p><b>Total:</b> ${data.summary.totalItems} &nbsp;|&nbsp;
         <b>Bajo:</b> ${data.summary.lowStock} &nbsp;|&nbsp;
@@ -217,3 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+document.addEventListener("contentResized", () => {
+  const car = document.querySelector(".carousel");
+  const active = document.querySelector(".carousel-item.active");
+  if (!car || !active) return;
+  car.style.setProperty("--carousel-base-h", active.scrollHeight + "px");
+});
