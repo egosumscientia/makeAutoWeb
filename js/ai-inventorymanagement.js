@@ -24,7 +24,7 @@ function renderInventoryDemo() {
   // ===== Descripción =====
   const desc = document.createElement("p");
   desc.textContent =
-    "Analiza el inventario en tiempo real con inteligencia artificial. Datos obtenidos dinámicamente desde AWS Lambda.";
+    "Analiza el inventario en tiempo real con inteligencia artificial.";
   Object.assign(desc.style, {
     color: "#94a3b8",
     fontSize: "0.9rem",
