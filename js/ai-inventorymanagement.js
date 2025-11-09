@@ -38,7 +38,7 @@ function renderInventoryDemo() {
   button.textContent = "Simular Inventario";
   button.className = "ai-btn";
   button.style.display = "block";
-  button.style.margin = "0 auto 0.5rem auto";
+  button.style.margin = "0 auto 0.3rem auto";
   container.appendChild(button);
 
   // ===== Canvas =====
@@ -60,14 +60,13 @@ function renderInventoryDemo() {
   function resizeCanvas() {
     const w = container.clientWidth;
     canvas.width = Math.min(w * 0.9, 380);
+    const vh = window.innerHeight;
 
-    // alturas adaptadas por dispositivo
-    if (window.innerWidth < 400) canvas.height = 210;       // móviles pequeños
-    else if (window.innerWidth < 768) canvas.height = 200;  // móviles grandes
-    else if (window.innerWidth < 1024) canvas.height = 180; // tablets
-    else canvas.height = 170;                               // escritorio
+    if (vh < 650) canvas.height = 220;      // móviles pequeños
+    else if (vh < 850) canvas.height = 200; // móviles grandes
+    else if (vh < 1000) canvas.height = 180; // tablets
+    else canvas.height = 170;               // escritorio
   }
-
 
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
@@ -111,7 +110,7 @@ function renderInventoryDemo() {
     marginTop: "0.6rem",
   });
   container.appendChild(summary);
-  summary.style.marginBottom = "1rem";
+  summary.style.marginBottom = "1.4rem";
 
 
   // ===== Barras =====
