@@ -32,7 +32,10 @@ document.addEventListener("slideChanged", (e) => {
   const canvas = document.createElement("canvas");
   const maxWidth = container.clientWidth || window.innerWidth;
   canvas.width = Math.min(maxWidth * 0.9, 340);
-  canvas.height = Math.min(maxWidth * 0.6, 220);
+  const isMobile = window.innerWidth < 768;
+  canvas.height = isMobile
+  ? Math.min(maxWidth * 0.45, 160)  // móvil
+  : Math.min(maxWidth * 0.55, 200); // escritorio
   canvas.style.display = "block";
   canvas.style.margin = "0 auto 12px auto";
   canvas.style.background = "#0f172a";
