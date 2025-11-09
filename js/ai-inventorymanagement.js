@@ -62,11 +62,12 @@ function renderInventoryDemo() {
     canvas.width = Math.min(w * 0.9, 380);
 
     // alturas adaptadas por dispositivo
-    if (window.innerWidth < 400) canvas.height = 180;       // móviles pequeños
-    else if (window.innerWidth < 768) canvas.height = 190;  // móviles grandes
-    else if (window.innerWidth < 1024) canvas.height = 170; // tablets
+    if (window.innerWidth < 400) canvas.height = 210;       // móviles pequeños
+    else if (window.innerWidth < 768) canvas.height = 200;  // móviles grandes
+    else if (window.innerWidth < 1024) canvas.height = 180; // tablets
     else canvas.height = 170;                               // escritorio
   }
+
 
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
