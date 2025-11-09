@@ -46,27 +46,22 @@ function renderInventoryDemo() {
   const ctx = canvas.getContext("2d");
   Object.assign(canvas.style, {
     display: "block",
-    margin: "0.4rem auto 0.4rem auto", // menos margen
+    margin: "0.5rem auto 1rem auto", // más margen abajo
     background: "#0f172a",
     borderRadius: "8px",
     boxShadow: "0 0 8px rgba(0,0,0,0.35)",
-    maxWidth: "420px",
-    width: "92%",
-    minHeight: "150px",
+    maxWidth: "380px",
+    width: "90%",
+    minHeight: "170px", // antes 150
   });
-
   container.appendChild(canvas);
 
   // ===== Tamaño responsivo =====
   function resizeCanvas() {
     const w = container.clientWidth;
-    canvas.width = Math.min(w * 0.92, 420); // más ancho
-    const vh = window.innerHeight;
-
-    if (vh < 650) canvas.height = 220;
-    else if (vh < 850) canvas.height = 200;
-    else if (vh < 1000) canvas.height = 190;
-    else canvas.height = 185; // escritorio más aireado
+    const h = Math.min(w * 0.6, 220); // 60% del ancho, máximo 220 px
+    canvas.width = Math.min(w * 0.9, 380);
+    canvas.height = h;
   }
 
   resizeCanvas();
