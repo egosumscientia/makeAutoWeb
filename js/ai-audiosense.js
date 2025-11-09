@@ -150,7 +150,6 @@ function renderAudioSenseDemo() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     button.disabled = true;
     button.textContent = "Analizando...";
-    resultText.textContent = "Procesando sonido...";
     kpiBox.style.display = "none";
 
     try {
@@ -181,7 +180,6 @@ function renderAudioSenseDemo() {
           <li>📊 <b>Estado:</b> <span style="color:${color}; font-weight:600;">${label}</span></li>
         </ul>`;
       kpiBox.style.display = "block";
-      resultText.innerHTML = `<span style="color:${color};">${message}</span>`;
     } catch (err) {
       console.error(err);
       resultText.textContent = "❌ Error al procesar el audio.";
