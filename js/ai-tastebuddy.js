@@ -30,12 +30,16 @@ document.addEventListener("slideChanged", (e) => {
 
   // ===== Canvas radar =====
   const canvas = document.createElement("canvas");
-  const maxWidth = container.clientWidth || window.innerWidth;
-  canvas.width = Math.min(maxWidth * 0.9, 340);
-  const isMobile = window.innerWidth < 768;
-  canvas.height = isMobile
-    ? Math.min(maxWidth * 0.45, 160)  // móvil
-    : Math.min(maxWidth * 0.55, 200); // escritorio
+  const isMobile = () => window.innerWidth < 768;
+
+  function fitCanvas() {
+    const maxWidth = container.clientWidth || window.innerWidth;
+    canvas.width  = Math.min(maxWidth * 0.9, 360);
+    canvas.height = isMobile() ? 200 : 220;   // alto estable para móvil/escritorio
+  }
+  fitCanvas();
+  window.addEventListener("resize", () => { fitCanvas(); drawRadar(); });
+
   canvas.style.display = "block";
   canvas.style.margin = "0 auto 12px auto";
   canvas.style.background = "#0f172a";
@@ -86,8 +90,8 @@ document.addEventListener("slideChanged", (e) => {
   function drawRadar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const cx = canvas.width / 2;
-    const cy = canvas.height / 2 + (isMobile ? 2 : 8);
-    const radius = Math.min(canvas.width / 3, 80);
+    const cy = canvas.height / 2 + (isMobile() ? 2 : 6);
+    const radius = Math.min(canvas.width * 0.38, canvas.height * 0.38);
     const levels = 5;
 
     ctx.strokeStyle = "rgba(255,255,255,0.08)";
