@@ -167,3 +167,8 @@ input:focus {
   outline: none !important;
   box-shadow: none !important;
 }
+
+.carousel-item:nth-child(3) div[style*="padding: 10px 14px"] h3 {
+  margin-top: 3px !important; /* baja solo el texto “Diagnóstico IA” */
+}
+
