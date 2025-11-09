@@ -1,13 +1,11 @@
 /**
- * AI-InventoryManagement – Animación inicial + simulación IA
+ * AI–InventoryManagement – Animación inicial + simulación IA
  * makeAutomatic – 2025
- * 100% responsivo y estable
+ * Reinicia la demo cuando el slide entra al viewport.
  */
 
-document.addEventListener("slideChanged", (e) => {
-  if (e.detail.index !== 3) return;
-
-  const container = document.getElementById("carousel-slide-3");
+function renderInventoryDemo() {
+  const container = document.querySelector("#ai-demo-carousel .carousel-item:nth-child(4)");
   if (!container) return;
   container.innerHTML = "";
 
@@ -52,38 +50,29 @@ document.addEventListener("slideChanged", (e) => {
     background: "#0f172a",
     borderRadius: "8px",
     boxShadow: "0 0 8px rgba(0,0,0,0.35)",
-    width: "100%",
-    height: "auto",
+    maxWidth: "380px",
+    width: "90%",
+    minHeight: "150px",
   });
   container.appendChild(canvas);
 
+  // ===== Tamaño responsivo =====
   function resizeCanvas() {
     const w = container.clientWidth;
     canvas.width = Math.min(w * 0.9, 380);
-
-    if (window.innerWidth < 600) {
-      // móviles
-      canvas.height = 130;
-    } else if (window.innerWidth < 1024) {
-      // tablet
-      canvas.height = 150;
-    } else {
-      // escritorio
-      canvas.height = 170;
-    }
+    if (window.innerWidth < 600) canvas.height = 130;
+    else if (window.innerWidth < 1024) canvas.height = 150;
+    else canvas.height = 170;
   }
-
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  // ===== Animación inicial (cajas que respiran) =====
+  // ===== Animación inicial =====
   let pulse = true;
   let phase = 0;
-
   function drawIdleAnimation() {
     if (!pulse) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     const numBoxes = 6;
     const padding = 30;
     const chartW = canvas.width - padding * 2;
@@ -96,7 +85,6 @@ document.addEventListener("slideChanged", (e) => {
       const height = chartH / 2 + Math.sin(phase + i * 0.5) * (chartH / 4);
       const x = padding + i * (boxW + gap);
       const y = midY - height;
-
       const alpha = 0.5 + 0.3 * Math.sin(phase + i);
       ctx.fillStyle = `rgba(34,211,238,${alpha.toFixed(2)})`;
       ctx.fillRect(x, y, boxW, height);
@@ -107,7 +95,6 @@ document.addEventListener("slideChanged", (e) => {
     phase += 0.08;
     requestAnimationFrame(drawIdleAnimation);
   }
-
   drawIdleAnimation();
 
   // ===== Resumen =====
@@ -120,7 +107,7 @@ document.addEventListener("slideChanged", (e) => {
   });
   container.appendChild(summary);
 
-  // ===== Dibuja barras reales =====
+  // ===== Barras =====
   function drawBars(categories) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const padding = 40;
@@ -137,7 +124,6 @@ document.addEventListener("slideChanged", (e) => {
       const x = padding + i * (barWidth + barGap);
       const h = (c.qty / maxVal) * chartHeight;
       const y = canvas.height - 30 - h;
-
       ctx.fillStyle = "rgba(34,211,238,0.8)";
       ctx.fillRect(x, y, barWidth, h);
       ctx.strokeStyle = "rgba(34,211,238,1)";
@@ -151,41 +137,76 @@ document.addEventListener("slideChanged", (e) => {
     ctx.fillText("Cantidad", canvas.width / 2, canvas.height - 3);
   }
 
-  // ===== Evento botón =====
+  // ===== Evento del botón =====
   button.addEventListener("click", async () => {
-    pulse = false; // detener animación
+    pulse = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     button.disabled = true;
     button.textContent = "Consultando...";
     summary.textContent = "";
 
     try {
-      const res = await fetch(
-        "https://4khu7h5wdj7aivcyybxsgayuyu0lyhoy.lambda-url.us-east-1.on.aws/"
-      );
+      const res = await fetch("https://4khu7h5wdj7aivcyybxsgayuyu0lyhoy.lambda-url.us-east-1.on.aws/");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-
       const cats = data.categories.slice(0, 5);
       drawBars(cats);
-
       summary.innerHTML = `
         <p><b>Total:</b> ${data.summary.totalItems} &nbsp;|&nbsp;
         <b>Bajo:</b> ${data.summary.lowStock} &nbsp;|&nbsp;
         <b>Sobrestock:</b> ${data.summary.overStock}</p>
         <p><b>Rotación:</b> ${data.summary.rotationRate} &nbsp;|&nbsp;
-        <b>Valor:</b> $${data.summary.totalValueUSD.toLocaleString()}</p>
-      `;
-
+        <b>Valor:</b> $${data.summary.totalValueUSD.toLocaleString()}</p>`;
       button.textContent = "Simular";
     } catch (err) {
       console.error(err);
-      summary.innerHTML =
-        "<span style='color:#f87171;'>Error al obtener datos.</span>";
+      summary.innerHTML = "<span style='color:#f87171;'>Error al obtener datos.</span>";
       button.textContent = "Reintentar";
     } finally {
       button.disabled = false;
     }
   });
+}
+
+// === Forzar render inicial + reinicio solo cuando cambie de estado ===
+let lastActive = -1; // guarda el último slide activo
+
+function activateInventorySlide() {
+  const items = document.querySelectorAll("#ai-demo-carousel .carousel-item");
+  items.forEach((item, idx) => {
+    if (item.classList.contains("active")) {
+      // si es el cuarto slide y no estaba activo antes → renderiza
+      if (idx === 3 && lastActive !== 3) {
+        renderInventoryDemo();
+      }
+      lastActive = idx;
+    }
+  });
+}
+
+// === Render inicial al cargar ===
+document.addEventListener("DOMContentLoaded", () => {
+  activateInventorySlide();
+
+  // Rechequear cada 800 ms para detectar cambio real de slide
+  setInterval(() => {
+    activateInventorySlide();
+  }, 800);
 });
+
+  // === Reiniciar ondas al volver a entrar en viewport ===
+  const target = document.querySelector("#ai-demo-carousel .carousel-item:nth-child(4)");
+  if (target) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          renderInventoryDemo(); // vuelve al estado inicial
+          lastActive = 3;
+        }
+      });
+    }, { threshold: 0.4 });
+
+    observer.observe(target);
+  }
+
+

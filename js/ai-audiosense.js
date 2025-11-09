@@ -1,16 +1,10 @@
 /**
- * AI-AudioSense – demo mínimo funcional
- * Reemplaza el archivo completo con este contenido.
+ * AI-AudioSense – demo recargable al entrar en viewport
  */
 
-document.addEventListener("slideChanged", (e) => {
-  // Este demo vive en el slide #3 (índice 2)
-  if (!e || e.detail?.index !== 2) return;
-
-  const container = document.querySelector(".carousel-item:nth-child(3)");
+function renderAudioSenseDemo() {
+  const container = document.querySelector("#ai-demo-carousel .carousel-item:nth-child(3)");
   if (!container) return;
-
-  // Render limpio SIEMPRE que entres al slide (evita duplicados)
   container.innerHTML = "";
 
   // ===== Título =====
@@ -79,18 +73,16 @@ document.addEventListener("slideChanged", (e) => {
   });
   container.appendChild(resultText);
 
-  // ===== Tamaño responsivo del canvas =====
+  // ===== Tamaño responsivo =====
   function resizeCanvas() {
     const w = container.clientWidth || 400;
     canvas.width = Math.min(w * 0.9, 360);
-    if (window.innerWidth < 600) canvas.height = 120;       // móvil
-    else if (window.innerWidth < 1024) canvas.height = 140; // tablet
-    else canvas.height = 160;                                // desktop
+    canvas.height = window.innerWidth < 600 ? 120 : window.innerWidth < 1024 ? 140 : 160;
   }
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  // ===== Animación de ondas inicial =====
+  // ===== Animación =====
   let running = true;
   let phase = 0;
   function drawWave() {
@@ -100,7 +92,6 @@ document.addEventListener("slideChanged", (e) => {
     const amp = canvas.height / 6;
     const f = 0.03;
 
-    // onda 1
     ctx.beginPath();
     for (let x = 0; x < canvas.width; x++) {
       const y = midY + Math.sin(x * f + phase) * amp;
@@ -110,7 +101,6 @@ document.addEventListener("slideChanged", (e) => {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // onda 2
     ctx.beginPath();
     for (let x = 0; x < canvas.width; x++) {
       const y = midY + Math.cos(x * f * 1.2 + phase + 1) * (amp * 0.6);
@@ -157,7 +147,7 @@ document.addEventListener("slideChanged", (e) => {
 
   // ===== Acción del botón =====
   button.addEventListener("click", async () => {
-    running = false;                     // detiene ondas
+    running = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     button.disabled = true;
     button.textContent = "Analizando...";
@@ -176,19 +166,7 @@ document.addEventListener("slideChanged", (e) => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
-      const {
-        rms_db,
-        frequency_dominant,
-        bands,
-        levels_db,
-        anomaly_detected,
-        confidence,
-        message,
-      } = data;
-
-      // asegura que título y descripción estén visibles
-      title.style.display = "block";
-      desc.style.display = "block";
+      const { rms_db, frequency_dominant, bands, levels_db, anomaly_detected, confidence, message } = data;
 
       drawBars(bands, levels_db);
 
@@ -205,13 +183,24 @@ document.addEventListener("slideChanged", (e) => {
         </ul>`;
       kpiBox.style.display = "block";
       resultText.innerHTML = `<span style="color:${color};">${message}</span>`;
-      button.textContent = "Analizar Audio";
-      button.disabled = false;
     } catch (err) {
       console.error(err);
       resultText.textContent = "❌ Error al procesar el audio.";
-      button.textContent = "Reintentar";
+    } finally {
+      button.textContent = "Analizar Audio";
       button.disabled = false;
     }
   });
+}
+
+// === Observador de visibilidad ===
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) renderAudioSenseDemo();
+  });
+}, { threshold: 0.4 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const target = document.querySelector("#ai-demo-carousel .carousel-item:nth-child(3)");
+  if (target) observer.observe(target);
 });

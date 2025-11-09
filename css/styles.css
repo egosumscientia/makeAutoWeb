@@ -181,3 +181,25 @@ input:focus {
 .carousel-item:first-child h3 {
   margin-top: 0.5rem !important;
 }
+
+/* Fix para demo AI–InventoryManagement: permitir render dinámico */
+#ai-demo-carousel .carousel-item:nth-child(4) {
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  flex-direction: column !important;
+  padding-top: 1rem !important;
+  overflow: visible !important;
+  min-height: 400px !important;
+}
+
+#ai-demo-carousel .carousel-item:nth-child(4) canvas {
+  display: block !important;
+  background: #0f172a !important;
+  margin: 0 auto 1rem auto !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 8px rgba(0,0,0,0.35) !important;
+}
+
+#ai-demo-carousel .carousel-item:nth-child(4) button.ai-btn {
+  margin-top: 0.6rem !important;
+}
