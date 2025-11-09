@@ -34,8 +34,8 @@ document.addEventListener("slideChanged", (e) => {
   canvas.width = Math.min(maxWidth * 0.9, 340);
   const isMobile = window.innerWidth < 768;
   canvas.height = isMobile
-  ? Math.min(maxWidth * 0.45, 160)  // móvil
-  : Math.min(maxWidth * 0.55, 200); // escritorio
+    ? Math.min(maxWidth * 0.45, 160)  // móvil
+    : Math.min(maxWidth * 0.55, 200); // escritorio
   canvas.style.display = "block";
   canvas.style.margin = "0 auto 12px auto";
   canvas.style.background = "#0f172a";
@@ -86,7 +86,7 @@ document.addEventListener("slideChanged", (e) => {
   function drawRadar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const cx = canvas.width / 2;
-    const cy = canvas.height / 2 + 10;
+    const cy = canvas.height / 2 + (isMobile ? 2 : 8);
     const radius = Math.min(canvas.width / 3, 80);
     const levels = 5;
 
