@@ -222,3 +222,13 @@ input:focus {
     margin-bottom: 0.5rem !important;
   }
 }
+/* Espacio extra para mostrar claramente el resumen debajo del canvas */
+#ai-demo-carousel .carousel-item:nth-child(4) {
+  padding-bottom: 1.2rem !important;
+}
+
+@media (max-width: 600px) {
+  #ai-demo-carousel .carousel-item:nth-child(4) {
+    padding-bottom: 1.8rem !important; /* más aire en móviles */
+  }
+}
