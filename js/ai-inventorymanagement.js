@@ -38,7 +38,7 @@ function renderInventoryDemo() {
   button.textContent = "Simular Inventario";
   button.className = "ai-btn";
   button.style.display = "block";
-  button.style.margin = "0 auto 1rem auto";
+  button.style.margin = "0 auto 0.5rem auto";
   container.appendChild(button);
 
   // ===== Canvas =====
@@ -46,13 +46,13 @@ function renderInventoryDemo() {
   const ctx = canvas.getContext("2d");
   Object.assign(canvas.style, {
     display: "block",
-    margin: "0 auto 0.8rem auto",
+    margin: "0.5rem auto 0.6rem auto",
     background: "#0f172a",
     borderRadius: "8px",
     boxShadow: "0 0 8px rgba(0,0,0,0.35)",
     maxWidth: "380px",
     width: "90%",
-    minHeight: "150px",
+    minHeight: "140px",
   });
   container.appendChild(canvas);
 
@@ -60,10 +60,14 @@ function renderInventoryDemo() {
   function resizeCanvas() {
     const w = container.clientWidth;
     canvas.width = Math.min(w * 0.9, 380);
-    if (window.innerWidth < 600) canvas.height = 130;
-    else if (window.innerWidth < 1024) canvas.height = 150;
-    else canvas.height = 170;
+
+    // alturas adaptadas por dispositivo
+    if (window.innerWidth < 400) canvas.height = 180;       // móviles pequeños
+    else if (window.innerWidth < 768) canvas.height = 190;  // móviles grandes
+    else if (window.innerWidth < 1024) canvas.height = 170; // tablets
+    else canvas.height = 170;                               // escritorio
   }
+
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
@@ -76,7 +80,7 @@ function renderInventoryDemo() {
     const numBoxes = 6;
     const padding = 30;
     const chartW = canvas.width - padding * 2;
-    const chartH = canvas.height - 60;
+    const chartH = canvas.height - 50;
     const gap = 10;
     const boxW = chartW / numBoxes - gap;
     const midY = canvas.height - 40;
@@ -106,13 +110,15 @@ function renderInventoryDemo() {
     marginTop: "0.6rem",
   });
   container.appendChild(summary);
+  summary.style.marginBottom = "1rem";
+
 
   // ===== Barras =====
   function drawBars(categories) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const padding = 40;
     const chartWidth = canvas.width - padding * 2;
-    const chartHeight = canvas.height - 50;
+    const chartHeight = canvas.height - 60;
     const barGap = 10;
     const barWidth = chartWidth / categories.length - barGap;
     const maxVal = Math.max(...categories.map((c) => c.qty)) * 1.1;
@@ -134,7 +140,6 @@ function renderInventoryDemo() {
 
     ctx.fillStyle = "#94a3b8";
     ctx.font = "11px Segoe UI";
-    ctx.fillText("Cantidad", canvas.width / 2, canvas.height - 3);
   }
 
   // ===== Evento del botón =====
