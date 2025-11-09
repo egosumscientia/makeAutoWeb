@@ -52,16 +52,14 @@ function renderInventoryDemo() {
     boxShadow: "0 0 8px rgba(0,0,0,0.35)",
     maxWidth: "380px",
     width: "90%",
-    minHeight: "170px", // antes 150
   });
   container.appendChild(canvas);
 
   // ===== Tamaño responsivo =====
   function resizeCanvas() {
-    const w = container.clientWidth;
-    const drawW = Math.min(w * 0.9, 380);
-    canvas.width  = drawW;
-    canvas.height = Math.round(drawW * 0.62); // ~16:10
+    const w = container.clientWidth || 400;
+    canvas.width = Math.min(w * 0.9, 360);
+    canvas.height = window.innerWidth < 600 ? 120 : window.innerWidth < 1024 ? 140 : 160;
   }
 
   resizeCanvas();
