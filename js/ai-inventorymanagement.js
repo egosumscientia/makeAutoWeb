@@ -59,9 +59,8 @@ function renderInventoryDemo() {
   // ===== Tamaño responsivo =====
   function resizeCanvas() {
     const w = container.clientWidth;
-    const h = Math.min(w * 0.6, 220); // 60% del ancho, máximo 220 px
     canvas.width = Math.min(w * 0.9, 380);
-    canvas.height = h;
+    canvas.height = w * 0.55; // 55 % del ancho visible
   }
 
   resizeCanvas();

@@ -218,6 +218,3 @@ input:focus {
     margin-bottom: 1.2rem !important;
   }
 }
-#ai-demo-carousel .carousel-item:nth-child(4) {
-  padding-bottom: 3rem !important;
-}
