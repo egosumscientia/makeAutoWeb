@@ -172,3 +172,12 @@ input:focus {
   margin-top: 3px !important; /* baja solo el texto “Diagnóstico IA” */
 }
 
+/* Corrige el recorte del título en el primer slide */
+.carousel-item:first-child {
+  padding-top: 0.6rem;
+  overflow: visible !important;
+}
+
+.carousel-item:first-child h3 {
+  margin-top: 0.5rem !important;
+}
