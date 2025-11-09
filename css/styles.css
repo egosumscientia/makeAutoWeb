@@ -182,24 +182,39 @@ input:focus {
   margin-top: 0.5rem !important;
 }
 
-/* Fix para demo AI–InventoryManagement: permitir render dinámico */
+/* Fix para demo AI–InventoryManagement: permitir render dinámico y mantener responsividad */
 #ai-demo-carousel .carousel-item:nth-child(4) {
   align-items: stretch !important;
   justify-content: flex-start !important;
   flex-direction: column !important;
   padding-top: 1rem !important;
   overflow: visible !important;
-  min-height: 400px !important;
+  min-height: auto !important; /* <-- elimina la altura fija */
 }
 
+/* Canvas responsivo */
 #ai-demo-carousel .carousel-item:nth-child(4) canvas {
   display: block !important;
-  background: #0f172a !important;
+  width: 90% !important;
+  max-width: 380px !important;
+  height: auto !important;
   margin: 0 auto 1rem auto !important;
+  background: #0f172a !important;
   border-radius: 8px !important;
   box-shadow: 0 0 8px rgba(0,0,0,0.35) !important;
 }
 
+/* Botón */
 #ai-demo-carousel .carousel-item:nth-child(4) button.ai-btn {
   margin-top: 0.6rem !important;
+}
+
+/* Ajustes extra para pantallas pequeñas */
+@media (max-width: 600px) {
+  #ai-demo-carousel .carousel-item:nth-child(4) {
+    padding-top: 0.5rem !important;
+  }
+  #ai-demo-carousel .carousel-item:nth-child(4) canvas {
+    max-width: 320px !important;
+  }
 }
