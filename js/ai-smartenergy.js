@@ -1,6 +1,6 @@
 // =============================================
 // AI–SmartEnergy  — makeAutomatic demo
-// Versión compacta y 100% embebida
+// Versión final sin botón (clic en gráficas)
 // =============================================
 
 document.addEventListener("smartEnergyInit", () => {
@@ -13,44 +13,53 @@ function initSmartEnergy() {
   const slide = document.querySelector(".carousel-item:nth-child(5)");
   if (!slide) return;
 
-  // --- Estilos locales, tamaño pequeño y responsivo ---
   const style = document.createElement("style");
   style.textContent = `
-    /* Contenedor del slide */
     #ai-demo-carousel .carousel-item:nth-child(5){
-      padding: 6px 0 10px 0 !important;
+      padding: 0 0 6px 0 !important;
       display:flex; flex-direction:column; align-items:center; text-align:center;
     }
-    /* Canvases: muy compactos */
+    #ai-demo-carousel .carousel-item:nth-child(5) h3.ai-demo-title {
+      margin-top: 0 !important;
+      margin-bottom: 16px !important;
+    }
+    #ai-demo-carousel .carousel-item:nth-child(5) p {
+      margin-top: 0 !important;
+      margin-bottom: 10px !important;
+      line-height: 1.3;
+    }
     #ai-demo-carousel .carousel-item:nth-child(5) canvas{
       display:block !important;
-      width: 78% !important;       /* relativo al carrusel */
-      max-width: 180px !important; /* desktop compacto */
+      width: 85% !important;
+      max-width: 190px !important;
       height:auto !important;
       margin: 6px auto !important;
     }
-    /* Móvil más pequeño aún */
     @media (max-width: 500px){
       #ai-demo-carousel .carousel-item:nth-child(5) canvas{
-        max-width: 150px !important;
-        margin: 4px auto !important;
+        max-width: 160px !important;
+        margin: 3px auto !important;
       }
     }
-    /* Indicador de anomalías y botón */
     #ai-demo-carousel #anomalyIndicator{
-      font-size:.9rem; margin-top:6px;
+      font-size:.85rem;
+      margin-top:2px;
+      margin-bottom:2px;
+      white-space:nowrap;
     }
-    #ai-demo-carousel #btnRefresh{
-      transform: scale(.70); padding:2px 10px; font-size:.80rem; line-height:1rem;
-      margin-top:6px;
+    .hint-tap {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 3px;
     }
   `;
   document.head.appendChild(style);
 
-  // --- Estructura HTML mínima ---
+
+  // --- Estructura HTML sin botón ---
   slide.innerHTML = `
-    <h3 class="ai-demo-title">AI–SmartEnergy</h3>
-    <p style="max-width:480px; margin:2px auto 8px; color:#cbd5e1">
+    <h3 class="ai-demo-title" style="margin-top:2px; margin-bottom:18px;">AI–SmartEnergy</h3>
+    <p style="max-width:480px; margin:0 auto 8px; color:#cbd5e1; line-height:1.3;">
       Monitoreo de potencia eléctrica en tiempo real con inteligencia artificial.
     </p>
 
@@ -61,24 +70,20 @@ function initSmartEnergy() {
       Anomalías detectadas: <b id="anomalyCount">0</b>
     </div>
 
-    <div class="ai-input" style="margin-top:6px;">
-      <button id="btnRefresh" class="ai-secondary-btn">🔄 Actualizar datos</button>
-    </div>
+    <div class="hint-tap">(toca o haz clic en una gráfica para actualizar)</div>
   `;
 
   const ctxV = document.getElementById("chartVoltage").getContext("2d");
   const ctxP = document.getElementById("chartPower").getContext("2d");
   const anomalyCount = document.getElementById("anomalyCount");
-  const btn = document.getElementById("btnRefresh");
 
-  // --- Generación de datos (compacta) ---
+  // --- Generación de datos ---
   function generateWave(base, variation, points = 48) {
     return Array.from({ length: points }, (_, i) =>
       base + Math.sin(i / 6) * variation + (Math.random() - 0.5) * 1.2
     );
   }
   function generateRandomData() {
-    // 10% de probabilidad para permitir verdes
     const anomalies = Array.from({ length: 48 }, () => (Math.random() > 0.90 ? 1 : 0));
     return {
       voltage: generateWave(402, 14),
@@ -88,7 +93,7 @@ function initSmartEnergy() {
   }
   let data = generateRandomData();
 
-  // --- Opciones comunes super-compactas para Chart.js ---
+  // --- Configuración compacta de Chart.js ---
   const tinyOpts = {
     responsive: true,
     maintainAspectRatio: true,
@@ -142,15 +147,13 @@ function initSmartEnergy() {
     options: tinyOpts
   });
 
-  // --- Actualización manual + brillo sincronizado por criticidad ---
+  // --- Actualización manual y efecto visual ---
   function updateCharts() {
-    // Nuevos datos
     data = generateRandomData();
     chartVoltage.data.datasets[0].data = data.voltage;
     chartPower.data.datasets[0].data   = data.power;
     chartVoltage.update(); chartPower.update();
 
-    // Anomalías y color de nivel
     const total = data.anomalies.reduce((a, b) => a + b, 0);
     anomalyCount.textContent = total;
 
@@ -159,29 +162,25 @@ function initSmartEnergy() {
     else if (total <= 6)   { anomalyCount.style.color = "#FACC15"; colorGlow = "rgba(250,204,21,.7)"; }
     else                   { anomalyCount.style.color = "#EF4444"; colorGlow = "rgba(239,68,68,.7)"; }
 
-    // Efecto visual breve
-    [document.getElementById("chartVoltage"), document.getElementById("chartPower")]
-      .forEach(c => {
-        c.style.transition = "box-shadow .35s ease";
-        c.style.boxShadow  = `0 0 16px ${colorGlow}`;
-        setTimeout(() => { c.style.boxShadow = "none"; }, 400);
-      });
+    [ctxV.canvas, ctxP.canvas].forEach(c => {
+      c.style.transition = "box-shadow .35s ease";
+      c.style.boxShadow  = `0 0 16px ${colorGlow}`;
+      setTimeout(() => { c.style.boxShadow = "none"; }, 400);
+    });
 
-    // Asegura que el carrusel reajuste la altura al cambiar contenido
+    // Notificar al carrusel para reajustar altura
     setTimeout(() => {
       const ev = new CustomEvent("slideChanged", { detail: { index: 4 } });
       document.dispatchEvent(ev);
     }, 100);
   }
 
-  // Botón: única fuente de actualización
-  btn.addEventListener("click", updateCharts);
+  // --- Click en las gráficas para actualizar ---
+  [ctxV.canvas, ctxP.canvas].forEach(c => {
+    c.addEventListener("click", updateCharts);
+  });
 
-  // Pequeño realce en hover
-  btn.addEventListener("mouseenter", () => btn.style.filter = "brightness(1.25)");
-  btn.addEventListener("mouseleave", () => btn.style.filter = "brightness(1)");
-
-  // Ajuste de altura inicial del carrusel tras renderizado
+  // Ajuste inicial de altura del carrusel
   setTimeout(() => {
     const ev = new CustomEvent("slideChanged", { detail: { index: 4 } });
     document.dispatchEvent(ev);
