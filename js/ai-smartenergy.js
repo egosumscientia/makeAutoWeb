@@ -152,8 +152,16 @@ function initSmartEnergy() {
     data = generateRandomData();
     chartVoltage.data.datasets[0].data = data.voltage;
     chartPower.data.datasets[0].data   = data.power;
-    chartVoltage.update(); chartPower.update();
+    chartVoltage.update(); 
+    chartPower.update();
 
+    // Corrige glitch visual (línea blanca o tachado)
+    chartVoltage.setActiveElements([]);
+    chartPower.setActiveElements([]);
+    chartVoltage.render();
+    chartPower.render();
+
+    // Recalcula anomalías
     const total = data.anomalies.reduce((a, b) => a + b, 0);
     anomalyCount.textContent = total;
 
@@ -162,6 +170,7 @@ function initSmartEnergy() {
     else if (total <= 6)   { anomalyCount.style.color = "#FACC15"; colorGlow = "rgba(250,204,21,.7)"; }
     else                   { anomalyCount.style.color = "#EF4444"; colorGlow = "rgba(239,68,68,.7)"; }
 
+    // Efecto visual sincronizado
     [ctxV.canvas, ctxP.canvas].forEach(c => {
       c.style.transition = "box-shadow .35s ease";
       c.style.boxShadow  = `0 0 16px ${colorGlow}`;
