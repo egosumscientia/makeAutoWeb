@@ -47,15 +47,28 @@ document.addEventListener("slideChanged", (e) => {
 });
 
 // Bloquea la referencia vertical de las flechas a una altura base medida una sola vez
-window.addEventListener("load", () => {
-  const car = document.querySelector(".carousel");
-  const active = document.querySelector(".carousel-item.active") || document.querySelector(".carousel-item");
-  if (!car || !active) return;
+//window.addEventListener("load", () => {
+  //const car = document.querySelector(".carousel");
+  //const active = document.querySelector(".carousel-item.active") || document.querySelector(".carousel-item");
+  //if (!car || !active) return;
 
   // Altura flexible: se ajusta al contenido, nunca corta ni añade margen extra
+  //const base = active.scrollHeight;
+  //car.style.setProperty("--carousel-base-h", base + "px");
+//});
+
+function adjustCarouselHeight() {
+  const car = document.querySelector(".carousel");
+  const active = document.querySelector(".carousel-item.active");
+  if (!car || !active) return;
   const base = active.scrollHeight;
   car.style.setProperty("--carousel-base-h", base + "px");
-});
+}
+
+// Inicializa y escucha eventos relevantes
+window.addEventListener("load", adjustCarouselHeight);
+window.addEventListener("resize", adjustCarouselHeight);
+document.addEventListener("slideChanged", adjustCarouselHeight);
 
 
 // Si quieres que se reajuste al rotar el móvil, descomenta:
