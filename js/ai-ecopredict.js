@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearBackground(w, h) {
-    ctx.fillStyle = "#0b0b0b";
+    ctx.fillStyle = "#0A0F1D";
     ctx.fillRect(0, 0, w, h);
   }
 
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.font = `${h * 0.038}px monospace`;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("Temperatura", padX + 5, padY + 6);
+    ctx.fillText("T°C", padX + 5, padY + 6);
   }
 
   async function fetchPrediction() {
