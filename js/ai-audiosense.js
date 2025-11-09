@@ -9,10 +9,10 @@ function renderAudioSenseDemo() {
 
   // ===== Título =====
   const title = document.createElement("h3");
-  title.textContent = "AI–AudioSense";
+  title.textContent = "AI—AudioSense";
   Object.assign(title.style, {
     color: "#22d3ee",
-    marginBottom: "0.5rem",
+    marginBottom: "0.2rem",
     fontSize: "1.25rem",
     fontWeight: "600",
     textAlign: "center",
@@ -22,14 +22,13 @@ function renderAudioSenseDemo() {
   // ===== Descripción =====
   const desc = document.createElement("p");
   desc.textContent =
-    "Analiza sonidos industriales para detectar patrones anómalos en motores, compresores o líneas de producción.";
+    "Analiza sonidos industriales para detectar patrones anómalos.";
   Object.assign(desc.style, {
     textAlign: "center",
-    marginBottom: "1rem",
+    marginBottom: "0.4rem",
     fontSize: "0.95rem",
   });
   container.appendChild(desc);
-
   // ===== Botón =====
   const button = document.createElement("button");
   button.textContent = "Analizar Audio";
@@ -53,13 +52,13 @@ function renderAudioSenseDemo() {
   // ===== Caja de resultados =====
   const kpiBox = document.createElement("div");
   Object.assign(kpiBox.style, {
-    margin: "1rem auto 0 auto",
+    margin: "0.3rem auto 0 auto",
     maxWidth: "560px",
     background: "#0f172a",
-    borderRadius: "8px",
-    padding: "10px 14px",
+    borderRadius: "6px",
+    padding: "5px 8px",
     textAlign: "left",
-    fontSize: "0.9rem",
+    fontSize: "0.7rem",
     color: "#e2e8f0",
     display: "none",
   });
@@ -67,9 +66,9 @@ function renderAudioSenseDemo() {
 
   const resultText = document.createElement("p");
   Object.assign(resultText.style, {
-    marginTop: "6px",
+    marginTop: "2px",
     textAlign: "center",
-    fontSize: "0.9rem",
+    fontSize: "0.7rem",
   });
   container.appendChild(resultText);
 
