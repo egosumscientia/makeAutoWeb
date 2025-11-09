@@ -182,70 +182,39 @@ input:focus {
   margin-top: 0.5rem !important;
 }
 
-/* Ajuste responsivo definitivo para el 4º slide */
+/* === Ajuste limpio y responsivo para el 4º slide (AI–InventoryManagement) === */
 #ai-demo-carousel .carousel-item:nth-child(4) {
-  align-items: stretch !important;
-  justify-content: flex-start !important;
+  display: flex !important;
   flex-direction: column !important;
-  padding-top: 1rem !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 1rem 0 2rem 0 !important;
   overflow: visible !important;
-  min-height: auto !important;
 }
 
-/* Canvas con proporción más baja en móviles */
+/* Canvas adaptable */
 #ai-demo-carousel .carousel-item:nth-child(4) canvas {
   display: block !important;
   width: 90% !important;
   max-width: 380px !important;
   height: auto !important;
-  aspect-ratio: 16 / 9 !important;   /* mantiene proporción controlada */
-  margin: 0 auto 0.8rem auto !important;
   border-radius: 8px !important;
-  box-shadow: 0 0 8px rgba(0,0,0,0.35) !important;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.35) !important;
+  margin: 0 auto 1rem auto !important;
 }
 
-/* Espaciado del botón */
+/* Botón */
 #ai-demo-carousel .carousel-item:nth-child(4) button.ai-btn {
-  margin-top: 0.6rem !important;
+  margin: 0.8rem auto 1rem auto !important;
 }
 
-/* Ajuste fino para pantallas pequeñas (Android / iPhone) */
+/* Móviles */
 @media (max-width: 600px) {
   #ai-demo-carousel .carousel-item:nth-child(4) {
-    padding-top: 0.5rem !important;
+    padding: 0.5rem 0 2.4rem 0 !important;
   }
   #ai-demo-carousel .carousel-item:nth-child(4) canvas {
     max-width: 300px !important;
-    aspect-ratio: 4 / 3 !important;  /* menos altura en móviles */
-  }
-  #ai-demo-carousel .carousel-item:nth-child(4) div {
-    margin-bottom: 0.5rem !important;
-  }
-}
-/* Espacio extra para mostrar claramente el resumen debajo del canvas */
-#ai-demo-carousel .carousel-item:nth-child(4) {
-  padding-bottom: 1.2rem !important;
-}
-
-@media (max-width: 600px) {
-  #ai-demo-carousel .carousel-item:nth-child(4) {
-    padding-bottom: 1.8rem !important; /* más aire en móviles */
-  }
-}
-
-/* Ajuste fino: asegura espacio bajo el gráfico */
-#ai-demo-carousel .carousel-item:nth-child(4) {
-  padding-bottom: 2rem !important;
-}
-
-/* Extra aire en móviles */
-@media (max-width: 600px) {
-  #ai-demo-carousel .carousel-item:nth-child(4) {
-    padding-bottom: 2.8rem !important;
-  }
-  #ai-demo-carousel .carousel-item:nth-child(4) canvas {
-    aspect-ratio: 4 / 3 !important;
-    max-width: 300px !important;
-    margin-bottom: 1.2rem !important; /* empuja el resumen hacia abajo */
+    margin-bottom: 1.2rem !important;
   }
 }
