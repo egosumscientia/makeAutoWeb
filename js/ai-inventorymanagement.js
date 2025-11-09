@@ -128,7 +128,7 @@ function renderInventoryDemo() {
   function drawBars(categories) {
     barData = categories;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const padding = 40;
+    const padding = canvas.width < 300 ? 18 : canvas.width < 360 ? 25 : 35;
     const chartWidth = canvas.width - padding * 2;
     const chartHeight = canvas.height - 60;
     const barGap = 10;
