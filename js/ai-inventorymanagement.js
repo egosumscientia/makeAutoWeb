@@ -1,7 +1,8 @@
 /**
- * AI–InventoryManagement – versión mejorada (makeAutomatic 2025)
- * Mantiene animación inicial y endpoint original AWS
- * Mejora visual: degradado violeta→cian, sombras y tooltip flotante
+ * AI–InventoryManagement – versión corregida (makeAutomatic 2025)
+ * Mantiene animación inicial y endpoint original AWS.
+ * Corrige centrado geométrico en todas las resoluciones.
+ * Mejora visual: degradado violeta→cian, sombras y tooltip flotante.
  */
 
 function renderInventoryDemo() {
@@ -36,8 +37,12 @@ function renderInventoryDemo() {
   const button = document.createElement("button");
   button.textContent = "Simular Inventario";
   button.className = "ai-btn";
-  button.style.display = "block";
-  button.style.margin = "0 auto 0.3rem auto";
+  Object.assign(button.style, {
+    display: "block",
+    margin: "0 auto 0.3rem auto",
+    position: "relative",
+    zIndex: "10",
+  });
   container.appendChild(button);
 
   // ===== Canvas =====
@@ -51,7 +56,7 @@ function renderInventoryDemo() {
     boxShadow: "0 0 8px rgba(0,0,0,0.35)",
     maxWidth: "380px",
     width: "90%",
-    cursor: "pointer"
+    cursor: "pointer",
   });
   container.appendChild(canvas);
 
@@ -78,27 +83,29 @@ function renderInventoryDemo() {
     canvas.width = Math.min(w * 0.9, 360);
     canvas.height = window.innerWidth < 600 ? 120 : window.innerWidth < 1024 ? 140 : 160;
   }
-
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  // ===== Animación inicial (barras ondulantes) =====
+  // ===== Animación inicial (barras ondulantes centradas) =====
   let pulse = true;
   let phase = 0;
   function drawIdleAnimation() {
     if (!pulse) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     const numBoxes = 6;
-    const padding = 30;
-    const chartW = canvas.width - padding * 2;
     const chartH = canvas.height - 50;
     const gap = 10;
-    const boxW = chartW / numBoxes - gap;
+    const chartW = canvas.width - 20;
+    const totalGaps = (numBoxes - 1) * gap;
+    const boxW = (chartW - totalGaps) / numBoxes;
+    const usedWidth = numBoxes * boxW + totalGaps;
+    const startX = (canvas.width - usedWidth) / 2;
     const midY = canvas.height - 40;
 
     for (let i = 0; i < numBoxes; i++) {
       const height = chartH / 2 + Math.sin(phase + i * 0.5) * (chartH / 4);
-      const x = padding + i * (boxW + gap);
+      const x = startX + i * (boxW + gap);
       const y = midY - height;
       const alpha = 0.5 + 0.3 * Math.sin(phase + i);
       ctx.fillStyle = `rgba(34,211,238,${alpha.toFixed(2)})`;
@@ -123,27 +130,30 @@ function renderInventoryDemo() {
   container.appendChild(summary);
   summary.style.marginBottom = "1.4rem";
 
-  // ===== Dibujar barras con degradado y sombras =====
+  // ===== Dibujar barras con degradado, centradas =====
   let barData = [];
   function drawBars(categories) {
     barData = categories;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const padding = canvas.width < 300 ? 18 : canvas.width < 360 ? 25 : 35;
-    const chartWidth = canvas.width - padding * 2;
+
+    const N = categories.length;
     const chartHeight = canvas.height - 60;
     const barGap = 10;
-    const barWidth = chartWidth / categories.length - barGap;
+    const chartWidth = canvas.width - 20;
+    const totalGaps = (N - 1) * barGap;
+    const barWidth = (chartWidth - totalGaps) / N;
+    const usedWidth = N * barWidth + totalGaps;
+    const startX = (canvas.width - usedWidth) / 2;
     const maxVal = Math.max(...categories.map((c) => c.qty)) * 1.1;
 
     ctx.textAlign = "center";
     ctx.font = (window.innerWidth < 600 ? "6.5px Segoe UI" : "10px Segoe UI");
 
     categories.forEach((c, i) => {
-      const x = padding + i * (barWidth + barGap);
+      const x = startX + i * (barWidth + barGap);
       const h = (c.qty / maxVal) * chartHeight;
       const y = canvas.height - 30 - h;
 
-      // Gradiente violeta→cian
       const gradient = ctx.createLinearGradient(0, y, 0, y + h);
       gradient.addColorStop(0, "#22d3ee");
       gradient.addColorStop(1, "#8b5cf6");
@@ -160,7 +170,6 @@ function renderInventoryDemo() {
       ctx.fillStyle = "#e2e8f0";
       ctx.fillText(c.name.slice(0, 5), x + barWidth / 2, canvas.height - (window.innerWidth < 600 ? 20 : 15));
 
-      // Guardar coordenadas para tooltip
       c._x = x;
       c._y = y;
       c._w = barWidth;
@@ -231,9 +240,8 @@ function renderInventoryDemo() {
   });
 }
 
-// === Forzar render inicial + reinicio solo cuando cambie de estado ===
+// === Control del carrusel ===
 let lastActive = -1;
-
 function activateInventorySlide() {
   const items = document.querySelectorAll("#ai-demo-carousel .carousel-item");
   items.forEach((item, idx) => {
