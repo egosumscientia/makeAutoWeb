@@ -46,16 +46,13 @@ document.addEventListener("slideChanged", (e) => {
   }
 });
 
-// Bloquea la referencia vertical de las flechas a una altura base medida una sola vez
-//window.addEventListener("load", () => {
-  //const car = document.querySelector(".carousel");
-  //const active = document.querySelector(".carousel-item.active") || document.querySelector(".carousel-item");
-  //if (!car || !active) return;
-
-  // Altura flexible: se ajusta al contenido, nunca corta ni añade margen extra
-  //const base = active.scrollHeight;
-  //car.style.setProperty("--carousel-base-h", base + "px");
-//});
+// SmartEnergy initialization on slide 5
+document.addEventListener("slideChanged", (e) => {
+  if (e.detail.index === 4) {
+    console.log("Showing slide 5: SmartEnergy");
+    document.dispatchEvent(new CustomEvent("smartEnergyInit"));
+  }
+});
 
 function adjustCarouselHeight() {
   const car = document.querySelector(".carousel");
@@ -71,13 +68,4 @@ window.addEventListener("resize", adjustCarouselHeight);
 document.addEventListener("slideChanged", adjustCarouselHeight);
 
 
-// Si quieres que se reajuste al rotar el móvil, descomenta:
-/*
-window.addEventListener("resize", () => {
-  const car = document.querySelector(".carousel");
-  const active = document.querySelector(".carousel-item.active");
-  if (!car || !active) return;
-  const base = Math.max(520, Math.min(700, active.getBoundingClientRect().height));
-  car.style.setProperty("--carousel-base-h", base + "px");
-});
-*/
+
