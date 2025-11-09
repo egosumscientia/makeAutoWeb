@@ -24,7 +24,7 @@ function renderInventoryDemo() {
   // ===== Descripción =====
   const desc = document.createElement("p");
   desc.textContent =
-    "Analiza el inventario en tiempo real con inteligencia artificial.";
+    "Analiza el inventario en tiempo real.";
   Object.assign(desc.style, {
     color: "#94a3b8",
     fontSize: "0.9rem",
@@ -46,26 +46,27 @@ function renderInventoryDemo() {
   const ctx = canvas.getContext("2d");
   Object.assign(canvas.style, {
     display: "block",
-    margin: "0.5rem auto 0.6rem auto",
+    margin: "0.4rem auto 0.4rem auto", // menos margen
     background: "#0f172a",
     borderRadius: "8px",
     boxShadow: "0 0 8px rgba(0,0,0,0.35)",
-    maxWidth: "380px",
-    width: "90%",
-    minHeight: "140px",
+    maxWidth: "420px",
+    width: "92%",
+    minHeight: "150px",
   });
+
   container.appendChild(canvas);
 
   // ===== Tamaño responsivo =====
   function resizeCanvas() {
     const w = container.clientWidth;
-    canvas.width = Math.min(w * 0.9, 380);
+    canvas.width = Math.min(w * 0.92, 420); // más ancho
     const vh = window.innerHeight;
 
-    if (vh < 650) canvas.height = 220;      // móviles pequeños
-    else if (vh < 850) canvas.height = 200; // móviles grandes
-    else if (vh < 1000) canvas.height = 180; // tablets
-    else canvas.height = 170;               // escritorio
+    if (vh < 650) canvas.height = 220;
+    else if (vh < 850) canvas.height = 200;
+    else if (vh < 1000) canvas.height = 190;
+    else canvas.height = 185; // escritorio más aireado
   }
 
   resizeCanvas();
@@ -162,7 +163,14 @@ function renderInventoryDemo() {
         <b>Sobrestock:</b> ${data.summary.overStock}</p>
         <p><b>Rotación:</b> ${data.summary.rotationRate} &nbsp;|&nbsp;
         <b>Valor:</b> $${data.summary.totalValueUSD.toLocaleString()}</p>`;
+
+      summary.querySelectorAll("p").forEach(p => {
+        p.style.margin = "0.2rem 0";
+        p.style.lineHeight = "1.1";
+      });
+
       button.textContent = "Simular";
+
     } catch (err) {
       console.error(err);
       summary.innerHTML = "<span style='color:#f87171;'>Error al obtener datos.</span>";
