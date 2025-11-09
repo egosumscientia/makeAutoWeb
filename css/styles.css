@@ -232,3 +232,20 @@ input:focus {
     padding-bottom: 1.8rem !important; /* más aire en móviles */
   }
 }
+
+/* Ajuste fino: asegura espacio bajo el gráfico */
+#ai-demo-carousel .carousel-item:nth-child(4) {
+  padding-bottom: 2rem !important;
+}
+
+/* Extra aire en móviles */
+@media (max-width: 600px) {
+  #ai-demo-carousel .carousel-item:nth-child(4) {
+    padding-bottom: 2.8rem !important;
+  }
+  #ai-demo-carousel .carousel-item:nth-child(4) canvas {
+    aspect-ratio: 4 / 3 !important;
+    max-width: 300px !important;
+    margin-bottom: 1.2rem !important; /* empuja el resumen hacia abajo */
+  }
+}
