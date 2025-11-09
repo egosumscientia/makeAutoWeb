@@ -124,7 +124,7 @@ function renderInventoryDemo() {
     const barWidth = chartWidth / categories.length - barGap;
     const maxVal = Math.max(...categories.map((c) => c.qty)) * 1.1;
 
-    ctx.font = "10px Segoe UI";
+    ctx.font = (window.innerWidth < 600 ? "6.5px Segoe UI" : "10px Segoe UI");
     ctx.textAlign = "center";
 
     categories.forEach((c, i) => {
@@ -136,11 +136,11 @@ function renderInventoryDemo() {
       ctx.strokeStyle = "rgba(34,211,238,1)";
       ctx.strokeRect(x, y, barWidth, h);
       ctx.fillStyle = "#e2e8f0";
-      ctx.fillText(c.name.slice(0, 5), x + barWidth / 2, canvas.height - 15);
+      ctx.fillText(c.name.slice(0, 5), x + barWidth / 2, canvas.height - (window.innerWidth < 600 ? 20 : 15));
     });
 
     ctx.fillStyle = "#94a3b8";
-    ctx.font = "11px Segoe UI";
+    ctx.font = (window.innerWidth < 600 ? "7.5px Segoe UI" : "11px Segoe UI");
   }
 
   // ===== Evento del botón =====
