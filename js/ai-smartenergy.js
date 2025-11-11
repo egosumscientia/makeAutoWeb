@@ -122,7 +122,7 @@ function initSmartEnergy() {
     data: {
       labels: data.voltage.map((_, i) => i),
       datasets: [{
-        label: "Voltaje trifásico (V)",
+        label: "Voltaje (V)",
         data: data.voltage,
         borderColor: "#22D3EE",
         tension: 0.25
