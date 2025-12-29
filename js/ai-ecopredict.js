@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelAnimationFrame(idleAnim);
     clearBackground(w, h);
 
-    const title = "AI–EcoPredict listo 🌍";
+    const title = "EcoPredict listo 🌍";
     const subtitle = "Presiona 'Predecir' para generar datos";
     let radius = 8, growing = true;
 

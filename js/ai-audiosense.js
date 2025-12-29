@@ -9,7 +9,7 @@ function renderAudioSenseDemo() {
 
   // ===== Título =====
   const title = document.createElement("h3");
-  title.textContent = "AI—AudioSense";
+  title.textContent = "AudioSense";
   Object.assign(title.style, {
     color: "#22d3ee",
     marginBottom: "0.2rem",

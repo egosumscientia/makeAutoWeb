@@ -12,7 +12,7 @@ document.addEventListener("slideChanged", (e) => {
 
   // ===== Título =====
   const title = document.createElement("h3");
-  title.textContent = "AI–TasteBuddy";
+  title.textContent = "TasteBuddy";
   title.style.color = "#22d3ee";
   title.style.textAlign = "center";
   title.style.marginBottom = "0.5rem";

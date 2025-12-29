@@ -58,7 +58,7 @@ function initSmartEnergy() {
 
   // --- Estructura HTML sin botón ---
   slide.innerHTML = `
-    <h3 class="ai-demo-title" style="margin-top:2px; margin-bottom:18px;">AI–SmartEnergy</h3>
+    <h3 class="ai-demo-title" style="margin-top:2px; margin-bottom:18px;">SmartEnergy</h3>
     <p style="max-width:480px; margin:0 auto 8px; color:#cbd5e1; line-height:1.3;">
       Monitoreo de potencia eléctrica en tiempo real con inteligencia artificial.
     </p>

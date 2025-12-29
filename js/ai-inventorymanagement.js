@@ -12,7 +12,7 @@ function renderInventoryDemo() {
 
   // ===== Título =====
   const title = document.createElement("h3");
-  title.textContent = "AI–InventoryManagement";
+  title.textContent = "InventoryAnalytics";
   Object.assign(title.style, {
     color: "#22d3ee",
     marginBottom: "0.5rem",
