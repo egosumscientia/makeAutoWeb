@@ -1,0 +1,19 @@
+[
+  {
+    "summary": {
+      "totalItems": 1240,
+      "lowStock": 4,
+      "overStock": 2,
+      "rotationRate": "2.6x",
+      "totalValueUSD": 18400
+    }
+  },
+  {
+    "summary": {
+      "totalItems": 1110,
+      "lowStock": 6,
+      "overStock": 1,
+      "rotationRate": "3.1x",
+      "totalValueUSD": 17250
+    }
+  }

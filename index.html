@@ -1,218 +1,218 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="makeAutomatic – Laboratorio de Electrónica, Cloud, IoT y Robótica. Integramos hardware, software y nube para soluciones industriales y comerciales eficientes y escalables.">
-  <title>makeAutomatic – Laboratorio de Electrónica, Cloud, IoT y Robótica</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17151219695"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17151219695');
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="makeAutomatic ayuda a equipos operativos a reducir desperdicio cloud, ordenar su stack y automatizar procesos sin proyectos eternos.">
+  <meta name="theme-color" content="#0a0f14">
+  <title>makeAutomatic | Menos Gasto Cloud, Mas Operacion</title>
+  <link rel="stylesheet" href="css/styles.css?v=20260329a">
 </head>
-<body>
-  <header>
-    <img src="assets/images/makeAuto-logo.jpeg" alt="Logo makeAutomatic">
-    <h1>makeAutomatic</h1>
+<body data-page="home">
+  <a class="skip-link" href="#main">Ir al contenido</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Inicio makeAutomatic">
+        <img class="brand__logo" src="assets/images/makeAutomatic_v2.png" alt="Logo makeAutomatic">
+        <span class="brand__text">makeAutomatic</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+      <nav class="site-nav" id="site-nav" data-nav>
+        <a href="#problema">Problema</a>
+        <a href="#solucion">Solucion</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#prueba">Prueba</a>
+        <a href="lab/index.html">Lab</a>
+        <a class="button button--small" href="https://wa.me/573233344633" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="content">
-    <section class="intro">
-      <p>Integramos electrónica, software, nube, IoT y robótica para crear soluciones eficientes, confiables y escalables.</p>
-      <div class="contact-info">
-        <p>Contacto:</p>
-        <p>WhatsApp: 3233344633</p>
-        <p>Email: operaciones@makeautomatic.com</p>
-      </div>
-      <div class="portfolio">
-        <a href="assets/pdf/Portafolio_makeAutomatic.pdf" target="_blank" class="portfolio-btn">
-          <i class="fa-solid fa-file-pdf"></i> Ver Portafolio (PDF)
-        </a>
-      </div>
-    </section>
-
-    <section class="services">
-      <div class="service">
-        <h2>Administración de sistemas Linux</h2>
-        <p>Gestión, configuración y optimización avanzada de servidores Linux, garantizando entornos estables, seguros y de alto rendimiento para aplicaciones industriales.</p>
-      </div>
-
-      <div class="service">
-        <h2>Servicios en la Nube</h2>
-        <p>Implementación y administración de soluciones en AWS, Azure, GCP y otras plataformas, facilitando la integración de procesos y la transformación digital.</p>
-      </div>
-
-      <div class="service">
-        <h2>IoT y Robótica</h2>
-        <p>Diseño de prototipos y soluciones de automatización mediante sensores, actuadores y sistemas robóticos conectados, integrados con servicios en la nube.</p>
-      </div>
-
-      <div class="service">
-        <h2>Agentes de Inteligencia Artificial</h2>
-        <p>Desarrollo e integración de agentes de IA especializados para sectores productivos, aplicados al análisis de datos, automatización y soporte en la toma de decisiones.</p>
-      </div>
-    </section>
-
-    <section class="service ai-demo-block" id="ai-foodsales">
-      <h2>FoodSales - Agente inteligente de ventas</h2>
-      <p>
-        Demostración interactiva del agente de IA especializado en ventas de alimentos.
-        Escribe pedidos o preguntas como “3 paquetes de papas fritas” o “precio del queso mozzarella”.
-      </p>
-      <div class="ai-chat">
-        <div id="chat-box" class="ai-chat-box"></div>
-        <div class="ai-chat-input">
-          <input id="user-input" type="text" placeholder="Escribe tu mensaje aquí..." />
-          <button id="send-btn">Enviar</button>
+  <main id="main">
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">Cloud operations</p>
+          <h1>Reduce costos cloud sin agregar complejidad</h1>
+          <p class="lead">
+            Ordenamos tu infraestructura y automatizamos lo que importa para bajar costos y recuperar control operativo.
+          </p>
+          <div class="hero__actions">
+            <a class="button" href="https://wa.me/573233344633" target="_blank" rel="noopener noreferrer">Quiero una revisión</a>
+            <a class="button button--ghost" href="lab/index.html">Ver el Lab</a>
+          </div>
+          <ul class="hero__metrics">
+            <li><strong>7-21 días</strong><span>para detectar y priorizar fugas operativas</span></li>
+            <li><strong>Enfoque técnico</strong><span>sin discurso comercial vacío</span></li>
+            <li><strong>Implementación</strong><span>sin rehacer todo el stack</span></li>
+          </ul>
         </div>
-        <div class="ai-chat-actions">
-          <button id="clear-chat" class="ai-secondary-btn">🧹 Limpiar chat</button>
-          <button id="confirm-order" class="ai-secondary-btn">✅ Confirmar orden</button>
+        <aside class="hero-card" aria-label="Resultados esperados">
+          <p class="hero-card__label">RESULTADO ESPERADO</p>
+          <h2>Un stack más barato, más claro y más gobernable.</h2>
+          <ul class="check-list">
+            <li>Servicios cloud sin uso visible</li>
+            <li>Automatizaciones con ROI claro</li>
+            <li>Alertas y tableros entendibles por operaciones</li>
+            <li>Ruta de ejecución priorizada por impacto</li>
+            <li>Menos errores operativos recurrentes</li>
+            <li>Más visibilidad sobre costos y decisiones técnicas</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="problema">
+      <div class="container section__grid">
+        <div>
+          <p class="eyebrow">PROBLEMA</p>
+          <h2>Estás gastando más en cloud de lo necesario.</h2>
         </div>
-      </div>
-      <button id="show-catalog" class="ai-btn-cat">📦 Ver catálogo disponible</button>
-      <div id="catalog-list" class="ai-catalog" style="display:none;"></div>
-    </section>
-
-
-    <section id="ai-demo-carousel" class="ai-demo">
-      <h2>Demos de Automatización</h2>
-
-      <div class="carousel">
-        <div class="carousel-inner">
-
-          <!-- Proyecto 1 -->
-          <div class="carousel-item active">
-            <h3>AI-TestBuddy</h3>
-            <p>Demo interactiva de <b>makeAutomatic</b> donde una IA adapta preferencias humanas en un vector visual.</p>
-            <canvas id="tasteRadar" width="500" height="400"></canvas>
-            <div class="ai-input">
-              <input id="msg" placeholder="'más picante', 'equilibrado', 'menos dulce'" />
-              <button id="sendBtn">Enviar</button>
-            </div>
-            <p id="reply"></p>
-            <p id="explanation"></p>
-          </div>
-
-          <!-- Proyecto 2 -->
-          <div class="carousel-item">
-            <h3>EcoPredict</h3>
-            <p>Predicción ambiental simulada por <b>makeAutomatic</b>.</p>
-            <canvas id="ecoCanvas" width="400" height="400"></canvas>
-            <div class="ai-input">
-              <button id="btnPredict">Predecir</button>
-            </div>
-          </div>
-
-          <!-- Proyecto 3 -->
-          <div class="carousel-item">
-            <h3>AudioSense</h3>
-            <p>Procesamiento de audio inteligente para monitoreo industrial.</p>
-          </div>
-
-          <!-- Proyecto 4 -->
-          <div class="carousel-item" id="inventory-slide">
-            <h3>InventoryAnalytics</h3>
-            <p>Monitoreo de inventario en tiempo real con inteligencia artificial.</p>
-          </div>
-
-          <!-- Proyecto 5 -->
-          <div class="carousel-item" id="smartenergy-slide">
-            <h3>SmartEnergy</h3>
-            <p>Monitoreo de potencia eléctrica en tiempo real con inteligencia artificial.</p>
-          </div>
-
-        </div> <!-- ← cierre correcto de carousel-inner -->
-
-        <button class="carousel-btn prev">❮</button>
-        <button class="carousel-btn next">❯</button>
-      </div>
-    </section>
-
-    <section class="service ai-demo-block" id="makeautomatic-os">
-      <h2>makeAutomaticOS</h2>
-      <p>
-        <b>makeAutomaticOS</b> es una distribución GNU/Linux basada en <b>Debian 12 (bookworm)</b>,
-        desarrollada en el laboratorio <b>makeAutomatic</b>. Ofrece un entorno ligero, estable
-        y preparado para pruebas, automatización y desarrollo técnico.
-      </p>
-      <ul style="text-align:left; max-width:480px; margin:10px auto; font-size:0.9rem;">
-        <li>Optimizada para <b>laboratorios de Electrónica, IoT y Automatización</b>.</li>
-      </ul>
-      <div style="text-align:center; margin-top:1.5rem;">
-        <a href="https://makeautomaticos.s3.amazonaws.com/releases/makeAutomaticOS.iso"
-          class="ai-btn"
-          download>
-          makeAutomaticOS (ISO)
-        </a>
-      </div>
-    </section>
-
-    <section class="ai-assistant">
-      <h2>makeAutomaticGPT</h2>
-      <p>
-        Asistente inteligente desarrollado con <strong>ChatGPT-5</strong> <strong>makeAutomatic</strong>.  
-        Te ayuda a optimizar proyectos de <strong>Electrónica, Robótica, IoT y Cloud Computing</strong>, ofreciendo soluciones precisas y eficientes.
-      </p>
-      <a
-        href="https://chatgpt.com/g/g-68e178205c6c8191be4bb09d3b1e043c-makeautomatic"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="ai-btn">
-        makeAutomaticGPT
-      </a>
-    </section>
-
-    <section class="ai-demo-block" id="makeautomatic-cloud-demo">
-      <h2>Cloud Demo</h2>
-      <p>
-        Demostración interactiva del sistema en la nube desarrollado con
-        <strong>AWS Lambda</strong>, <strong>API Gateway</strong> y <strong>DynamoDB</strong>.
-        Muestra productos y servicios gestionados desde infraestructura sin servidor.
-      </p>
-
-      <button id="cloud-btn" class="ai-btn">Ver Servicios en la Nube</button>
-
-      <div id="cloud-modal" class="modal">
-        <div class="modal-content">
-          <h3>Productos Cloud</h3>
-          <div id="product-list"></div>
-          <button id="close-cloud-modal" class="close-btn">Cerrar</button>
+        <div class="problem-list">
+          <article class="problem-card">
+            <h3>Costos opacos</h3>
+            <p>Recursos encendidos, integraciones duplicadas y consumo difícil de explicar en la factura.</p>
+          </article>
+          <article class="problem-card">
+            <h3>Operación reactiva</h3>
+            <p>Se apagan incendios manualmente porque los flujos críticos no están automatizados ni medidos.</p>
+          </article>
+          <article class="problem-card">
+            <h3>Herramientas desconectadas</h3>
+            <p>Datos y alertas viven en varios lugares sin una capa de ejecución coherente.</p>
+          </article>
         </div>
       </div>
     </section>
-  
-    <footer class="footer">
-      <p class="footer-slogan">
-        Innovación en electrónica, nube e inteligencia artificial.
-      </p>
-      <p class="footer-copy">
-        © 2025 <span class="brand">makeAutomatic</span>. Todos los derechos reservados.<br>
-        Sabaneta, Antioquia, Colombia.
-      </p>
-    </footer>
 
+    <section class="section section--alt" id="solucion">
+      <div class="container section__grid">
+        <div>
+          <p class="eyebrow">SOLUCIÓN</p>
+          <h2>Ordenamos la operación y atacamos primero lo que libera dinero o tiempo.</h2>
+        </div>
+        <div class="solution-stack">
+          <article class="feature-card">
+            <h3>Diagnóstico operativo</h3>
+            <p>Mapeamos infraestructura, consumo y puntos de fricción para detectar gasto innecesario.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Automatización focalizada</h3>
+            <p>Implementamos mejoras pequeñas, medibles y con impacto inmediato.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Instrumentación útil</h3>
+            <p>Alertas y visibilidad pensadas para decisiones, no dashboards decorativos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proceso">
+      <div class="container">
+        <p class="eyebrow">PROCESO</p>
+        <h2>Pasas de intuición a control en tres pasos.</h2>
+        <div class="steps">
+          <article class="step-card">
+            <span class="step-card__number">01</span>
+            <h3>Auditoría corta</h3>
+            <p>Revisamos arquitectura, costos y puntos manuales que impactan la operación.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-card__number">02</span>
+            <h3>Plan priorizado</h3>
+            <p>Ordenamos acciones por impacto vs esfuerzo, sin sobreingeniería.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-card__number">03</span>
+            <h3>Ejecución guiada</h3>
+            <p>Implementamos mejoras con seguimiento operativo, sin rehacer todo el stack.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--accent" id="resultado">
+      <div class="container result-panel">
+        <div>
+          <p class="eyebrow eyebrow--light">RESULTADO</p>
+          <h2>Menos gasto incierto. Más control. Operación repetible.</h2>
+        </div>
+        <div class="result-grid">
+          <article>
+            <strong>Visibilidad</strong>
+            <p>Sabes qué mantener, qué apagar y dónde optimizar primero.</p>
+          </article>
+          <article>
+            <strong>Velocidad</strong>
+            <p>Menos tiempo perdido en tareas manuales y errores recurrentes.</p>
+          </article>
+          <article>
+            <strong>Gobernanza</strong>
+            <p>Una base clara para crecer sin caos operativo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prueba">
+      <div class="container proof-grid">
+        <div>
+          <p class="eyebrow">Prueba</p>
+          <h2>El Lab existe para mostrar criterio tecnico, no para distraer del objetivo comercial.</h2>
+          <p class="lead lead--compact">
+            Separamos las demos para que la página principal venda con claridad y el Lab funcione como soporte técnico.
+          </p>
+        </div>
+        <div class="proof-card">
+          <p class="proof-card__title">Incluye</p>
+          <ul class="check-list">
+            <li>Demos locales de analitica, energia, inventario y asistentes</li>
+            <li>Portafolio tecnico descargable</li>
+            <li>Canal directo por WhatsApp</li>
+          </ul>
+          <div class="proof-card__actions">
+            <a class="button" href="lab/index.html">Entrar al Lab</a>
+            <a class="button button--ghost" href="assets/pdf/Portafolio_makeAutomatic.pdf" target="_blank" rel="noopener noreferrer">Ver portafolio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cta">
+      <div class="container cta-panel">
+        <div>
+          <p class="eyebrow eyebrow--light">CONTACTO</p>
+          <h2>Envíame tu factura o acceso de solo lectura y te digo dónde estás perdiendo dinero.</h2>
+          <p class="lead lead--compact lead--light">Reviso gasto, uso y puntos obvios de optimización antes de hablar de cambios mayores.</p>
+        </div>
+        <div class="cta-panel__actions">
+          <a class="button button--light" href="https://wa.me/573233344633" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+          <a class="button button--ghost-light" href="mailto:operaciones@makeautomatic.com">operaciones@makeautomatic.com</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <a href="https://wa.me/573233344633" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div>
+        <a class="brand brand--footer" href="index.html">
+          <img class="brand__logo" src="assets/images/makeAuto-logo.jpeg" alt="Logo makeAutomatic">
+          <span class="brand__text">makeAutomatic</span>
+        </a>
+        <p class="site-footer__copy">Operacion, automatizacion y criterio tecnico para equipos que necesitan resultados.</p>
+      </div>
+      <div class="site-footer__meta">
+        <p>Sabaneta, Antioquia, Colombia</p>
+        <p>&copy; <span data-current-year></span> makeAutomatic</p>
+      </div>
+    </div>
+  </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/carousel.js" defer></script>
-  <script src="js/ai-tastebuddy.js" defer></script>
-  <script src="js/ai-ecopredict.js" defer></script>
-  <script src="js/ai-audiosense.js" defer></script>
-  <script src="js/ai-inventorymanagement.js" defer></script>
-  <script src="js/ai-foodsales.js" defer></script>
-  <script src="js/cloud-demo.js" defer></script>
-  <script src="js/ai-smartenergy.js" defer></script>
+  <script type="module" src="js/core/site.js?v=20260329a"></script>
 </body>
 </html>

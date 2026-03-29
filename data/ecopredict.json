@@ -1,0 +1,12 @@
+[
+  {
+    "region": "Planta Norte",
+    "summary": "Temperatura estable y humedad controlada durante el siguiente turno.",
+    "points": [21, 22, 22, 23, 24, 24, 23, 22]
+  },
+  {
+    "region": "Centro de Distribucion",
+    "summary": "Aumento termico moderado en la tarde. Se recomienda revisar ventilacion.",
+    "points": [19, 20, 21, 24, 26, 27, 25, 22]
+  }
+]

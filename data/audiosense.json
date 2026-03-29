@@ -1,0 +1,16 @@
+[
+  {
+    "rmsDb": 63,
+    "dominantHz": 420,
+    "confidence": 0.93,
+    "anomaly": false,
+    "message": "Firma acustica consistente con operacion normal."
+  },
+  {
+    "rmsDb": 71,
+    "dominantHz": 690,
+    "confidence": 0.88,
+    "anomaly": true,
+    "message": "Se detecta un pico atipico en bandas medias y altas."
+  }
+]

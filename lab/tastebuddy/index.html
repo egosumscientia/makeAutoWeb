@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Demo local TasteBuddy de makeAutomatic.">
+  <title>TasteBuddy | makeAutomatic Lab</title>
+  <link rel="stylesheet" href="../../css/styles.css?v=20260329b">
+</head>
+<body data-page="demo">
+  <a class="skip-link" href="#main">Ir al contenido</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../../index.html">
+        <img class="brand__logo" src="../../assets/images/makeAutomatic_v2.png" alt="Logo makeAutomatic">
+        <span class="brand__text">makeAutomatic</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" data-nav>
+        <a href="../index.html">Volver al Lab</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="demo-page">
+    <section class="demo-shell">
+      <div class="container">
+        <p class="eyebrow">Demo Local</p>
+        <h1>TasteBuddy</h1>
+        <p class="lead lead--compact">Un radar local que ajusta atributos de sabor en funcion de instrucciones simples.</p>
+        <div class="demo-layout demo-layout--single">
+          <section class="panel panel--centered">
+            <canvas id="tastebuddy-canvas" class="chart-canvas" width="420" height="320" aria-label="Radar de sabor"></canvas>
+            <form class="inline-form" id="tastebuddy-form">
+              <label class="sr-only" for="tastebuddy-input">Instruccion</label>
+              <input id="tastebuddy-input" name="message" type="text" placeholder="Ejemplo: mas picante y menos dulce">
+              <button class="button" type="submit">Aplicar</button>
+            </form>
+            <p class="status-line" id="tastebuddy-status">Escribe una instruccion para modificar el perfil.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p class="site-footer__copy">&copy; <span data-current-year></span> makeAutomatic</p>
+    </div>
+  </footer>
+
+  <script type="module" src="../../js/components/tastebuddy-demo.js?v=20260329b"></script>
+</body>
+</html>

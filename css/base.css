@@ -1,0 +1,113 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(0, 240, 255, 0.08), transparent 24%),
+    radial-gradient(circle at top right, rgba(0, 255, 156, 0.06), transparent 22%),
+    linear-gradient(180deg, #081017 0%, #0a1118 40%, #0a0f14 100%);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.62;
+  font-size: clamp(1rem, 0.96rem + 0.22vw, 1.08rem);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  background: #0f1820;
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 1.2rem;
+  line-height: 1.16;
+  font-family: var(--font-display);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 2.1rem + 1.8vw, 3.5rem);
+  letter-spacing: -0.01em;
+  line-height: 1.14;
+  font-weight: 600;
+  max-width: 14ch;
+}
+
+.lab-hero h1 {
+  font-size: clamp(2rem, 1.8rem + 0.9vw, 2.6rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 1.55rem + 0.9vw, 2.25rem);
+  letter-spacing: -0.012em;
+  line-height: 1.18;
+  font-weight: 620;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 1.14rem + 0.35vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.28;
+}
+
+p,
+ul {
+  margin: 0 0 1.18rem;
+}
+
+ul {
+  padding-left: 1.25rem;
+}
+
+p {
+  color: var(--color-text-muted);
+  max-width: 70ch;
+  line-height: 1.68;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+}

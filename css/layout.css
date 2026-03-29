@@ -1,0 +1,159 @@
+.container {
+  width: min(calc(100% - 2rem), var(--container));
+  margin: 0 auto;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background: rgba(8, 13, 18, 0.9);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.14);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 78px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.hero,
+.lab-hero,
+.demo-shell {
+  padding: var(--space-7) 0;
+}
+
+.hero {
+  padding: 2.8rem 0 0.7rem;
+}
+
+.lab-hero {
+  padding: 2rem 0 0.35rem;
+}
+
+.hero__grid,
+.section__grid,
+.proof-grid,
+.demo-layout {
+  display: grid;
+  align-items: start;
+}
+
+/* Unified 2-column system — same logic for Hero, Problema, Solución */
+.hero__grid,
+.section__grid,
+.proof-grid {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--space-6);
+}
+
+#problema .section__grid,
+#solucion .section__grid {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.section {
+  padding: var(--space-7) 0;
+}
+
+#problema.section {
+  padding-top: 1rem;
+}
+
+.section--alt {
+  background: rgba(16, 24, 32, 0.72);
+}
+
+.section--accent,
+.section--cta {
+  color: var(--color-light);
+}
+
+.section--accent .result-panel,
+.section--cta .cta-panel {
+  background:
+    linear-gradient(140deg, rgba(0, 231, 255, 0.14) 0%, rgba(0, 255, 156, 0.1) 100%),
+    #0b141b;
+}
+
+/* Full-width 3-column card grids (Proceso, Resultado) */
+.steps,
+.card-grid,
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+/* Cards in right column stack vertically as one grouped block */
+.problem-list,
+.solution-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.site-footer {
+  padding: var(--space-6) 0;
+  border-top: 1px solid rgba(0, 240, 255, 0.12);
+}
+
+.site-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.demo-page,
+.lab-page {
+  min-height: calc(100vh - 160px);
+  min-height: calc(100dvh - 160px);
+}
+
+.demo-layout {
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: var(--space-5);
+}
+
+.demo-layout--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 900px) {
+  .hero__grid,
+  .section__grid,
+  .proof-grid,
+  .demo-layout,
+  .steps,
+  .card-grid,
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__inner {
+    flex-direction: column;
+  }
+
+  .problem-list,
+  .solution-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .problem-list,
+  .solution-stack {
+    grid-template-columns: 1fr;
+  }
+}
